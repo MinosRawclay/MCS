@@ -1,7 +1,7 @@
 #include <string.h>
 #include <arpa/inet.h>
-#include "reqRep.h"
-#include "users.h"
+#include "../include/libRepReq.h"
+#include "../include/users.h"
 /*
 *****************************************************************************************
  *	\note		D E F I N I T I O N   DES   M A C R O S
@@ -25,7 +25,10 @@
  */
 #define CHECK_NULL(sts, msg) if ((sts)==NULL) {perror(msg); exit(-1);}
 
+
+
 users_t users;
+
 int afficherUsers(char *cde) {
 	printf("[%s] Liste des users [%d]\n", cde, users.nbUsers);	
 	for (int i=0; i < users.nbUsers; i++)

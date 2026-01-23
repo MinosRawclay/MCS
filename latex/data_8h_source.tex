@@ -1,0 +1,42 @@
+\doxysection{data.\+h}
+\hypertarget{data_8h_source}{}\label{data_8h_source}\mbox{\hyperlink{data_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ DATA\_H}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ DATA\_H}}
+\DoxyCodeLine{00010\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00011\ \textcolor{comment}{*****************************************************************************************}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ I\ N\ C\ L\ U\ D\ E\ S\ \ \ S\ P\ E\ C\ I\ F\ I\ Q\ U\ E\ S}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{session_8h}{session.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00016\ \textcolor{comment}{*****************************************************************************************}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ D\ E\ F\ I\ N\ I\ T\ I\ O\ N\ \ \ DES\ \ \ C\ O\ N\ S\ T\ A\ N\ T\ E\ S}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ MAX\_BUFFER\ \ 1024}}
+\DoxyCodeLine{00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00025\ \textcolor{comment}{*****************************************************************************************}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ S\ T\ R\ C\ T\ U\ R\ E\ S\ \ \ DE\ \ \ D\ O\ N\ N\ E\ E\ S}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{data_8h_a2c2240d1cf1f52381c9fe541ceec05bd}{buffer\_t}}[\mbox{\hyperlink{data_8h_a1d5dab30b404fab91608086105afc78c}{MAX\_BUFFER}}];}
+\DoxyCodeLine{00037\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{generic};}
+\DoxyCodeLine{00042\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{pFct}})\ (\textcolor{keyword}{generic},\ \textcolor{keyword}{generic});}
+\DoxyCodeLine{00043\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00044\ \textcolor{comment}{*****************************************************************************************}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ P\ R\ O\ T\ O\ T\ Y\ P\ E\ S\ \ \ DES\ \ \ F\ O\ N\ C\ T\ I\ O\ N\ S}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data_8h_aa56b8d84de67f5ea7ea393a8884d3bbf}{envoyer}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}}\ quoi,\ \mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{pFct}}\ serial,\ ...);}
+\DoxyCodeLine{00068\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{data_8h_ad62cf336e585a61123084d2fc4ba4791}{recevoir}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}}\ quoi,\ \mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{pFct}}\ deSerial);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ DATA\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00075\ \textcolor{comment}{*****************************************************************************************}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ DEFINITION\ \ DES\ \ \ MACROS}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ CHECK(sts,\ msg)\ if\ ((sts)==-\/1)\ \{perror(msg);\ exit(-\/1);\}}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ PAUSE(msg)\ \ printf("{}\%s\ [Appuyez\ sur\ entrée\ pour\ continuer]"{},\ msg);\ getchar();}}
+
+\end{DoxyCode}

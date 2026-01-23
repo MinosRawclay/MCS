@@ -1,0 +1,180 @@
+.TH "session.c" 3 "LibInet" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+session.c \- Fonctions de la couche session\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'session\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCHECK\fP(sts,  msg)   if ((sts)==\-1) {perror(msg); exit(\-1);}"
+.br
+.RI "Macro-fonction qui vérifie que sts est égal -1 (cas d'erreur : sts==-1) En cas d'erreur, il y a affichage du message adéquat et fin d'exécution 
+.br
+ "
+.ti -1c
+.RI "#define \fBPAUSE\fP(msg)   printf('%s [Appuyez sur entrée pour continuer]', msg); getchar();"
+.br
+.RI "Macro-fonction qui affiche msg et attend une entrée clavier 
+.br
+ "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBadr2struct\fP (struct sockaddr_in *addr, char *adrIP, short port)"
+.br
+.RI "Transformer une adresse au format humain en structure SocketBSD\&. "
+.ti -1c
+.RI "\fBsocket_t\fP \fBcreerSocket\fP (int mode)"
+.br
+.RI "Création d'une socket de type DGRAM/STREAM\&. "
+.ti -1c
+.RI "\fBsocket_t\fP \fBcreerSocketAddr\fP (int mode, char *adrIp, int port)"
+.br
+.ti -1c
+.RI "\fBsocket_t\fP \fBcreerSocketEcoute\fP (char *adrIP, short port)"
+.br
+.RI "Création d'une socket d'écoute avec l'adressage fourni en paramètre\&. "
+.ti -1c
+.RI "\fBsocket_t\fP \fBaccepterClt\fP (const \fBsocket_t\fP sockEcoute)"
+.br
+.RI "Acceptation d'une demande de connexion d'un client\&. "
+.ti -1c
+.RI "\fBsocket_t\fP \fBconnecterClt2Srv\fP (char *adrIP, short port)"
+.br
+.RI "Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Fonctions de la couche session\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Alexandre BREVIERE 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+6 janvier 2026 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+1\&.0 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBsocket_t\fP accepterClt (const \fBsocket_t\fP sockEcoute)"
+
+.PP
+Acceptation d'une demande de connexion d'un client\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEcoute\fP : socket d'écoute pour réception de la demande 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+socket (dialogue) connectée portpar le serveur avec un client 
+.RE
+.PP
+
+.SS "void adr2struct (struct sockaddr_in * addr, char * adrIP, short port)"
+
+.PP
+Transformer une adresse au format humain en structure SocketBSD\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIaddr\fP : structure d'adressage BSD d'une socket INET 
+.br
+\fIadrIP\fP : adresse IP de la socket créée 
+.br
+\fIport\fP : port de la socket créée 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+Le domaine dépend du mode choisi (TCP/UDP) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre *adr modifié 
+.RE
+.PP
+
+.SS "\fBsocket_t\fP connecterClt2Srv (char * adrIP, short port)"
+
+.PP
+Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIadrIP\fP : adresse IP du serveur à connecter 
+.br
+\fIport\fP : port TCP du serveur à connecter 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+socket connectée au serveur fourni en paramètre 
+.RE
+.PP
+
+.SS "\fBsocket_t\fP creerSocket (int mode)"
+
+.PP
+Création d'une socket de type DGRAM/STREAM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImode\fP : mode connecté (STREAM) ou non (DGRAM) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+socket créée selon le mode choisi 
+.RE
+.PP
+
+.SS "creerSocketEcoute (char * adrIP, short port)"
+
+.PP
+Création d'une socket d'écoute avec l'adressage fourni en paramètre\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIadrIP\fP : adresse IP du serveur à mettre en écoute 
+.br
+\fIport\fP : port TCP du serveur à mettre en écoute 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+socket créée avec l'adressage fourni en paramètre et dans un état d'écoute 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+Le domaine est nécessairement STREAM 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for LibInet from the source code\&.

@@ -1,0 +1,126 @@
+\doxysection{data.\+h File Reference}
+\hypertarget{data_8h}{}\label{data_8h}\index{data.h@{data.h}}
+
+
+Spécification de la couche Data Representation.  
+
+
+{\ttfamily \#include "{}session.\+h"{}}\newline
+Include dependency graph for data.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{data_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{data_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{data_8h_a1d5dab30b404fab91608086105afc78c}\label{data_8h_a1d5dab30b404fab91608086105afc78c} 
+\#define {\bfseries MAX\+\_\+\+BUFFER}~1024
+\begin{DoxyCompactList}\small\item\em taille d\textquotesingle{}un buffer\+\_\+t d\textquotesingle{}émission/réception \end{DoxyCompactList}\item 
+\Hypertarget{data_8h_ad3fe337408f16c132c895f2b59326410}\label{data_8h_ad3fe337408f16c132c895f2b59326410} 
+\#define {\bfseries CHECK}(sts,  msg)~if ((sts)==-\/1) \{perror(msg); exit(-\/1);\}
+\begin{DoxyCompactList}\small\item\em Macro-\/fonction qui vérifie que sts est égal -\/1 (cas d\textquotesingle{}erreur \+: sts==-\/1) En cas d\textquotesingle{}erreur, il y a affichage du message adéquat et fin d\textquotesingle{}exécution ~\newline
+ \end{DoxyCompactList}\item 
+\Hypertarget{data_8h_a04c10e619b22ff247ade9e18e9082fa0}\label{data_8h_a04c10e619b22ff247ade9e18e9082fa0} 
+\#define {\bfseries PAUSE}(msg)~printf("{}\%s \mbox{[}Appuyez sur entrée pour continuer\mbox{]}"{}, msg); getchar();
+\begin{DoxyCompactList}\small\item\em Macro-\/fonction qui affiche msg et attend une entrée clavier ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{data_8h_a2c2240d1cf1f52381c9fe541ceec05bd}\label{data_8h_a2c2240d1cf1f52381c9fe541ceec05bd} 
+typedef char {\bfseries buffer\+\_\+t}\mbox{[}\mbox{\hyperlink{data_8c_a1d5dab30b404fab91608086105afc78c}{MAX\+\_\+\+BUFFER}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em chaîne de caractères à émettre/recevoir \end{DoxyCompactList}\item 
+\Hypertarget{data_8h_a20a07aa5a0a4656891f77115d03fd436}\label{data_8h_a20a07aa5a0a4656891f77115d03fd436} 
+typedef void \texorpdfstring{$\ast$}{*} {\bfseries generic}
+\begin{DoxyCompactList}\small\item\em type de données générique \+: requêtes/réponses \end{DoxyCompactList}\item 
+\Hypertarget{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}\label{data_8h_aff0a816c1aa078dc74b95c5074a14b6c} 
+typedef void(\texorpdfstring{$\ast$}{*} {\bfseries p\+Fct}) (\mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}}, \mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}})
+\begin{DoxyCompactList}\small\item\em pointer sur fonction générique à 2 parametres génériques \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{data_8h_aa56b8d84de67f5ea7ea393a8884d3bbf}{envoyer}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sock\+Ech, \mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}} quoi, \mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{p\+Fct}} serial,...)
+\begin{DoxyCompactList}\small\item\em Envoi d\textquotesingle{}une requête/réponse sur une socket. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{data_8h_ad62cf336e585a61123084d2fc4ba4791}{recevoir}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sock\+Ech, \mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}} quoi, \mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{p\+Fct}} de\+Serial)
+\begin{DoxyCompactList}\small\item\em Réception d\textquotesingle{}une requête/réponse sur une socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Spécification de la couche Data Representation. 
+
+\begin{DoxyAuthor}{Author}
+Samir El Khattabi 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+3 mars 2023 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{data_8h_aa56b8d84de67f5ea7ea393a8884d3bbf}\label{data_8h_aa56b8d84de67f5ea7ea393a8884d3bbf} 
+\index{data.h@{data.h}!envoyer@{envoyer}}
+\index{envoyer@{envoyer}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{envoyer()}{envoyer()}}
+{\footnotesize\ttfamily void envoyer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sock\+Ech,  }\item[{\mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}}}]{quoi,  }\item[{\mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{p\+Fct}}}]{serial,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Envoi d\textquotesingle{}une requête/réponse sur une socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock\+Ech} & \+: socket d\textquotesingle{}échange à utiliser pour l\textquotesingle{}envoi \\
+\hline
+{\em quoi} & \+: requête/réponse à serialiser avant l\textquotesingle{}envoi \\
+\hline
+{\em serial} & \+: pointeur sur la fonction de serialisation d\textquotesingle{}une requête/réponse \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+si le paramètre serial vaut NULL alors quoi est une chaîne de caractères 
+
+Si le mode est DGRAM, l\textquotesingle{}appel nécessite en plus l\textquotesingle{}adresse IP et le port. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+paramètre sock\+Ech modifié pour le mode DGRAM 
+\end{DoxyReturn}
+\Hypertarget{data_8h_ad62cf336e585a61123084d2fc4ba4791}\label{data_8h_ad62cf336e585a61123084d2fc4ba4791} 
+\index{data.h@{data.h}!recevoir@{recevoir}}
+\index{recevoir@{recevoir}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{recevoir()}{recevoir()}}
+{\footnotesize\ttfamily void recevoir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sock\+Ech,  }\item[{\mbox{\hyperlink{data_8h_a20a07aa5a0a4656891f77115d03fd436}{generic}}}]{quoi,  }\item[{\mbox{\hyperlink{data_8h_aff0a816c1aa078dc74b95c5074a14b6c}{p\+Fct}}}]{de\+Serial }\end{DoxyParamCaption})}
+
+
+
+Réception d\textquotesingle{}une requête/réponse sur une socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock\+Ech} & \+: socket d\textquotesingle{}échange à utiliser pour la réception \\
+\hline
+{\em quoi} & \+: requête/réponse reçue après dé-\/serialisation du buffer de réception \\
+\hline
+{\em de\+Serial} & \+: pointeur sur la fonction de dé-\/serialisation d\textquotesingle{}une requête/réponse \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+si le paramètre de\+Serial vaut NULL alors quoi est une chaîne de caractères 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+paramètre quoi modifié avec le requête/réponse reçue paramètre sock\+Ech modifié pour le mode DGRAM 
+\end{DoxyReturn}

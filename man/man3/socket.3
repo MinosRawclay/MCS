@@ -1,0 +1,61 @@
+.TH "socket" 3 "LibInet" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+socket \- Définition de la structure de données socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <session\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBfd\fP"
+.br
+.ti -1c
+.RI "int \fBmode\fP"
+.br
+.ti -1c
+.RI "struct sockaddr_in \fBaddrLoc\fP"
+.br
+.ti -1c
+.RI "struct sockaddr_in \fBaddrDst\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Définition de la structure de données socket\&. 
+
+
+.PP
+\fBNote\fP
+.RS 4
+Ce type est composé du fd de la socket, du mode (connecté/non) et des adresses applicatives (locale/distante) 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "struct sockaddr_in socket::addrDst"
+adresse distante de la socket 
+.br
+ 
+.SS "struct sockaddr_in socket::addrLoc"
+adresse locale de la socket 
+.br
+ 
+.SS "int socket::fd"
+numéro de la socket créée 
+.br
+ 
+.SS "int socket::mode"
+mode connecté/non : STREAM/DGRAM 
+.br
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for LibInet from the source code\&.

@@ -1,0 +1,242 @@
+.TH "data.c" 3 "LibInet" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+data.c \- Implémentation de la couche Data Representation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <libgen\&.h>\fP
+.br
+\fC#include <stdarg\&.h>\fP
+.br
+\fC#include <netinet/in\&.h>\fP
+.br
+\fC#include <arpa/inet\&.h>\fP
+.br
+\fC#include 'data\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPAUSE\fP(msg)   printf('%s [Appuyez sur entrée pour continuer]', msg); getchar();"
+.br
+.RI "Macro-fonction qui affiche msg et attend une entrée clavier 
+.br
+ "
+.ti -1c
+.RI "#define \fBCHECK\fP(sts,  msg)   if ((sts)==\-1) {perror(msg); exit(\-1);}"
+.br
+.RI "Macro-fonction qui vérifie que sts est égal -1 (cas d'erreur : sts==-1) En cas d'erreur, il y a affichage du message adéquat et fin d'exécution 
+.br
+ "
+.ti -1c
+.RI "#define \fBPAUSE\fP(msg)   printf('%s [Appuyez sur entrée pour continuer]', msg); getchar();"
+.br
+.RI "Macro-fonction qui affiche msg et attend une entrée clavier 
+.br
+ "
+.ti -1c
+.RI "#define \fBMAX_BUFFER\fP   1024"
+.br
+.RI "taille d'un buffer_t d'émission/réception "
+.ti -1c
+.RI "#define \fBRECV_FLAGS\fP   0"
+.br
+.RI "Flags à utiliser en réception\&. "
+.ti -1c
+.RI "#define \fBSEND_FLAGS\fP   0"
+.br
+.RI "Flags à utiliser en émission\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBenvoyerMessDGRAM\fP (\fBsocket_t\fP *sockEch, char *msg, char *adrDest, short portDest)"
+.br
+.ti -1c
+.RI "void \fBrecevoirMessDGRAM\fP (\fBsocket_t\fP *sockEch, char *msg, int msgSize)"
+.br
+.RI "Réception d'un message sur une socket en mode DGRAM\&. "
+.ti -1c
+.RI "void \fBenvoyerMessSTREAM\fP (const \fBsocket_t\fP *sockEch, char *msg)"
+.br
+.RI "Envoi d'un message sur une socket en mode STREAM\&. "
+.ti -1c
+.RI "void \fBrecevoirMessSTREAM\fP (const \fBsocket_t\fP *sockEch, char *msg, int msgSize)"
+.br
+.RI "Réception d'un message sur une socket en mode STREAM\&. "
+.ti -1c
+.RI "void \fBenvoyer\fP (\fBsocket_t\fP *sockEch, \fBgeneric\fP quoi, \fBpFct\fP serial,\&.\&.\&.)"
+.br
+.RI "Envoi d'une requête/réponse sur une socket\&. "
+.ti -1c
+.RI "void \fBrecevoir\fP (\fBsocket_t\fP *sockEch, \fBgeneric\fP quoi, \fBpFct\fP deSerial)"
+.br
+.RI "Réception d'une requête/réponse sur une socket\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char * \fBprogName\fP"
+.br
+.RI "Nom de l'exécutable\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Implémentation de la couche Data Representation\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Alexandre BREVIERE 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+7 janvier 2026 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+1\&.0 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void envoyer (\fBsocket_t\fP * sockEch, \fBgeneric\fP quoi, \fBpFct\fP serial,  \&.\&.\&.)"
+
+.PP
+Envoi d'une requête/réponse sur une socket\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour l'envoi 
+.br
+\fIquoi\fP : requête/réponse à serialiser avant l'envoi 
+.br
+\fIserial\fP : pointeur sur la fonction de serialisation d'une requête/réponse 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+si le paramètre serial vaut NULL alors quoi est une chaîne de caractères 
+.PP
+Si le mode est DGRAM, l'appel nécessite en plus l'adresse IP et le port\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre sockEch modifié pour le mode DGRAM 
+.RE
+.PP
+
+.SS "void envoyerMessSTREAM (const \fBsocket_t\fP * sockEch, char * msg)"
+
+.PP
+Envoi d'un message sur une socket en mode STREAM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour l'envoi 
+.br
+\fImsg\fP : message à envoyer 
+.RE
+.PP
+
+.SS "void recevoir (\fBsocket_t\fP * sockEch, \fBgeneric\fP quoi, \fBpFct\fP deSerial)"
+
+.PP
+Réception d'une requête/réponse sur une socket\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour la réception 
+.br
+\fIquoi\fP : requête/réponse reçue après dé-serialisation du buffer de réception 
+.br
+\fIdeSerial\fP : pointeur sur la fonction de dé-serialisation d'une requête/réponse 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+si le paramètre deSerial vaut NULL alors quoi est une chaîne de caractères 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre quoi modifié avec le requête/réponse reçue paramètre sockEch modifié pour le mode DGRAM 
+.RE
+.PP
+
+.SS "void recevoirMessDGRAM (\fBsocket_t\fP * sockEch, char * msg, int msgSize)"
+
+.PP
+Réception d'un message sur une socket en mode DGRAM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour la réception 
+.br
+\fImsg\fP : message reçu 
+.br
+\fImsgSize\fP : taille de l'espace mémoire préalablement alloué à msg 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre modifié avec le message reçu 
+.RE
+.PP
+
+.SS "void recevoirMessSTREAM (const \fBsocket_t\fP * sockEch, char * msg, int msgSize)"
+
+.PP
+Réception d'un message sur une socket en mode STREAM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour la réception 
+.br
+\fImsg\fP : message reçu 
+.br
+\fImsgSize\fP : taille de l'espace mémoire préalablement alloué à msg 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre modifié avec le message reçu 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "progName\fC [extern]\fP"
+
+.PP
+Nom de l'exécutable\&. Nom de l'exécutable : libnet nécessite cette variable qui pointe sur argv[0]\&.
+.PP
+\fBNote\fP
+.RS 4
+Variable externe : à déclarer par l'utilisateur 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for LibInet from the source code\&.

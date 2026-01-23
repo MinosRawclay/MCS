@@ -1,0 +1,37 @@
+<map id="data.c" name="data.c">
+<area shape="rect" id="Node000001" title="Implémentation de la couche Data Representation." alt="" coords="386,5,449,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,225,80,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="394,33,299,81,172,156,73,220,70,215,169,152,296,76,391,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="105,225,175,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="402,33,335,81,165,218,162,214,332,77,399,29"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="200,225,267,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="407,33,361,80,300,154,252,216,248,213,295,151,357,77,403,29"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="291,225,362,251"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="409,32,392,54,376,80,349,151,334,212,329,211,344,149,371,77,388,51,405,29"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="584,79,659,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="450,28,576,72,575,77,448,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="683,79,757,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="450,24,670,76,669,81,449,29"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="823,225,919,251"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="428,30,462,77,480,107,491,132,505,154,530,175,566,195,599,207,629,214,660,216,726,216,809,223,809,228,726,221,660,221,629,219,597,213,564,200,526,180,501,158,486,135,475,110,458,80,424,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="943,225,1035,251"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="437,28,496,63,573,102,670,139,768,172,932,219,930,224,766,177,668,144,571,106,494,68,434,33"/>
+<area shape="rect" id="Node000010" href="$data_8h.html" title="Spécification de la couche Data Representation." alt="" coords="386,79,449,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="420,31,420,65,415,65,415,31"/>
+<area shape="rect" id="Node000011" href="$session_8h.html" title="Spécification de la couche Session." alt="" coords="376,152,459,177"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="420,104,420,138,415,138,415,104"/>
+<area shape="poly" id="edge11_Node000011_Node000002" title=" " alt="" coords="376,176,94,228,93,222,375,170"/>
+<area shape="poly" id="edge12_Node000011_Node000003" title=" " alt="" coords="376,179,189,227,188,222,375,174"/>
+<area shape="poly" id="edge13_Node000011_Node000004" title=" " alt="" coords="389,180,277,223,275,218,387,175"/>
+<area shape="poly" id="edge17_Node000011_Node000005" title=" " alt="" coords="404,179,354,219,351,214,401,175"/>
+<area shape="poly" id="edge15_Node000011_Node000008" title=" " alt="" coords="460,172,478,175,642,198,809,222,809,228,641,204,477,180,459,177"/>
+<area shape="poly" id="edge16_Node000011_Node000009" title=" " alt="" coords="459,168,690,193,930,223,930,228,690,198,458,173"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="575,225,678,251"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="452,175,580,218,579,223,450,180"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="703,225,799,251"/>
+<area shape="poly" id="edge18_Node000011_Node000013" title=" " alt="" coords="459,172,690,221,689,226,458,177"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="386,225,459,251"/>
+<area shape="poly" id="edge19_Node000011_Node000014" title=" " alt="" coords="421,177,423,212,418,212,416,178"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="483,225,551,251"/>
+<area shape="poly" id="edge20_Node000011_Node000015" title=" " alt="" coords="435,175,491,215,488,219,432,180"/>
+</map>

@@ -1,0 +1,66 @@
+\doxysection{socket Struct Reference}
+\hypertarget{structsocket}{}\label{structsocket}\index{socket@{socket}}
+
+
+Définition de la structure de données socket.  
+
+
+
+
+{\ttfamily \#include $<$session.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structsocket_adce841ceca3a01158a71421e6b0dbd8a}{fd}}
+\item 
+int \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}}
+\item 
+struct sockaddr\+\_\+in \mbox{\hyperlink{structsocket_adf34762a764605679cf1221553d4083a}{addr\+Loc}}
+\item 
+struct sockaddr\+\_\+in \mbox{\hyperlink{structsocket_a1296e2dc21d5cb36deef2045f6431edf}{addr\+Dst}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Définition de la structure de données socket. 
+
+\begin{DoxyNote}{Note}
+Ce type est composé du fd de la socket, du mode (connecté/non) et des adresses applicatives (locale/distante) 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structsocket_a1296e2dc21d5cb36deef2045f6431edf}\label{structsocket_a1296e2dc21d5cb36deef2045f6431edf} 
+\index{socket@{socket}!addrDst@{addrDst}}
+\index{addrDst@{addrDst}!socket@{socket}}
+\doxysubsubsection{\texorpdfstring{addrDst}{addrDst}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+in socket\+::addr\+Dst}
+
+adresse distante de la socket ~\newline
+ \Hypertarget{structsocket_adf34762a764605679cf1221553d4083a}\label{structsocket_adf34762a764605679cf1221553d4083a} 
+\index{socket@{socket}!addrLoc@{addrLoc}}
+\index{addrLoc@{addrLoc}!socket@{socket}}
+\doxysubsubsection{\texorpdfstring{addrLoc}{addrLoc}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+in socket\+::addr\+Loc}
+
+adresse locale de la socket ~\newline
+ \Hypertarget{structsocket_adce841ceca3a01158a71421e6b0dbd8a}\label{structsocket_adce841ceca3a01158a71421e6b0dbd8a} 
+\index{socket@{socket}!fd@{fd}}
+\index{fd@{fd}!socket@{socket}}
+\doxysubsubsection{\texorpdfstring{fd}{fd}}
+{\footnotesize\ttfamily int socket\+::fd}
+
+numéro de la socket créée ~\newline
+ \Hypertarget{structsocket_a91c13966eecc710ac792e7349172e975}\label{structsocket_a91c13966eecc710ac792e7349172e975} 
+\index{socket@{socket}!mode@{mode}}
+\index{mode@{mode}!socket@{socket}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily int socket\+::mode}
+
+mode connecté/non \+: STREAM/\+DGRAM ~\newline
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{session_8h}{session.\+h}}\end{DoxyCompactItemize}

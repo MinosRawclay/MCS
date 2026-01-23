@@ -1,0 +1,139 @@
+.TH "data.h" 3 "LibInet" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+data.h \- Spécification de la couche Data Representation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'session\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_BUFFER\fP   1024"
+.br
+.RI "taille d'un buffer_t d'émission/réception "
+.ti -1c
+.RI "#define \fBCHECK\fP(sts,  msg)   if ((sts)==\-1) {perror(msg); exit(\-1);}"
+.br
+.RI "Macro-fonction qui vérifie que sts est égal -1 (cas d'erreur : sts==-1) En cas d'erreur, il y a affichage du message adéquat et fin d'exécution 
+.br
+ "
+.ti -1c
+.RI "#define \fBPAUSE\fP(msg)   printf('%s [Appuyez sur entrée pour continuer]', msg); getchar();"
+.br
+.RI "Macro-fonction qui affiche msg et attend une entrée clavier 
+.br
+ "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef char \fBbuffer_t\fP[\fBMAX_BUFFER\fP]"
+.br
+.RI "chaîne de caractères à émettre/recevoir "
+.ti -1c
+.RI "typedef void * \fBgeneric\fP"
+.br
+.RI "type de données générique : requêtes/réponses "
+.ti -1c
+.RI "typedef void(* \fBpFct\fP) (\fBgeneric\fP, \fBgeneric\fP)"
+.br
+.RI "pointer sur fonction générique à 2 parametres génériques "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBenvoyer\fP (\fBsocket_t\fP *sockEch, \fBgeneric\fP quoi, \fBpFct\fP serial,\&.\&.\&.)"
+.br
+.RI "Envoi d'une requête/réponse sur une socket\&. "
+.ti -1c
+.RI "void \fBrecevoir\fP (\fBsocket_t\fP *sockEch, \fBgeneric\fP quoi, \fBpFct\fP deSerial)"
+.br
+.RI "Réception d'une requête/réponse sur une socket\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Spécification de la couche Data Representation\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Samir El Khattabi 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+3 mars 2023 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+1\&.0 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void envoyer (\fBsocket_t\fP * sockEch, \fBgeneric\fP quoi, \fBpFct\fP serial,  \&.\&.\&.)"
+
+.PP
+Envoi d'une requête/réponse sur une socket\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour l'envoi 
+.br
+\fIquoi\fP : requête/réponse à serialiser avant l'envoi 
+.br
+\fIserial\fP : pointeur sur la fonction de serialisation d'une requête/réponse 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+si le paramètre serial vaut NULL alors quoi est une chaîne de caractères 
+.PP
+Si le mode est DGRAM, l'appel nécessite en plus l'adresse IP et le port\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre sockEch modifié pour le mode DGRAM 
+.RE
+.PP
+
+.SS "void recevoir (\fBsocket_t\fP * sockEch, \fBgeneric\fP quoi, \fBpFct\fP deSerial)"
+
+.PP
+Réception d'une requête/réponse sur une socket\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEch\fP : socket d'échange à utiliser pour la réception 
+.br
+\fIquoi\fP : requête/réponse reçue après dé-serialisation du buffer de réception 
+.br
+\fIdeSerial\fP : pointeur sur la fonction de dé-serialisation d'une requête/réponse 
+.RE
+.PP
+\fBNote\fP
+.RS 4
+si le paramètre deSerial vaut NULL alors quoi est une chaîne de caractères 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+paramètre quoi modifié avec le requête/réponse reçue paramètre sockEch modifié pour le mode DGRAM 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for LibInet from the source code\&.

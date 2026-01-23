@@ -1,0 +1,164 @@
+\doxysection{session.\+c File Reference}
+\hypertarget{session_8c}{}\label{session_8c}\index{session.c@{session.c}}
+
+
+Fonctions de la couche session.  
+
+
+{\ttfamily \#include "{}session.\+h"{}}\newline
+Include dependency graph for session.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{session_8c_ad3fe337408f16c132c895f2b59326410}\label{session_8c_ad3fe337408f16c132c895f2b59326410} 
+\#define {\bfseries CHECK}(sts,  msg)~if ((sts)==-\/1) \{perror(msg); exit(-\/1);\}
+\begin{DoxyCompactList}\small\item\em Macro-\/fonction qui vérifie que sts est égal -\/1 (cas d\textquotesingle{}erreur \+: sts==-\/1) En cas d\textquotesingle{}erreur, il y a affichage du message adéquat et fin d\textquotesingle{}exécution ~\newline
+ \end{DoxyCompactList}\item 
+\Hypertarget{session_8c_a04c10e619b22ff247ade9e18e9082fa0}\label{session_8c_a04c10e619b22ff247ade9e18e9082fa0} 
+\#define {\bfseries PAUSE}(msg)~printf("{}\%s \mbox{[}Appuyez sur entrée pour continuer\mbox{]}"{}, msg); getchar();
+\begin{DoxyCompactList}\small\item\em Macro-\/fonction qui affiche msg et attend une entrée clavier ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{session_8c_a33abe921a88df75673f623e49227139e}{adr2struct}} (struct sockaddr\+\_\+in \texorpdfstring{$\ast$}{*}addr, char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
+\begin{DoxyCompactList}\small\item\em Transformer une adresse au format humain en structure Socket\+BSD. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8c_afac73db40b85a0897ae36d9342188ab7}{creer\+Socket}} (int mode)
+\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. \end{DoxyCompactList}\item 
+\Hypertarget{session_8c_a47fafbd925dfc57ce690402c79e2c883}\label{session_8c_a47fafbd925dfc57ce690402c79e2c883} 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} {\bfseries creer\+Socket\+Addr} (int mode, char \texorpdfstring{$\ast$}{*}adr\+Ip, int port)
+\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8c_adf7b35a6e085a114fb06ec3208bf3c90}{creer\+Socket\+Ecoute}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
+\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket d\textquotesingle{}écoute avec l\textquotesingle{}adressage fourni en paramètre. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8c_a1bf8e2cd5daab300c5354e8efaf065c9}{accepter\+Clt}} (const \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sock\+Ecoute)
+\begin{DoxyCompactList}\small\item\em Acceptation d\textquotesingle{}une demande de connexion d\textquotesingle{}un client. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8c_a7f5e8ef98743c3001ba36b42a46f1561}{connecter\+Clt2\+Srv}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
+\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket d\textquotesingle{}appel et connexion au seveur dont l\textquotesingle{}adressage est fourni en paramètre. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fonctions de la couche session. 
+
+\begin{DoxyAuthor}{Author}
+Alexandre BREVIERE 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+6 janvier 2026 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{session_8c_a1bf8e2cd5daab300c5354e8efaf065c9}\label{session_8c_a1bf8e2cd5daab300c5354e8efaf065c9} 
+\index{session.c@{session.c}!accepterClt@{accepterClt}}
+\index{accepterClt@{accepterClt}!session.c@{session.c}}
+\doxysubsubsection{\texorpdfstring{accepterClt()}{accepterClt()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} accepter\+Clt (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sock\+Ecoute }\end{DoxyParamCaption})}
+
+
+
+Acceptation d\textquotesingle{}une demande de connexion d\textquotesingle{}un client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock\+Ecoute} & \+: socket d\textquotesingle{}écoute pour réception de la demande \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+socket (dialogue) connectée portpar le serveur avec un client 
+\end{DoxyReturn}
+\Hypertarget{session_8c_a33abe921a88df75673f623e49227139e}\label{session_8c_a33abe921a88df75673f623e49227139e} 
+\index{session.c@{session.c}!adr2struct@{adr2struct}}
+\index{adr2struct@{adr2struct}!session.c@{session.c}}
+\doxysubsubsection{\texorpdfstring{adr2struct()}{adr2struct()}}
+{\footnotesize\ttfamily void adr2struct (\begin{DoxyParamCaption}\item[{struct sockaddr\+\_\+in \texorpdfstring{$\ast$}{*}}]{addr,  }\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
+
+
+
+Transformer une adresse au format humain en structure Socket\+BSD. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & \+: structure d\textquotesingle{}adressage BSD d\textquotesingle{}une socket INET \\
+\hline
+{\em adr\+IP} & \+: adresse IP de la socket créée \\
+\hline
+{\em port} & \+: port de la socket créée \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Le domaine dépend du mode choisi (TCP/\+UDP) 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+paramètre \texorpdfstring{$\ast$}{*}adr modifié 
+\end{DoxyReturn}
+\Hypertarget{session_8c_a7f5e8ef98743c3001ba36b42a46f1561}\label{session_8c_a7f5e8ef98743c3001ba36b42a46f1561} 
+\index{session.c@{session.c}!connecterClt2Srv@{connecterClt2Srv}}
+\index{connecterClt2Srv@{connecterClt2Srv}!session.c@{session.c}}
+\doxysubsubsection{\texorpdfstring{connecterClt2Srv()}{connecterClt2Srv()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} connecter\+Clt2\+Srv (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
+
+
+
+Création d\textquotesingle{}une socket d\textquotesingle{}appel et connexion au seveur dont l\textquotesingle{}adressage est fourni en paramètre. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em adr\+IP} & \+: adresse IP du serveur à connecter \\
+\hline
+{\em port} & \+: port TCP du serveur à connecter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+socket connectée au serveur fourni en paramètre 
+\end{DoxyReturn}
+\Hypertarget{session_8c_afac73db40b85a0897ae36d9342188ab7}\label{session_8c_afac73db40b85a0897ae36d9342188ab7} 
+\index{session.c@{session.c}!creerSocket@{creerSocket}}
+\index{creerSocket@{creerSocket}!session.c@{session.c}}
+\doxysubsubsection{\texorpdfstring{creerSocket()}{creerSocket()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} creer\+Socket (\begin{DoxyParamCaption}\item[{int}]{mode }\end{DoxyParamCaption})}
+
+
+
+Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & \+: mode connecté (STREAM) ou non (DGRAM) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+socket créée selon le mode choisi 
+\end{DoxyReturn}
+\Hypertarget{session_8c_adf7b35a6e085a114fb06ec3208bf3c90}\label{session_8c_adf7b35a6e085a114fb06ec3208bf3c90} 
+\index{session.c@{session.c}!creerSocketEcoute@{creerSocketEcoute}}
+\index{creerSocketEcoute@{creerSocketEcoute}!session.c@{session.c}}
+\doxysubsubsection{\texorpdfstring{creerSocketEcoute()}{creerSocketEcoute()}}
+{\footnotesize\ttfamily creer\+Socket\+Ecoute (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
+
+
+
+Création d\textquotesingle{}une socket d\textquotesingle{}écoute avec l\textquotesingle{}adressage fourni en paramètre. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em adr\+IP} & \+: adresse IP du serveur à mettre en écoute \\
+\hline
+{\em port} & \+: port TCP du serveur à mettre en écoute \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+socket créée avec l\textquotesingle{}adressage fourni en paramètre et dans un état d\textquotesingle{}écoute 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Le domaine est nécessairement STREAM 
+\end{DoxyNote}

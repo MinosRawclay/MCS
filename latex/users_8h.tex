@@ -1,0 +1,242 @@
+\doxysection{include/users.h File Reference}
+\hypertarget{users_8h}{}\label{users_8h}\index{include/users.h@{include/users.h}}
+
+
+Spécification du gestionnaire d\textquotesingle{}utilisateurs et de leurs sessions.  
+
+
+{\ttfamily \#include "{}session.\+h"{}}\newline
+Include dependency graph for users.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{users_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structuser__t}{user\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Représente un utilisateur connecté ou enregistré \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structusers__t}{users\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Structure globale de gestion des utilisateurs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{users_8h_a2c2a303621f66761529e598758d7ef34}\label{users_8h_a2c2a303621f66761529e598758d7ef34} 
+\#define {\bfseries MAX\+\_\+\+USERS}~16
+\begin{DoxyCompactList}\small\item\em Nombre maximal de joueurs/utilisateurs autorisés. \end{DoxyCompactList}\item 
+\Hypertarget{users_8h_ac7c0207aa5a0e10d378be03b68041350}\label{users_8h_ac7c0207aa5a0e10d378be03b68041350} 
+\#define {\bfseries MAX\+\_\+\+NAME}~64
+\begin{DoxyCompactList}\small\item\em Taille maximale du nom d\textquotesingle{}un utilisateur (incluant le \textbackslash{}0) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}\label{users_8h_a6f16b4fd25762446eca133c6cb29b0e7} 
+typedef char {\bfseries name\+\_\+t}\mbox{[}\mbox{\hyperlink{users_8h_ac7c0207aa5a0e10d378be03b68041350}{MAX\+\_\+\+NAME}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Type pour le nom de l\textquotesingle{}utilisateur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{users_8h_ae34bfe8f2ae33fd6fb4295636b90ecd7}{afficher\+Users}} (char \texorpdfstring{$\ast$}{*}cde)
+\begin{DoxyCompactList}\small\item\em Affiche l\textquotesingle{}état actuel de la table des utilisateurs sur la sortie standard. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{users_8h_a4013c0def6984f01a5a43fb72212809f}{trouver\+User}} (\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}} nom)
+\begin{DoxyCompactList}\small\item\em Recherche un utilisateur par son nom. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{users_8h_a6f074a8e06bf64e74b35872dae63741c}{creer\+User}} (\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}} nom, \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}s\+Dial)
+\begin{DoxyCompactList}\small\item\em Ajoute un nouvel utilisateur à la table. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{users_8h_afb204a0b2021767e2673ed96dcf2e3a9}{identifier\+User}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}s\+Dial)
+\begin{DoxyCompactList}\small\item\em Gère la phase d\textquotesingle{}identification (lecture de la requête ID) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{users_8h_aa6942959e670e167a7da2f8421264600}{deconnecter\+User}} (int ind\+User)
+\begin{DoxyCompactList}\small\item\em Ferme la connexion d\textquotesingle{}un utilisateur et réinitialise ses paramètres. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{users_8h_a8f21e63ee6ec50bc38c9323fa6813cf9}{modifier\+Dest}} (int ind\+User, \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}} dest\+Name)
+\begin{DoxyCompactList}\small\item\em Définit l\textquotesingle{}interlocuteur d\textquotesingle{}un utilisateur. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{users_8h_a4a3c34408cc52a3fce38f005b41c219d}{indice\+Dest}} (int ind\+User)
+\begin{DoxyCompactList}\small\item\em Récupère l\textquotesingle{}index du destinataire d\textquotesingle{}un utilisateur. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{users_8h_a25dad20d785f93a629f6fc554f483140}{name\+User}} (int ind\+User)
+\begin{DoxyCompactList}\small\item\em Récupère le nom d\textquotesingle{}un utilisateur par son index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{users_8h_aca03269c785a082463a03c1368103193}{socket\+User}} (int ind\+User)
+\begin{DoxyCompactList}\small\item\em Récupère la socket associée à un utilisateur. \end{DoxyCompactList}\item 
+\Hypertarget{users_8h_af60ebf32fdc143e278cb6f77fea224f6}\label{users_8h_af60ebf32fdc143e278cb6f77fea224f6} 
+void {\bfseries lire\+Users} (void)
+\begin{DoxyCompactList}\small\item\em Charge la base des utilisateurs depuis le fichier "{}users.\+dat"{}. \end{DoxyCompactList}\item 
+\Hypertarget{users_8h_a54fde5d5e12ec9435e08140e8bd9e074}\label{users_8h_a54fde5d5e12ec9435e08140e8bd9e074} 
+void {\bfseries ecrire\+Users} (void)
+\begin{DoxyCompactList}\small\item\em Sauvegarde la base actuelle des utilisateurs dans le fichier "{}users.\+dat"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Spécification du gestionnaire d\textquotesingle{}utilisateurs et de leurs sessions. 
+
+\begin{DoxyAuthor}{Author}
+Samir El Khattabi 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+23 Janvier 2026 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{users_8h_ae34bfe8f2ae33fd6fb4295636b90ecd7}\label{users_8h_ae34bfe8f2ae33fd6fb4295636b90ecd7} 
+\index{users.h@{users.h}!afficherUsers@{afficherUsers}}
+\index{afficherUsers@{afficherUsers}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{afficherUsers()}{afficherUsers()}}
+{\footnotesize\ttfamily int afficher\+Users (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{cde }\end{DoxyParamCaption})}
+
+
+
+Affiche l\textquotesingle{}état actuel de la table des utilisateurs sur la sortie standard. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cde} & \+: Chaîne de caractères descriptive (contexte de l\textquotesingle{}appel) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}
+\Hypertarget{users_8h_a6f074a8e06bf64e74b35872dae63741c}\label{users_8h_a6f074a8e06bf64e74b35872dae63741c} 
+\index{users.h@{users.h}!creerUser@{creerUser}}
+\index{creerUser@{creerUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{creerUser()}{creerUser()}}
+{\footnotesize\ttfamily int creer\+User (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}}}]{nom,  }\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s\+Dial }\end{DoxyParamCaption})}
+
+
+
+Ajoute un nouvel utilisateur à la table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nom} & \+: Nom du nouvel utilisateur \\
+\hline
+{\em s\+Dial} & \+: Pointeur vers sa socket de dialogue \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}index du nouvel utilisateur, ou -\/1 si la table est pleine 
+\end{DoxyReturn}
+\Hypertarget{users_8h_aa6942959e670e167a7da2f8421264600}\label{users_8h_aa6942959e670e167a7da2f8421264600} 
+\index{users.h@{users.h}!deconnecterUser@{deconnecterUser}}
+\index{deconnecterUser@{deconnecterUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{deconnecterUser()}{deconnecterUser()}}
+{\footnotesize\ttfamily void deconnecter\+User (\begin{DoxyParamCaption}\item[{int}]{ind\+User }\end{DoxyParamCaption})}
+
+
+
+Ferme la connexion d\textquotesingle{}un utilisateur et réinitialise ses paramètres. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind\+User} & \+: Index de l\textquotesingle{}utilisateur à déconnecter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{users_8h_afb204a0b2021767e2673ed96dcf2e3a9}\label{users_8h_afb204a0b2021767e2673ed96dcf2e3a9} 
+\index{users.h@{users.h}!identifierUser@{identifierUser}}
+\index{identifierUser@{identifierUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{identifierUser()}{identifierUser()}}
+{\footnotesize\ttfamily int identifier\+User (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s\+Dial }\end{DoxyParamCaption})}
+
+
+
+Gère la phase d\textquotesingle{}identification (lecture de la requête ID) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Dial} & \+: Socket sur laquelle on attend l\textquotesingle{}identification \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}index de l\textquotesingle{}utilisateur identifié/créé, ou -\/1 en cas d\textquotesingle{}erreur 
+\end{DoxyReturn}
+\Hypertarget{users_8h_a4a3c34408cc52a3fce38f005b41c219d}\label{users_8h_a4a3c34408cc52a3fce38f005b41c219d} 
+\index{users.h@{users.h}!indiceDest@{indiceDest}}
+\index{indiceDest@{indiceDest}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{indiceDest()}{indiceDest()}}
+{\footnotesize\ttfamily int indice\+Dest (\begin{DoxyParamCaption}\item[{int}]{ind\+User }\end{DoxyParamCaption})}
+
+
+
+Récupère l\textquotesingle{}index du destinataire d\textquotesingle{}un utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind\+User} & \+: Index de l\textquotesingle{}utilisateur source \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index du destinataire (-\/1 si aucun) 
+\end{DoxyReturn}
+\Hypertarget{users_8h_a8f21e63ee6ec50bc38c9323fa6813cf9}\label{users_8h_a8f21e63ee6ec50bc38c9323fa6813cf9} 
+\index{users.h@{users.h}!modifierDest@{modifierDest}}
+\index{modifierDest@{modifierDest}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{modifierDest()}{modifierDest()}}
+{\footnotesize\ttfamily void modifier\+Dest (\begin{DoxyParamCaption}\item[{int}]{ind\+User,  }\item[{\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}}}]{dest\+Name }\end{DoxyParamCaption})}
+
+
+
+Définit l\textquotesingle{}interlocuteur d\textquotesingle{}un utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind\+User} & \+: Index de l\textquotesingle{}utilisateur source \\
+\hline
+{\em dest\+Name} & \+: Nom de l\textquotesingle{}utilisateur cible \\
+\hline
+\end{DoxyParams}
+\Hypertarget{users_8h_a25dad20d785f93a629f6fc554f483140}\label{users_8h_a25dad20d785f93a629f6fc554f483140} 
+\index{users.h@{users.h}!nameUser@{nameUser}}
+\index{nameUser@{nameUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{nameUser()}{nameUser()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} name\+User (\begin{DoxyParamCaption}\item[{int}]{ind\+User }\end{DoxyParamCaption})}
+
+
+
+Récupère le nom d\textquotesingle{}un utilisateur par son index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind\+User} & \+: Index de l\textquotesingle{}utilisateur \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointeur vers la chaîne de caractères du nom, ou NULL si index invalide 
+\end{DoxyReturn}
+\Hypertarget{users_8h_aca03269c785a082463a03c1368103193}\label{users_8h_aca03269c785a082463a03c1368103193} 
+\index{users.h@{users.h}!socketUser@{socketUser}}
+\index{socketUser@{socketUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{socketUser()}{socketUser()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*} socket\+User (\begin{DoxyParamCaption}\item[{int}]{ind\+User }\end{DoxyParamCaption})}
+
+
+
+Récupère la socket associée à un utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ind\+User} & \+: Index de l\textquotesingle{}utilisateur \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointeur vers la structure socket\+\_\+t, ou NULL si index invalide 
+\end{DoxyReturn}
+\Hypertarget{users_8h_a4013c0def6984f01a5a43fb72212809f}\label{users_8h_a4013c0def6984f01a5a43fb72212809f} 
+\index{users.h@{users.h}!trouverUser@{trouverUser}}
+\index{trouverUser@{trouverUser}!users.h@{users.h}}
+\doxysubsubsection{\texorpdfstring{trouverUser()}{trouverUser()}}
+{\footnotesize\ttfamily int trouver\+User (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}}}]{nom }\end{DoxyParamCaption})}
+
+
+
+Recherche un utilisateur par son nom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nom} & \+: Le nom de l\textquotesingle{}utilisateur recherché \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}index de l\textquotesingle{}utilisateur dans le tableau, ou -\/1 s\textquotesingle{}il n\textquotesingle{}existe pas 
+\end{DoxyReturn}

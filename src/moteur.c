@@ -59,8 +59,8 @@ const char *card_names[NB_CARD_DECK] = {
 bool addPlayer(players_t players, int *nbPlayer);
 void giveCard(players_t players, int playingPlayer);
 void givePli(players_t players, pli_t pli);
-bool askTakeAtout(int player);
-bool askTakeAtoutTurn2(int player, enum colorAtout *c);
+bool askTakeAtout(players_t players, int player);
+bool askTakeAtoutTurn2(players_t players, int player, enum colorAtout *c);
 
 //Card
 enum card dealCard(pileCard_t* pileDeck);
@@ -78,6 +78,7 @@ void secondDeal(pileCard_t* deck, players_t players,int* startPlayer,pli_t pli);
 void thirdDeal(pileCard_t* deck, players_t players,int* startPlayer, pli_t pli, int playerTakeAtout);
 bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorAtout * c);
 int nextPlayingPlayer(int* startPlayer, int nbNextPlayer);
+void turnNormal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorAtout * c);
 
 //Affichage
 void str_color(enum card card);
@@ -118,7 +119,7 @@ void givePli(players_t players, pli_t pli){
 }
 
 //TODO --> demander si tu veux accepter la carte du milieu
-bool askTakeAtout(int player){
+bool askTakeAtout(players_t players, int player){
     // if(player == 0){CLient INTERNE}
     printf("Tu prend l'atout T1 ? \n");
     printf("yes=1,no=0 :");
@@ -129,7 +130,7 @@ bool askTakeAtout(int player){
 }
 
 //TODO --> chose atout color
-bool askTakeAtoutTurn2(int player, enum colorAtout *c){
+bool askTakeAtoutTurn2(players_t players, int player, enum colorAtout *c){
     char color=0;
     char choice=0;
     printf("Tu prend l'atout T2 ? \n");
@@ -146,6 +147,15 @@ bool askTakeAtoutTurn2(int player, enum colorAtout *c){
     *c=color;
     printf("Color : %c\n",color);
     return true;
+}
+
+enum card askCard(players_t players, int player){
+    // if(player == 0){CLient INTERNE}
+    printf("Tu met quel card ? \n");
+    char choice;
+    scanf(" %c",&choice);
+    if(choice == '1') return true; 
+    return false;
 }
 
 // ==================== CARD ==============================================================
@@ -292,6 +302,8 @@ void initPile(pileCard_t **pile)
     }
 }
 
+
+
 // ==================== GAME ==============================================
 void firstDeal(pileCard_t* deck, players_t players, int * startPlayer, pli_t pli){
     int i=0;
@@ -365,6 +377,16 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
             return false;
     thirdDeal(deck,players,startPlayer,pli,p);
     return true;
+}
+
+void turnNormal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorAtout * c){
+    int i=0;
+    int playingPlayer=nextPlayingPlayer(startPlayer,i);
+    do
+    {
+          
+        i++;
+    } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
 }
 
 int nextPlayingPlayer(int* startPlayer, int nbNextPlayer){

@@ -57,8 +57,8 @@ const char *card_names[NB_CARD_DECK] = {
 // ==================== FONCTION DECLARATION ==============================================
 //Communication
 bool addPlayer(players_t players, int *nbPlayer);
-void giveCard(int player);
-void givePli();
+void giveCard(players_t players, int playingPlayer);
+void givePli(players_t players, pli_t pli);
 bool askTakeAtout(int player);
 bool askTakeAtoutTurn2(int player, enum colorAtout *c);
 
@@ -106,12 +106,14 @@ bool addPlayer(players_t players, int *nbPlayer){
 }
 
 //TODO --> transmet toutes les cartes du joueur au joueur
-void giveCard(int player){
+void giveCard(players_t players, int player){
     return;
 }
 
 //TODO --> transmett le pli au joueurs
-void givePli(){
+void givePli(players_t players, pli_t pli){
+    afficherPli(pli);
+    afficherPlayers(players);
     return;
 }
 
@@ -165,6 +167,7 @@ void resetCards(pileCard_t* pileDeck,pileCard_t* pileEq1,pileCard_t* pileEq2, pl
         pileDeck->deck[i]=i;
         pileDeck->lastcard = 0;
     }
+    pileDeck->lastcard = 0;
     for (int i = 0; i < PLAYERS_MAX; i++){
         for (int j = 0; j < NB_CARD_HAND; j++)
             {players[i]->cards[j]=NOTHING;}
@@ -295,15 +298,13 @@ void firstDeal(pileCard_t* deck, players_t players, int * startPlayer, pli_t pli
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     do
     {
-        printf("i:%d\n",i);
         players[playingPlayer]->cards[0]=dealCard(deck);
         players[playingPlayer]->cards[1]=dealCard(deck);
         players[playingPlayer]->cards[2]=dealCard(deck);
-        giveCard(playingPlayer);
+        giveCard(players, playingPlayer);
         i++;
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
-    pli[0]=dealCard(deck);
-    givePli();
+    givePli(players, pli);
 }
 
 int playerTurnAtout(int turn,int * startPlayer,enum colorAtout *c){
@@ -311,7 +312,6 @@ int playerTurnAtout(int turn,int * startPlayer,enum colorAtout *c){
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     do
     {
-        printf("player : %d\n",playingPlayer);
         if(turn == 1)
             {if(askTakeAtout(playingPlayer))return playingPlayer;}
         else
@@ -328,7 +328,7 @@ void secondDeal(pileCard_t* deck, players_t players,int* startPlayer,pli_t pli){
     {
         players[playingPlayer]->cards[3]=dealCard(deck);
         players[playingPlayer]->cards[4]=dealCard(deck);
-        giveCard(playingPlayer);  
+        giveCard(players, playingPlayer);  
         i++;
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
     pli[0]=dealCard(deck);
@@ -339,14 +339,14 @@ void thirdDeal(pileCard_t* deck, players_t players,int* startPlayer, pli_t pli, 
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     do
     {
-        if(*startPlayer==playerTakeAtout){
+        if(playingPlayer==playerTakeAtout){
             players[playingPlayer]->cards[5]=pli[0];
             pli[0]==NOTHING;
         }
         else players[playingPlayer]->cards[5]=dealCard(deck);
         players[playingPlayer]->cards[6]=dealCard(deck);
         players[playingPlayer]->cards[7]=dealCard(deck);
-        giveCard(playingPlayer); 
+        giveCard(players, playingPlayer); 
         i++;   
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
 }
@@ -355,37 +355,23 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
     int i=0;
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     int p;
-    printf("TEST1\n");
-    getc(stdin);
     resetCards(deck,pileEq1,pileEq2, players);
-    printf("TEST2\n");
-    getc(stdin);
+    cardShuffle(deck);
     firstDeal(deck,players,startPlayer,pli);
-    afficherPlayers(players);
-    printf("TEST1\n");
-    getc(stdin);
     secondDeal(deck,players,startPlayer,pli);
-    afficherPlayers(players);
-    printf("TEST1\n");
-    afficherPli(pli);
-    getc(stdin);
+    givePli(players,pli);
     if((p = playerTurnAtout(1,startPlayer,c))==-1)
         if((p = playerTurnAtout(2,startPlayer,c))==-1)
             return false;
-    printf("TEST1\n");
-    getc(stdin);
     thirdDeal(deck,players,startPlayer,pli,p);
-    afficherPlayers(players);
-    printf("TEST1\n");
-    getc(stdin);
-    afficherPlayers(players);
-    afficherDeck(deck);
     return true;
 }
 
 int nextPlayingPlayer(int* startPlayer, int nbNextPlayer){
     return (*startPlayer+nbNextPlayer)%PLAYERS_MAX;
 }
+
+
 
 // ==================== AFFICHAGE =========================================
 void str_color(enum card card){

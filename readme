@@ -1,1 +1,7 @@
 MSC project
+
+src         : Contient tous les fichiers sources (.c)
+bin         : Contient tous les fichiers exécutables
+include     : Contient tous les fichiers d'entête (.h)
+lib         : Contient toutes les librairies statiques (.a)
+

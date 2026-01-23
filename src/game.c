@@ -139,9 +139,10 @@ bool askTakeAtoutTurn2(int player, enum colorAtout *c){
     {
         printf("color (H,C,P,T) ? \n");
         scanf(" %c",&color);
-    } while (verifColor(color));
+    } while (!verifColor(color));
+    
     *c=color;
-    printf("FIN\n");
+    printf("Color : %c\n",color);
     return true;
 }
 
@@ -225,12 +226,8 @@ void cardShuffle(pileCard_t* pileDeck) {
 }
 
 bool verifColor(char color){
-    printf(" color  : %c\n",color);
     if(color == 'H' || color == 'C' || color == 'P' || color == 'T') {
-        printf("COULEUR OK\n");
         return true;}
-    printf("COULEUR BOUU\n");
-
     return false;
 }
 
@@ -300,8 +297,8 @@ void firstDeal(pileCard_t* deck, players_t players, int * startPlayer, pli_t pli
     {
         printf("i:%d\n",i);
         players[playingPlayer]->cards[0]=dealCard(deck);
-        players[playingPlayer]->cards[2]=dealCard(deck);
         players[playingPlayer]->cards[1]=dealCard(deck);
+        players[playingPlayer]->cards[2]=dealCard(deck);
         giveCard(playingPlayer);
         i++;
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
@@ -370,6 +367,7 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
     secondDeal(deck,players,startPlayer,pli);
     afficherPlayers(players);
     printf("TEST1\n");
+    afficherPli(pli);
     getc(stdin);
     if((p = playerTurnAtout(1,startPlayer,c))==-1)
         if((p = playerTurnAtout(2,startPlayer,c))==-1)

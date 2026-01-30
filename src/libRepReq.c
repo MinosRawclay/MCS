@@ -51,3 +51,29 @@ void traiterReq103(requete_t * req){
 void traiterRep(reponse_t * rep){
 		fprintf(stderr,REQ_STR_OUT"\n",rep->idRep,rep->verbRep,rep->optRep);
 }
+
+void traiterRegister(reponse_t * rep){
+	switch(rep->idRep){
+		case 300:
+		
+			break;
+
+		case 301:
+			break;
+
+		case 302:
+			break;
+
+		case 303:
+			break;
+
+		case 304:
+			break;
+
+		case 305:
+			break;
+
+		default:
+			break;
+	}
+}

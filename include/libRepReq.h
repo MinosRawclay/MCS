@@ -1,4 +1,5 @@
 #include "data.h"
+#include "users.h"
 
 //1 req2str(req,str)
 #define REQ_STR_OUT "%i:%s:%s" 

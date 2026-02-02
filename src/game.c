@@ -46,7 +46,7 @@ void client (char *adrIP, int port) {
 	sd = connecterClt2Srv (adrIP, port);
 
 	// Dialoguer avec le serveur
-	DialC(sd);
+	DialRegister(sd);
 
 }
 /**

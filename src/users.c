@@ -61,8 +61,8 @@ int identifierUser(socket_t *sDial) {
 	requete_t req;
 	int index = -1;
 	recevoir(sDial, &req, (pFct)str2req);
-	if (req.reqNum==ID)
-		if ((index=trouverUser(req.reqOpt))==-1) index=creerUser(req.reqOpt, sDial);
+	if (req.idReq==300)
+		if ((index=trouverUser(req.optReq))==-1) index=creerUser(req.optReq, sDial);
 		else { users.tab[index].sDial=sDial; users.tab[index].indDest==-1; }
 	if (index==-1) CHECK(close(sDial->fd),"--close()--");
 	//
@@ -108,5 +108,27 @@ void ecrireUsers(void) {
 	CHECK(fwrite(users.tab, sizeof(user_t), users.nbUsers, fp),"--fread()--");
 	CHECK(fclose(fp),"--fclose()--");	
 }
+
+
+
+
+
+//TODO
+void creerPartie(socket_t * sDial){
+	user_t host = users.tab[identifierUser(sDial)];
+	host.party.list[0] = &host;
+	host.party.nbJoueurs = 1;
+}
+
+int isFull(int idUser){
+	return users.tab[idUser].party.nbJoueurs >=4;
+}
+
+
+
+
+
+
+
 
 

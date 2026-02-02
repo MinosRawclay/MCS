@@ -1,0 +1,257 @@
+.TH "include/users.h" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs sessions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'session\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBuser_t\fP"
+.br
+.RI "Représente un utilisateur connecté ou enregistré "
+.ti -1c
+.RI "struct \fBusers_t\fP"
+.br
+.RI "Structure globale de gestion des utilisateurs\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_USERS\fP   16"
+.br
+.RI "Nombre maximal de joueurs/utilisateurs autorisés\&. "
+.ti -1c
+.RI "#define \fBMAX_NAME\fP   64"
+.br
+.RI "Taille maximale du nom d'un utilisateur (incluant le \\0) "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef char \fBname_t\fP[\fBMAX_NAME\fP]"
+.br
+.RI "Type pour le nom de l'utilisateur\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBafficherUsers\fP (char *cde)"
+.br
+.RI "Affiche l'état actuel de la table des utilisateurs sur la sortie standard\&. "
+.ti -1c
+.RI "int \fBtrouverUser\fP (\fBname_t\fP nom)"
+.br
+.RI "Recherche un utilisateur par son nom\&. "
+.ti -1c
+.RI "int \fBcreerUser\fP (\fBname_t\fP nom, \fBsocket_t\fP *sDial)"
+.br
+.RI "Ajoute un nouvel utilisateur à la table\&. "
+.ti -1c
+.RI "int \fBidentifierUser\fP (\fBsocket_t\fP *sDial)"
+.br
+.RI "Gère la phase d'identification (lecture de la requête ID) "
+.ti -1c
+.RI "void \fBdeconnecterUser\fP (int indUser)"
+.br
+.RI "Ferme la connexion d'un utilisateur et réinitialise ses paramètres\&. "
+.ti -1c
+.RI "void \fBmodifierDest\fP (int indUser, \fBname_t\fP destName)"
+.br
+.RI "Définit l'interlocuteur d'un utilisateur\&. "
+.ti -1c
+.RI "int \fBindiceDest\fP (int indUser)"
+.br
+.RI "Récupère l'index du destinataire d'un utilisateur\&. "
+.ti -1c
+.RI "char * \fBnameUser\fP (int indUser)"
+.br
+.RI "Récupère le nom d'un utilisateur par son index\&. "
+.ti -1c
+.RI "\fBsocket_t\fP * \fBsocketUser\fP (int indUser)"
+.br
+.RI "Récupère la socket associée à un utilisateur\&. "
+.ti -1c
+.RI "void \fBlireUsers\fP (void)"
+.br
+.RI "Charge la base des utilisateurs depuis le fichier 'users\&.dat'\&. "
+.ti -1c
+.RI "void \fBecrireUsers\fP (void)"
+.br
+.RI "Sauvegarde la base actuelle des utilisateurs dans le fichier 'users\&.dat'\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Spécification du gestionnaire d'utilisateurs et de leurs sessions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Samir El Khattabi 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+23 Janvier 2026 
+.RE
+.PP
+\fBVersion\fP
+.RS 4
+1\&.0 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int afficherUsers (char * cde)"
+
+.PP
+Affiche l'état actuel de la table des utilisateurs sur la sortie standard\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcde\fP : Chaîne de caractères descriptive (contexte de l'appel) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 
+.RE
+.PP
+
+.SS "int creerUser (\fBname_t\fP nom, \fBsocket_t\fP * sDial)"
+
+.PP
+Ajoute un nouvel utilisateur à la table\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInom\fP : Nom du nouvel utilisateur 
+.br
+\fIsDial\fP : Pointeur vers sa socket de dialogue 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+L'index du nouvel utilisateur, ou -1 si la table est pleine 
+.RE
+.PP
+
+.SS "void deconnecterUser (int indUser)"
+
+.PP
+Ferme la connexion d'un utilisateur et réinitialise ses paramètres\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP : Index de l'utilisateur à déconnecter 
+.RE
+.PP
+
+.SS "int identifierUser (\fBsocket_t\fP * sDial)"
+
+.PP
+Gère la phase d'identification (lecture de la requête ID) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsDial\fP : Socket sur laquelle on attend l'identification 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+L'index de l'utilisateur identifié/créé, ou -1 en cas d'erreur 
+.RE
+.PP
+
+.SS "int indiceDest (int indUser)"
+
+.PP
+Récupère l'index du destinataire d'un utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP : Index de l'utilisateur source 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Index du destinataire (-1 si aucun) 
+.RE
+.PP
+
+.SS "void modifierDest (int indUser, \fBname_t\fP destName)"
+
+.PP
+Définit l'interlocuteur d'un utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP : Index de l'utilisateur source 
+.br
+\fIdestName\fP : Nom de l'utilisateur cible 
+.RE
+.PP
+
+.SS "char * nameUser (int indUser)"
+
+.PP
+Récupère le nom d'un utilisateur par son index\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP : Index de l'utilisateur 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointeur vers la chaîne de caractères du nom, ou NULL si index invalide 
+.RE
+.PP
+
+.SS "\fBsocket_t\fP * socketUser (int indUser)"
+
+.PP
+Récupère la socket associée à un utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP : Index de l'utilisateur 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Pointeur vers la structure socket_t, ou NULL si index invalide 
+.RE
+.PP
+
+.SS "int trouverUser (\fBname_t\fP nom)"
+
+.PP
+Recherche un utilisateur par son nom\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInom\fP : Le nom de l'utilisateur recherché 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+L'index de l'utilisateur dans le tableau, ou -1 s'il n'existe pas 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

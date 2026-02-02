@@ -1,0 +1,5 @@
+<map id="user_t" name="user_t">
+<area shape="rect" id="Node000001" title="Représente un utilisateur connecté ou enregistré" alt="" coords="6,93,69,119"/>
+<area shape="rect" id="Node000002" href="$structsocket.html" title="Définition de la structure de données socket." alt="" coords="5,5,69,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,45,40,93,35,93,35,45"/>
+</map>

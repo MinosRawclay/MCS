@@ -1,4 +1,5 @@
 #include "data.h"
+#include "users.h"
 
 //1 req2str(req,str)
 #define REQ_STR_OUT "%i:%s:%s" 
@@ -38,3 +39,6 @@ void traiterRep(reponse_t * rep);
 
 void DialSrv(socket_t sockEcoute);
 void DialC(socket_t sd);
+
+
+requete_t traiterRegister(reponse_t * rep, socket_t * sDial);

@@ -11,6 +11,7 @@
 
 #include "session.h"
 
+
 /**
  *	\def		MAX_USERS
  *	\brief		Nombre maximal de joueurs/utilisateurs autorisés
@@ -23,6 +24,8 @@
  */
 #define MAX_NAME    64
 
+
+
 /*
  * S T R U C T U R E S   DE   D O N N E E S
  */
@@ -33,15 +36,30 @@
  */
 typedef char name_t[MAX_NAME];
 
+struct user_s;
+
+typedef struct user_s user_t;
+
+
+/**
+ *	\struct		party_t
+ *	\brief		Structure globale de gestion d'une party
+ */
+typedef struct {
+	user_t *list[4];	/**< Tableau des utilisateurs */
+	int nbJoueurs;			/**< Nombre actuel d'utilisateurs enregistrés */
+} party_t;
+
 /**
  *	\struct		user_t
  *	\brief		Représente un utilisateur connecté ou enregistré
  */
-typedef struct {
+struct user_s {
 	name_t name; 		/**< Nom de l'utilisateur */
 	socket_t *sDial;	/**< Pointeur vers la socket de dialogue active */
 	int indDest;		/**< Index de l'interlocuteur (ligne destinataire) */
-} user_t;
+	party_t party;
+} ;
 
 /**
  *	\struct		users_t
@@ -139,5 +157,8 @@ void lireUsers(void);
  *	\brief		Sauvegarde la base actuelle des utilisateurs dans le fichier "users.dat"
  */
 void ecrireUsers(void);
+
+void creerPartie(socket_t * sDial);
+int isFull(int idUser);
 
 #endif /* USERS_H */

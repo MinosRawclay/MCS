@@ -1,5 +1,5 @@
-\doxysection{session.\+h File Reference}
-\hypertarget{session_8h}{}\label{session_8h}\index{session.h@{session.h}}
+\doxysection{include/session.h File Reference}
+\hypertarget{session_8h}{}\label{session_8h}\index{include/session.h@{include/session.h}}
 
 
 Spécification de la couche Session.  
@@ -28,7 +28,7 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=247pt]{session_8h__dep__incl}
+\includegraphics[width=288pt]{session_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Classes}
@@ -51,7 +51,7 @@ void \mbox{\hyperlink{session_8h_a33abe921a88df75673f623e49227139e}{adr2struct}}
 \begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creer\+Socket\+Adr}} (int mode, char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
 \begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}{creer\+Socket\+Ecoute}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_adf7b35a6e085a114fb06ec3208bf3c90}{creer\+Socket\+Ecoute}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
 \begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket d\textquotesingle{}écoute avec l\textquotesingle{}adressage fourni en paramètre. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepter\+Clt}} (const \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sock\+Ecoute)
 \begin{DoxyCompactList}\small\item\em Acceptation d\textquotesingle{}une demande de connexion d\textquotesingle{}un client. \end{DoxyCompactList}\item 
@@ -177,11 +177,11 @@ Création d\textquotesingle{}une socket de type DGRAM/\+STREAM.
 \begin{DoxyReturn}{Returns}
 socket créée dans le domaine choisi avec l\textquotesingle{}adressage fourni 
 \end{DoxyReturn}
-\Hypertarget{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}\label{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976} 
+\Hypertarget{session_8h_adf7b35a6e085a114fb06ec3208bf3c90}\label{session_8h_adf7b35a6e085a114fb06ec3208bf3c90} 
 \index{session.h@{session.h}!creerSocketEcoute@{creerSocketEcoute}}
 \index{creerSocketEcoute@{creerSocketEcoute}!session.h@{session.h}}
 \doxysubsubsection{\texorpdfstring{creerSocketEcoute()}{creerSocketEcoute()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} creer\+Socket\+Ecoute (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily creer\+Socket\+Ecoute (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
 
 
 

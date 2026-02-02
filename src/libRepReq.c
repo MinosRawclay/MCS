@@ -51,3 +51,52 @@ void traiterReq103(requete_t * req){
 void traiterRep(reponse_t * rep){
 		fprintf(stderr,REQ_STR_OUT"\n",rep->idRep,rep->verbRep,rep->optRep);
 }
+
+requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
+	int index;
+	requete_t req;
+	switch(rep->idRep){
+		case 301:
+			index=trouverUser( rep->optRep);
+			if(index==-1)req.idReq = 3;
+			else req.idReq = 401;
+			break;
+
+		case 302:
+			deconnecterUser(identifierUser(sDial));
+			break;
+
+		case 303:
+			creerPartie(sDial); //TODO => Faire la fonction créer partie
+			req.idReq=401;
+			break;
+
+		case 304:
+			if(isFull(rep->optRep)){ //TODO => Faire la fonction isFull
+				req.idReq=2;
+			}
+			else{
+				modifierDest(identifierUser(sDial), rep->optRep);
+				req.idReq = 401;
+			}
+			break;
+
+		case 305:
+			for(int i = 0; i < MAX_USERS; i++){
+				if(!isFull(i)){
+					modifierDest(identifierUser(sDial),i );
+					req.idReq=401;
+					break;
+					req.idReq=402;
+					strcpy(req.optReq, "join aléatoire");
+				}
+			}
+			break;
+
+		default:
+			req.idReq = 402;
+			strcpy(req.optReq, "Demande inconnue");
+			break;
+	}
+	return req;
+}

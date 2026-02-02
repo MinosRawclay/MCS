@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['send_5fflags_0',['SEND_FLAGS',['../data_8c.html#aece47ec07b57208b50a570d1706bb3c1',1,'data.c']]],
-  ['session_2ec_1',['session.c',['../session_8c.html',1,'']]],
-  ['session_2eh_2',['session.h',['../session_8h.html',1,'']]],
-  ['socket_3',['socket',['../structsocket.html',1,'']]],
-  ['socket_5ft_4',['socket_t',['../session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416',1,'session.h']]]
+  ['name_0',['name',['../structuser__t.html#a0ef2da1eb4b58111c0c2505a9e9185e9',1,'user_t']]],
+  ['name_5ft_1',['name_t',['../users_8h.html#a6f16b4fd25762446eca133c6cb29b0e7',1,'users.h']]],
+  ['nameuser_2',['nameUser',['../users_8h.html#a25dad20d785f93a629f6fc554f483140',1,'users.h']]],
+  ['nbusers_3',['nbUsers',['../structusers__t.html#aa172715dd4d5a2a92ad672b3ace3a051',1,'users_t']]]
 ];

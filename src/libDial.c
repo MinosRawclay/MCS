@@ -53,3 +53,22 @@ void DialSrv(socket_t sockEcoute){
 		CHECK(close(sa.fd),"-- PB close() --");
 
 }
+
+void DialRegister(socket_t sd) {
+    requete_t req; 
+    reponse_t rep;
+    int nbOctets;
+
+    while(1) {
+
+        req.idReq = 201;
+        strcpy(req.verbReq, "Verb");
+		strcpy(req.optReq, "Opt");
+        envoyer(&sd,(generic)&req,(pFct)req2str);
+		recevoir(&sd,(generic)&rep,(pFct)str2rep);
+		traiterRep(&rep);
+    }
+
+    printf("Fermeture du dialogue.\n");
+    CHECK(shutdown(sd.fd, SHUT_WR), "-- PB shutdown() --");
+}

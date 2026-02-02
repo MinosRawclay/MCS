@@ -26,6 +26,46 @@ typedef struct reponse{
 } reponse_t;
 
 
+// Liste des codes de requêtes :
+typedef enum requeteList {
+	REQ_LANCER_PARTIE = 100,
+
+	// Fonctions de demande d'affichage :
+	REQ_ENVOYER_DECK = 110,
+	REQ_ENVOYER_PLI = 111,
+	REQ_ENVOYER_SCORE = 112,
+
+	// Fonctions de jeu :
+	REQ_JOUER = 120,
+	REQ_CARTE_LEGALE = 121,
+	REQ_CHOIX_ATOUT = 122,
+	REQ_CHOIX_ATOUT_COULEUR = 123,
+
+	// Liste des codes de réponses :
+
+	REP_ACK_ENVOYER_DECK = 210,
+	REP_ACK_ENVOYER_PLI = 211,
+	REP_ACK_ENVOYER_SCORE = 212,
+	REP_ENVOI_CARTE = 220,
+	REP_ACK_CARTE_LEGALE = 221,
+	REP_CHOIX_ATOUT = 222,
+	REP_CHOIX_ATOUT_COULEUR = 223,
+
+	// Liste des codes de communication :
+	COM_CONNECTER = 301,
+	COM_DECONNECTER = 302,
+	COM_CREER_PARTIE = 303,
+	COM_REJOINDRE_PARTIE = 304,
+	COM_REJOINDRE_ALEA = 305,
+
+	// Codes réponses communication :
+	REP_ACK_CONNECTER = 401,
+	REP_LIST_USERS = 403,
+
+
+} requeteList_t;
+
+
 // prototype des fonctions
 void req2str(const requete_t * req, char * str);
 void str2req(const char * str, requete_t * req);

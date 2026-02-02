@@ -117,6 +117,7 @@ void ecrireUsers(void) {
 void creerPartie(socket_t * sDial){
 	user_t host = users.tab[identifierUser(sDial)];
 	host.party.list[0] = &host;
+	host.party.nbJoueurs = 1;
 }
 
 int isFull(int idUser){

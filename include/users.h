@@ -24,17 +24,7 @@
  */
 #define MAX_NAME    64
 
-/**
- *	\def		IP_HOST
- *	\brief		IP du socket d écoute
- */
-#define IP_HOST  "192.168.0.1"
 
-/**
- *	\def		PORT
- *	\brief		Port du socket d ecoute
- */
-#define PORT    50000
 
 /*
  * S T R U C T U R E S   DE   D O N N E E S

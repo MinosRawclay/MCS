@@ -6,7 +6,7 @@ LIB_DIR = lib
 BIN_DIR = bin
 LDFLAGS = -L$(LIB_DIR) -lDial -lRepReq -lInet -lUsers
 
-all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a game gameClient gameServer
+all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a game gameClient gameServer socketEnregistrement
 
 # ----- Librairie statique -----
 $(LIB_DIR)/libInet.a: $(OBJ_DIR)/data.o $(OBJ_DIR)/session.o
@@ -36,6 +36,9 @@ gameClient: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DI
 
 gameServer: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
 	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS) -DSERVER
+
+socketEnregistrement: $(SRC_DIR)/socketEnregistrement.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
+	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
 
 # ----- Nettoyage -----
 clean:

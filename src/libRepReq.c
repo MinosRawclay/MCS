@@ -59,6 +59,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 		case 301:
 			index=trouverUser( rep->optRep);
 			if(index==-1)req.idReq = 3;
+			else req.idReq = 401;
 			break;
 
 		case 302:
@@ -67,6 +68,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 
 		case 303:
 			creerPartie(sDial); //TODO => Faire la fonction créer partie
+			req.idReq=401;
 			break;
 
 		case 304:
@@ -75,6 +77,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			}
 			else{
 				modifierDest(identifierUser(sDial), rep->optRep);
+				req.idReq = 401;
 			}
 			break;
 
@@ -82,13 +85,17 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			for(int i = 0; i < MAX_USERS; i++){
 				if(!isFull(i)){
 					modifierDest(identifierUser(sDial),i );
+					req.idReq=401;
 					break;
+					req.idReq=402;
+					strcpy(req.optReq, "join aléatoire");
 				}
 			}
 			break;
 
 		default:
-			req.idReq = -1;
+			req.idReq = 402;
+			strcpy(req.optReq, "Demande inconnue");
 			break;
 	}
 	return req;

@@ -84,6 +84,13 @@ void threadClient(void){
 }
 
 
+/**
+ *	\fn			void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t requestCode)
+ *	\brief		Attend une requête avec un certain code
+ *	\param 		sockEch : socket d'échange à utiliser pour la réception
+ *	\param 		request : requête modifiée par la fonction
+ *	\param 		requestCode : code de requête attendu
+ */
 void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t requestCode){
 
     request->idReq = -1;

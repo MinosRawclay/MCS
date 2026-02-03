@@ -190,6 +190,30 @@ int getValueAtoutCard(enum card card);
  */
 char* getNameCard(enum card card);
 
+/**
+ * @brief Gets the string representation of a card's value
+ * @param[in] card Card to get the value string of
+ * @return String representation of the card's value
+ */
+char* getValueCardString(enum card card);
+
+/**
+ * @brief Gets the string representation of a card's suit
+ * @param[in] color Suit to get the string of
+ * @return String representation of the suit
+ */
+char* getCouleurCardString(enum colorCard color);
+
+/**
+ * @brief Gets the ASCII color code for a card suit
+ * @param[in] color Suit to get the ASCII color for
+ * @return ASCII color code string
+ */
+char* getAsciiColor(enum colorCard color);
+
+
+
+
 // -------------------- Card Management Functions -----------------------------
 
 /**
@@ -294,6 +318,14 @@ enum card searchMaxCardInPli(pli_t pli, enum colorCard color, enum colorCard col
  * @return true if player's card beats the trick card, false otherwise
  */
 bool isOvercut(enum card maxPlayerCard, enum card maxPliCard, enum colorCard colorAtout, enum colorCard colorPli);
+
+/**
+ * @brief Removes a card from a player's hand and shifts remaining cards
+ * @param[in] players Array of player pointers
+ * @param[in] player Index of the player
+ * @param[in] card Card to remove
+ */
+void removeCardFromHand(players_t players, int player, enum card card);
 
 // -------------------- Game Flow Functions -----------------------------------
 
@@ -402,6 +434,19 @@ void game(players_t players);
  * @param[in] card Card whose suit determines the color
  */
 void str_color(enum card card);
+
+/**
+ * @brief Displays a single card in a formatted manner
+ * @param[in] card Card to display
+ */
+void afficher_carte(const enum card card);
+
+/**
+ * @brief Displays multiple cards side by side in a formatted manner
+ * @param[in] cards Array of cards to display
+ * @param[in] size Number of cards in the array
+ */
+void afficherCards(const enum card* cards, const int size);
 
 /**
  * @brief Displays all cards: deck and both teams' won piles

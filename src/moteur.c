@@ -8,6 +8,8 @@
  */
 #include "../include/moteur.h"
 
+#define MAX_LINE 1024
+
 // ==================== COMMUNICATION =====================================================
 
 /**
@@ -51,6 +53,8 @@ void okCard(players_t players, int player){
  * @todo Implement network communication to send cards
  */
 void giveCard(players_t players, int player){
+    printf("Player %d cards:\n", player);
+    afficherCards(players[player]->cards,NB_CARD_HAND);
     return;
 }
 
@@ -61,8 +65,7 @@ void giveCard(players_t players, int player){
  * @todo Implement network communication to broadcast trick
  */
 void givePli(players_t players, pli_t pli){
-    afficherPli(pli);
-    afficherPlayers(players);
+    afficherCards(pli,PLAYERS_MAX);
     return;
 }
 
@@ -75,7 +78,8 @@ void givePli(players_t players, pli_t pli){
  */
 bool askTakeAtout(players_t players, int player){
     // if(player == 0){CLient INTERNE}
-    printf("Tu prend l'atout T1 ? \n");
+    
+    printf("Player %d Tu prend l'atout T1 ? \n", player);
     printf("yes=1,no=0 :");
     char choice;
     scanf(" %c",&choice);
@@ -94,7 +98,7 @@ bool askTakeAtout(players_t players, int player){
 bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
     char color=0;
     char choice=0;
-    printf("Tu prend l'atout T2 ? \n");
+    printf("Player %d Tu prend l'atout T2 ? \n", player);
     printf("yes=1,no=0 :");
     scanf(" %c",&choice);
     
@@ -119,11 +123,14 @@ bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
  */
 enum card askCard(players_t players, int player){
     // if(player == 0){CLient INTERNE}
-    printf("Tu met quel card ? \n");
-    char choice;
-    scanf(" %c",&choice);
-    if(choice == '1') return true; 
-    return false;
+    printf("Player %d cards:\n", player);
+    afficherCards(players[player]->cards,NB_CARD_HAND);
+    printf("Player %d Tu met quel card ? \n", player);
+    int choice;
+    scanf(" %d",&choice);
+    printf("Choice : %d\n",choice);
+    if(choice >= 0 && choice < NB_CARD_HAND) return players[player]->cards[choice]; 
+    return NOTHING;
 }
 
 // ==================== VARIABLES =====================================================
@@ -156,6 +163,8 @@ int getValueAtoutCard(enum card card){
  * @return String representation of the card
  */
 char* getNameCard(enum card card){
+    if (card == NOTHING) return "NOTHING";
+    
     const char *CARD_NAMES[NB_CARD_DECK] = {
     "H_AS","H_7","H_8","H_9","H_10","H_V","H_D","H_R",
     "C_AS","C_7","C_8","C_9","C_10","C_V","C_D","C_R",
@@ -165,6 +174,46 @@ char* getNameCard(enum card card){
     return CARD_NAMES[card];
 }
 
+/**
+ * @brief Gets the string representation of a card's value
+ * @param[in] card Card to get the value string of
+ * @return String representation of the card's value
+ */
+char* getValueCardString(enum card card){
+    const char *VALUE_CARD_NAMES[9] = {
+    "AS","7","8","9","10","V","D","R",""
+    };
+    int numero = card % 8;
+    return VALUE_CARD_NAMES[numero];
+}
+
+/**
+ * @brief Gets the string representation of a card's suit
+ * @param[in] color Suit to get the string of
+ * @return String representation of the suit
+ */
+char* getCouleurCardString(enum colorCard color){
+    const char *COULEUR_CARD_NAMES[4] = {
+    "♥","♦","♠","♣"
+    };
+    return COULEUR_CARD_NAMES[color];
+}
+
+/**
+ * @brief Gets the ASCII color code for a card suit
+ * @param[in] color Suit to get the ASCII color for
+ * @return ASCII color code string
+ */
+char* getAsciiColor(enum colorCard color){
+    const char *ASCII_COLOR[5] = {
+    "\x1b[31m", // Hearts - Red
+    "\x1b[35m", // Diamonds - Magenta
+    "\x1b[33m", // Spades - Bleu
+    "\x1b[32m", // Clubs - Green
+    "\x1b[0m"   // Reset
+    };
+    return ASCII_COLOR[color];
+}
 
 // ==================== CARD ==============================================================
 
@@ -365,24 +414,9 @@ void initPile(pileCard_t **pile)
  *          - Partner winning allows any card
  */
 bool verifCard(players_t players, pli_t pli, int player, enum colorCard colorAtout, enum colorCard * colorPli, enum card card){
-    /*
-    Follow suit
-        If you have at least one card of the suit that was led, you must play that suit.
-    If you don't have the suit led
-        a) The suit led is trump
-            You must play a trump if you have one.
-            If a trump has already been played in the trick, you must overtrump (play a higher trump) if possible.
-        b) The suit led is NOT trump
-            If you have trump and your partner is not currently winning the trick:
-                You must play a trump (cut).
-                You must overtrump if possible.
-                If your partner is winning the trick:
-                You may play any card (discard).
-                You may also play a trump.
-    */
-    int flag = 0,flag2=0;
-    int i=0;
-    int nbCardPli=0;
+    int flag = 0, flag2 = 0;
+    int i = 0;
+    int nbCardPli = 0;
     enum card maxAtoutCard = NOTHING;
     enum card maxColorCard = NOTHING;
     enum card maxAtoutCardPli = NOTHING;
@@ -390,86 +424,170 @@ bool verifCard(players_t players, pli_t pli, int player, enum colorCard colorAto
     enum card maxCardPli = NOTHING;
     enum colorCard colorCard = card2Color(card);
 
-    // if card is in Player hand then ok
+    printf("[verifCard] === DEBUT verifCard ===\n");
+    printf("[verifCard] player=%d, card jouée=%s (color=%d), colorAtout=%d\n",
+           player, getNameCard(card), colorCard, colorAtout);
+
+    // Afficher la main du joueur
+    printf("[verifCard] Main du joueur %d : ", player);
+    for (int j = 0; j < NB_CARD_HAND; j++) {
+        if (players[player]->cards[j] == NOTHING) break;
+        printf("%s ", getNameCard(players[player]->cards[j]));
+    }
+    printf("\n");
+
+    // Afficher le pli actuel
+    printf("[verifCard] Pli actuel : ");
+    for (int j = 0; j < PLAYERS_MAX; j++) {
+        if (pli[j] == NOTHING) break;
+        printf("%s ", getNameCard(pli[j]));
+    }
+    printf("\n");
+
+    // Vérifier si la carte est dans la main
     for (i = 0; i < NB_CARD_HAND; i++)
     {
         if (players[player]->cards[i] == NOTHING) break;
         if(card == players[player]->cards[i]) flag = 1;
     }
-    if(flag == 0) return false;
-    flag=0;
-    i=0;
+    if(flag == 0) {
+        printf("[verifCard] ERREUR : carte %s PAS dans la main du joueur %d\n",
+               getNameCard(card), player);
+        return false;
+    }
+    flag = 0;
+    i = 0;
+    printf("[verifCard] OK : carte %s bien dans la main\n", getNameCard(card));
 
-    //if card is first in pli -> colorPli is now color of card. card is good
-    if (pli[0]==NOTHING){
+    // Premier joueur du pli
+    if (pli[0] == NOTHING){
         *colorPli = colorCard;
+        printf("[verifCard] Premier joueur du pli -> colorPli défini à %d\n", *colorPli);
+        printf("[verifCard] === RETOUR TRUE (première carte) ===\n");
         return true;
     }
+
     *colorPli = card2Color(pli[0]);
-    maxAtoutCard = searchMaxCardInHand(players,player,colorAtout,colorAtout);
-    maxColorCard = searchMaxCardInHand(players,player,*colorPli,colorAtout);
+    printf("[verifCard] colorPli (couleur demandée) = %d\n", *colorPli);
 
-    //if the player have the color in is hand he must play it
-    if(maxColorCard != NOTHING && card2Color(card) != *colorPli) return false;
+    maxAtoutCard = searchMaxCardInHand(players, player, colorAtout, colorAtout);
+    maxColorCard = searchMaxCardInHand(players, player, *colorPli, colorAtout);
+    printf("[verifCard] maxAtoutCard (meilleur atout en main) = %s\n", getNameCard(maxAtoutCard));
+    if (maxAtoutCard != NOTHING) printf("[verifCard] maxColorCard (meilleure carte couleur demandée en main) = %s\n", getNameCard(maxColorCard));
+    if (maxColorCard != NOTHING) printf("[verifCard] maxColorCard (meilleure carte couleur demandée en main) = %s\n", getNameCard(maxColorCard));
 
-    //Atout is asked
+    if (card2Color(card) == *colorPli )
+    {
+        printf("[verifCard] Le joueur suit la couleur demandée\n");
+        printf("[verifCard] === RETOUR TRUE (carte de la couleur demandée) ===\n");
+        return true;
+    }
+    // Le joueur a la couleur demandée -> il doit la jouer
+    if(maxColorCard != NOTHING && card2Color(card) != *colorPli) {
+        printf("[verifCard] REFUS : le joueur a la couleur demandée (%s) mais joue %s\n",
+               getNameCard(maxColorCard), getNameCard(card));
+        return false;
+    }
+    
+
+    // === CAS 1 : L'atout est demandé ===
     if (*colorPli == colorAtout)
     {
-        //if the player have the atout color in is hand he must play and overcome if possible
-        // the player have the atout color in is hand he must play it -> done before
-        maxAtoutCardPli = searchMaxCardInPli(pli,colorAtout,colorAtout);
-        if(isOvercut(card,maxCardPli,colorAtout,*colorPli))
+        printf("[verifCard] --- CAS : Atout est demandé ---\n");
+        maxAtoutCardPli = searchMaxCardInPli(pli, colorAtout, colorAtout);
+        printf("[verifCard] maxAtoutCardPli (meilleur atout dans le pli) = %s\n", getNameCard(maxAtoutCardPli));
+        printf("[verifCard] maxCardPli (utilisé pour isOvercut) = %s\n", getNameCard(maxCardPli));
+        // BUG POTENTIEL : maxCardPli n'est pas mis à jour ici avant isOvercut
+        // Il vaut encore NOTHING à ce point. Devrait être = maxAtoutCardPli ?
+
+        if(isOvercut(card, maxCardPli, colorAtout, *colorPli))
         {
-            printf("maxAtoutCard =%s, maxCardPli=%s, card=%s\n",getNameCard(maxAtoutCard),getNameCard(maxCardPli),getNameCard(card));
-            printf("overcut maxAtoutCard =%d, overcut card =%d\n",isOvercut(maxAtoutCard,maxAtoutCardPli,colorAtout,*colorPli),isOvercut(card,maxAtoutCardPli,colorAtout,*colorPli));
-            printf("He is overcutting\n");
+            printf("[verifCard] maxAtoutCard=%s, maxCardPli=%s, card=%s\n",
+                   getNameCard(maxAtoutCard), getNameCard(maxCardPli), getNameCard(card));
+            printf("[verifCard] isOvercut(maxAtoutCard, maxAtoutCardPli)=%d, isOvercut(card, maxAtoutCardPli)=%d\n",
+                   isOvercut(maxAtoutCard, maxAtoutCardPli, colorAtout, *colorPli),
+                   isOvercut(card, maxAtoutCardPli, colorAtout, *colorPli));
+            printf("[verifCard] === RETOUR TRUE (overcut atout demandé) ===\n");
             return true;
         }
-        if (isOvercut(maxAtoutCard,maxCardPli,colorAtout,*colorPli))
+        if (isOvercut(maxAtoutCard, maxCardPli, colorAtout, *colorPli))
         {
-            printf("He didn't overcut\n");
+            printf("[verifCard] REFUS : le joueur PEUT overcutter (maxAtoutCard=%s) mais ne le fait pas (card=%s)\n",
+                   getNameCard(maxAtoutCard), getNameCard(card));
+            printf("[verifCard] === RETOUR FALSE (pas d'overcut alors que possible) ===\n");
             return false;
         }
+        printf("[verifCard] Atout demandé : pas d'overcut possible, carte acceptée par défaut\n");
     }
-    else // atout isn't asked
+    // === CAS 2 : L'atout n'est PAS demandé ===
+    else
     {
+        printf("[verifCard] --- CAS : Atout PAS demandé ---\n");
+
         if(maxAtoutCard == NOTHING){
-            printf("the player don't have atout in is hand\n");
+            printf("[verifCard] Le joueur n'a pas d'atout en main\n");
+            printf("[verifCard] === RETOUR TRUE (pas d'atout disponible) ===\n");
             return true;
         }
 
-        //search number of card in the pli 
-        while (i < PLAYERS_MAX && pli[i] != NOTHING){i++;}
+        // Compter les cartes dans le pli
+        while (i < PLAYERS_MAX && pli[i] != NOTHING){ i++; }
         nbCardPli = i;
-        i=0;        
+        i = 0;
+        printf("[verifCard] Nombre de cartes dans le pli : %d\n", nbCardPli);
+        
 
-        //search in pli for the best card
-        maxAtoutCardPli = searchMaxCardInPli(pli,colorAtout,colorAtout);
-        maxColorCardPli = searchMaxCardInPli(pli,*colorPli,colorAtout);
+        // Chercher les meilleures cartes dans le pli
+        maxAtoutCardPli = searchMaxCardInPli(pli, colorAtout, colorAtout);
+       
+        maxColorCardPli = searchMaxCardInPli(pli, *colorPli, colorAtout);
+        
+        //printf("[verifCard] maxAtoutCardPli (meilleur atout dans le pli) = %s\n", getNameCard(maxAtoutCardPli));
+        //printf("[verifCard] maxColorCardPli (meilleure carte couleur dans le pli) = %s\n", getNameCard(maxColorCardPli));
+
         if (maxAtoutCardPli != NOTHING)
             maxCardPli = maxAtoutCardPli;
         else
             maxCardPli = maxColorCardPli;
-        //if your partner is wining the trick
-        if(nbCardPli>=2)
-            if (pli[nbCardPli-2]==maxCardPli)
-                return true;
+        printf("[verifCard] maxCardPli (meilleure carte globalement dans le pli) = %s\n", getNameCard(maxCardPli));
 
-        // if the player overcut
-        if(isOvercut(card,maxCardPli,colorAtout,*colorPli))
+        // Vérifier si le partenaire gagne le pli
+        if(nbCardPli >= 2) {
+            printf("[verifCard] Carte du partenaire (pli[%d]) = %s, maxCardPli = %s\n",
+                   nbCardPli - 2, getNameCard(pli[nbCardPli - 2]), getNameCard(maxCardPli));
+            if (pli[nbCardPli - 2] == maxCardPli) {
+                printf("[verifCard] Le partenaire gagne le pli -> toute carte autorisée\n");
+                printf("[verifCard] === RETOUR TRUE (partenaire gagne) ===\n");
+                return true;
+            }
+        }
+
+        // Vérifier si le joueur overcutte
+        printf("[verifCard] Vérifie isOvercut(card=%s, maxCardPli=%s)\n",
+               getNameCard(card), getNameCard(maxCardPli));
+        if(isOvercut(card, maxCardPli, colorAtout, *colorPli))
         {
-            printf("maxAtoutCard =%s, maxCardPli=%s, card=%s\n",getNameCard(maxAtoutCard),getNameCard(maxCardPli),getNameCard(card));
-            printf("overcut maxAtoutCard =%d, overcut card =%d\n",isOvercut(maxAtoutCard,maxAtoutCardPli,colorAtout,*colorPli),isOvercut(card,maxAtoutCardPli,colorAtout,*colorPli));
-            printf("He is overcutting\n");
+            printf("[verifCard] maxAtoutCard=%s, maxCardPli=%s, card=%s\n",
+                   getNameCard(maxAtoutCard), getNameCard(maxCardPli), getNameCard(card));
+            printf("[verifCard] isOvercut(maxAtoutCard, maxAtoutCardPli)=%d, isOvercut(card, maxAtoutCardPli)=%d\n",
+                   isOvercut(maxAtoutCard, maxAtoutCardPli, colorAtout, *colorPli),
+                   isOvercut(card, maxAtoutCardPli, colorAtout, *colorPli));
+            printf("[verifCard] === RETOUR TRUE (overcut réussi) ===\n");
             return true;
         }
-        // if the player can overcut but don't
-        if (isOvercut(maxAtoutCard,maxCardPli,colorAtout,*colorPli))
+        // Le joueur peut overcutter mais ne le fait pas
+        printf("[verifCard] Vérifie isOvercut(maxAtoutCard=%s, maxCardPli=%s)\n",
+               getNameCard(maxAtoutCard), getNameCard(maxCardPli));
+        if (isOvercut(maxAtoutCard, maxCardPli, colorAtout, *colorPli))
         {
-            printf("He didn't overcut\n");
+            printf("[verifCard] REFUS : le joueur PEUT overcutter (maxAtoutCard=%s) mais joue %s\n",
+                   getNameCard(maxAtoutCard), getNameCard(card));
+            printf("[verifCard] === RETOUR FALSE (pas d'overcut alors que possible) ===\n");
             return false;
         }
+        printf("[verifCard] Pas d'overcut possible, carte acceptée par défaut\n");
     }
+    printf("[verifCard] === RETOUR TRUE (fin de fonction) ===\n");
     return true;
 }
 
@@ -575,6 +693,28 @@ enum colorCard card2Color(enum card card){
     return card/8;
 }
 
+/**
+ * @brief Removes a card from a player's hand and shifts remaining cards
+ * @param[in] players Array of player pointers
+ * @param[in] player Index of the player
+ * @param[in] card Card to remove
+ */
+void removeCardFromHand(players_t players, int player, enum card card){
+    bool flag = false;
+
+    for (int i = 0; i < NB_CARD_HAND; i++)
+    {
+        if(flag){
+            players[player]->cards[i-1]=players[player]->cards[i];
+            players[player]->cards[i]=NOTHING;
+        }
+        if (players[player]->cards[i] == card){
+            players[player]->cards[i]=NOTHING;
+            flag = true;
+        }
+    }
+}
+
 // ==================== GAME ==============================================
 
 /**
@@ -663,6 +803,7 @@ void thirdDeal(pileCard_t* deck, players_t players,int* startPlayer, pli_t pli, 
         giveCard(players, playingPlayer); 
         i++;   
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
+    pli[0]=NOTHING;
 }
 
 /**
@@ -688,6 +829,8 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
     if((p = playerTurnAtout(players,1,startPlayer,c))==-1)
         if((p = playerTurnAtout(players,2,startPlayer,c))==-1)
             return false;
+    *c=card2Color(pli[0]);
+    printf("Player %d took the atout of color %d\n",p,*c);
     thirdDeal(deck,players,startPlayer,pli,p);
     return true;
 }
@@ -705,13 +848,21 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
 void turnNormal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorCard * c){
     int i=0;
     enum card card=NOTHING;
+    enum colorCard * colorPli;
+    *colorPli=NONE;
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     do
     {
+        printf("\n[turnNormal] Joueur %d joue son tour\n", playingPlayer);
+        printf("colorAtout=%d\n",*c);
         do
         {
             card = askCard(players, playingPlayer);
-        } while (verifCard(players, pli, playingPlayer, *c, c, card) == false);
+            printf("Player %d played card %s\n",playingPlayer,getNameCard(card));
+            printf("colorAtout=%d\n",*c);
+        } while (verifCard(players, pli, playingPlayer, *c, colorPli, card) == false);
+        printf("colorAtout=%d\n",*c);
+        removeCardFromHand(players, playingPlayer, card);
         okCard(players, playingPlayer);
         pli[i]=card;
         givePli(players, pli);
@@ -766,9 +917,11 @@ int nextPlayingPlayer(int* startPlayer, int nbNextPlayer){
 bool manche(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorCard * c, int* scoreEq1, int* scoreEq2){
     if(turnDeal( deck, pileEq1, pileEq2, players, startPlayer, pli, c)==false)
         return false;
-
-    for(int i =0; i < NB_CARD_DECK/NB_CARD_HAND; i++)
+    printf("Atout is of color %d\n",*c);
+    for(int i =0; i < NB_CARD_HAND; i++){
+        printf("\n\n\n--- Tour de jeu %d ---\n",i+1);
         turnNormal( deck, pileEq1, pileEq2, players, startPlayer, pli, c);
+    }
 
     *scoreEq1 += point_of_gain(pileEq1,pileEq2,EQUIPE1,*c);
     *scoreEq2 += point_of_gain(pileEq1,pileEq2,EQUIPE2,*c);
@@ -804,8 +957,6 @@ void game(players_t players){
     }
 }
 
-
-
 // ==================== AFFICHAGE =========================================
 
 /**
@@ -832,6 +983,76 @@ void str_color(enum card card){
     
     default:
         break;
+    }
+}
+
+/**
+ * @brief Displays a single card in a formatted manner
+ * @param[in] card Card to display
+ */
+void afficher_carte(const enum card card) {
+    printf("┌─────────┐\n");
+    printf("│ %-2s      │\n", getValueCardString(card));
+    printf("│         │\n");
+    printf("│    %s    │\n", getCouleurCardString(card2Color(card)));
+    printf("│         │\n");
+    printf("│      %-2s │\n", getValueCardString(card));
+    printf("└─────────┘\n");
+}
+
+/**
+ * @brief Displays multiple cards side by side in a formatted manner
+ * @param[in] cards Array of cards to display
+ * @param[in] size Number of cards in the array
+ */
+void afficherCards(const enum card* cards, const int size)
+{
+    char l1[MAX_LINE], l2[MAX_LINE], l3[MAX_LINE];
+    char l4[MAX_LINE], l5[MAX_LINE], l6[MAX_LINE], l7[MAX_LINE];
+    char color[10];
+
+    for (int i = 0; i < (size + 7) / 8; i++) {
+        l1[0]=l2[0]=l3[0]=l4[0]=l5[0]=l6[0]=l7[0]='\0';
+        color[0]='\0';
+        for (int j = 0; j < 8; j++) {
+            int idx = i * 8 + j;
+            if (idx >= size) break;
+            if(cards[idx]==NOTHING){
+                strcat(l1, "           ");
+                strcat(l2, "           ");
+                strcat(l3, "           ");
+                strcat(l4, "           ");
+                strcat(l5, "           ");
+                strcat(l6, "           ");
+                strcat(l7, "           ");
+                continue;
+            }
+            strcpy(color, getAsciiColor(card2Color(cards[idx])));
+            strcat(l1, color);strcat(l2, color);strcat(l3, color);
+            strcat(l4, color);strcat(l5, color);strcat(l6, color);strcat(l7, color);
+            
+            strcat(l1, "┌─────────┐ ");
+            strcat(l2, "│ ");
+            strcat(l2, getValueCardString(cards[idx]));
+            if (cards[idx]%8 != 0 && cards[idx]%8 != 4) strcat(l2," ");
+            strcat(l2, "      │ ");
+            strcat(l3, "│         │ ");
+            strcat(l4, "│    ");
+            strcat(l4, getCouleurCardString(card2Color(cards[idx])));
+            strcat(l4, "    │ ");
+            strcat(l5, "│         │ ");
+            strcat(l6, "│      ");
+            strcat(l6, getValueCardString(cards[idx]));
+            if (cards[idx]%8 != 0 && cards[idx]%8 != 4) strcat(l6," ");
+            strcat(l6, " │ ");
+            strcat(l7, "└─────────┘ ");
+
+            strcat(l1, "\x1b[0m");strcat(l2, "\x1b[0m");strcat(l3, "\x1b[0m");
+            strcat(l4, "\x1b[0m");strcat(l5, "\x1b[0m");strcat(l6, "\x1b[0m");strcat(l7, "\x1b[0m");
+        }
+
+        printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
+               l1,l2,l3,l4,l5,l6,l7);
     }
 }
 
@@ -965,8 +1186,11 @@ int main(int argc, char const *argv[])
     initPile(&deck);
     //turnDeal(deck,gain_Eq1,gain_Eq2,players,&startPlayer,pli,&colorAtout);
     
-    
+    enum card* cards;
+    cards = malloc(sizeof(enum card)*15);
+    printf("Appuyez sur une touche pour continuer...\n");
+    fgetc(stdin);
+    game(players);
 
     return 0;
-
 }

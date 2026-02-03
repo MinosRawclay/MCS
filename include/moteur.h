@@ -14,9 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-
-#include "../include/libRepReq.h"
-
+#include "data.h"
 
 // ==================== CONSTANTS =============================================
 
@@ -89,7 +87,7 @@ typedef struct player {
     int num;                    ///< Player number (0-3)
     enum state s;               ///< Current player state
     int cards[NB_CARD_HAND];    ///< Cards in player's hand
-    socket_t* sock;              ///< Socket for player communication
+    socket_t* sock;             ///< Socket for network communication (NULL for local player)
 } player_t;
 
 /**

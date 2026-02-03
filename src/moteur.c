@@ -7,6 +7,7 @@
  * @date 02/02/2026
  */
 #include "../include/moteur.h"
+#include "../include/libRepReq.h"
 
 #define MAX_LINE 1024
 
@@ -27,6 +28,7 @@ bool addPlayer(players_t players, int *nbPlayer){
     }
     players[*nbPlayer]->num=*nbPlayer;
     players[*nbPlayer]->s = FINISH;
+    players[*nbPlayer]->sock = NULL;  // Initialiser la socket à NULL
     for (int i = 0; i < NB_CARD_HAND; i++)
     {
         players[*nbPlayer]->cards[i]=NOTHING;
@@ -35,12 +37,6 @@ bool addPlayer(players_t players, int *nbPlayer){
     return true;
 }
 
-/**
- * @brief Confirms to the player that their card is valid
- * @param[in] players Array of player pointers
- * @param[in] player Index of the player to notify
- * @todo Implement network communication to send confirmation
- */
 /**
  * @brief Confirms to the player that their card is valid
  * @param[in] players Array of player pointers
@@ -63,19 +59,32 @@ void okCard(players_t players, int player){
     // Attendre l'accusé de réception
     reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    if (players[player]->sock == NULL) {
+        // Joueur local : pas besoin d'envoyer de confirmation
+        return;
+    }
+    
+    // Joueur distant : envoyer confirmation
+    requete_t req;
+    req.idReq = 121;  // REQ_OK_CARD
+    strcpy(req.verbReq, "OkCard");
+    strcpy(req.optReq, "OK");
+    
+    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
+    
+    // Attendre l'accusé de réception
+    reponse_t rep;
+    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
 }
 
 /**
  * @brief Sends all cards in hand to the player
  * @param[in] players Array of player pointers
  * @param[in] player Index of the player to send cards to
- * @todo Implement network communication to send cards
  */
 void giveCard(players_t players, int player){
     if (players[player]->sock == NULL) {
         // Joueur local : pas besoin d'envoyer
-        printf("Player %d cards:\n", player);
-        afficherCards(players[player]->cards,NB_CARD_HAND);
         return;
     }
     
@@ -101,13 +110,15 @@ void giveCard(players_t players, int player){
     // Attendre l'accusé de réception
     reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    printf("Player %d cards:\n", player);
+    afficherCards(players[player]->cards,NB_CARD_HAND);
+    return;
 }
 
 /**
  * @brief Sends the current trick to all players for display
  * @param[in] players Array of player pointers
  * @param[in] pli Current trick (4 cards)
- * @todo Implement network communication to broadcast trick
  */
 void givePli(players_t players, pli_t pli){
     // Afficher pour le joueur local
@@ -140,6 +151,8 @@ void givePli(players_t players, pli_t pli){
             recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
         }
     }
+    afficherCards(pli,PLAYERS_MAX);
+    return;
 }
 
 /**
@@ -147,10 +160,8 @@ void givePli(players_t players, pli_t pli){
  * @param[in] players Array of player pointers
  * @param[in] player Index of the player being asked
  * @return true if player accepts, false otherwise
- * @todo Implement network communication for remote players
  */
 bool askTakeAtout(players_t players, int player){
-    // if(player == 0){CLient INTERNE}
     if (players[player]->sock == NULL) {
         // Joueur local
         printf("Tu prends l'atout ? (1=oui, 0=non) : ");
@@ -171,6 +182,14 @@ bool askTakeAtout(players_t players, int player){
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
     
     return (strcmp(rep.optRep, "1") == 0);
+    // if(player == 0){CLient INTERNE}
+    
+    printf("Player %d Tu prend l'atout T1 ? \n", player);
+    printf("yes=1,no=0 :");
+    char choice;
+    scanf(" %c",&choice);
+    if(choice == '1') return true; 
+    return false;
 }
 
 /**
@@ -179,9 +198,51 @@ bool askTakeAtout(players_t players, int player){
  * @param[in] player Index of the player being asked
  * @param[out] c Chosen trump suit (if player accepts)
  * @return true if player accepts and chooses a suit, false otherwise
- * @todo Implement network communication for remote players
  */
 bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
+    if (players[player]->sock == NULL) {
+        // Joueur local
+        char color = 0;
+        char choice = 0;
+        printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
+        scanf(" %c", &choice);
+        
+        if (choice == '0') return false;
+        
+        do {
+            printf("Quelle couleur (H/C/P/T) : ");
+            scanf(" %c", &color);
+        } while (!verifColor(color));
+        
+        *c = color;
+        printf("Couleur choisie : %c\n", color);
+        return true;
+    }
+    
+    // Joueur distant
+    requete_t req;
+    req.idReq = 312;  // REQ_ASK_ATOUT_T2
+    strcpy(req.verbReq, "AskAtoutT2");
+    strcpy(req.optReq, "");
+    
+    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
+    
+    reponse_t rep;
+    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    
+    // Format réponse: "0" (refus) ou "1|H" (accepte + couleur)
+    if (strcmp(rep.optRep, "0") == 0) {
+        return false;
+    }
+    
+    // Parser "1|H" pour extraire la couleur
+    char* separator = strchr(rep.optRep, '|');
+    if (separator != NULL) {
+        *c = *(separator + 1);  // Caractère après le |
+        return true;
+    }
+    
+    return false;
     char color=0;
     char choice=0;
     printf("Player %d Tu prend l'atout T2 ? \n", player);
@@ -248,18 +309,15 @@ bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
  * @param[in] players Array of player pointers
  * @param[in] player Index of the player being asked
  * @return The card chosen by the player
- * @todo Implement proper card selection logic
  */
-enum card askCard(players_t players, int player){    
+enum card askCard(players_t players, int player){
     if (players[player]->sock == NULL) {
         // Joueur local - logique simple
         printf("Tu mets quelle carte ? \n");
-        int choice;
-        scanf(" %d",&choice);
-        printf("Choice : %d\n",choice);
-        if(choice >= 0 && choice < NB_CARD_HAND) return players[player]->cards[choice]; 
+        char choice;
+        scanf(" %c", &choice);
+        if(choice == '1') return H_AS;  // TODO: logique à améliorer
         return NOTHING;
-
     }
     
     // Joueur distant
@@ -279,6 +337,15 @@ enum card askCard(players_t players, int player){
         return c;
     }
     
+    return NOTHING;
+    // if(player == 0){CLient INTERNE}
+    printf("Player %d cards:\n", player);
+    afficherCards(players[player]->cards,NB_CARD_HAND);
+    printf("Player %d Tu met quel card ? \n", player);
+    int choice;
+    scanf(" %d",&choice);
+    printf("Choice : %d\n",choice);
+    if(choice >= 0 && choice < NB_CARD_HAND) return players[player]->cards[choice]; 
     return NOTHING;
 }
 

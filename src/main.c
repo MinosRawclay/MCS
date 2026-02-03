@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "libRepReq.h"
+#include "moteur.h"
 
 // déclarations des constantes
 #define IP_SERVEUR_ENREGISTREMENT "127.0.0.1"
@@ -10,39 +14,107 @@ int main () {
     char nomUtilisateur[50];
     int choix;
     socket_t sdSE;
+    socket_t se;
     requete_t req;
     reponse_t rep;
+    players_t players;
+    socket_t playerSocks[3];
 
-    // initialisation de la connexion au serveur d'enregistrement
+    // initialisation de la connexion au serveur d'enregistrem
     sdSE = connecterClt2Srv(IP_SERVEUR_ENREGISTREMENT, PORT_SERVEUR_ENREGISTREMENT);
+    se = creerSocketEcoute("0.0.0.0", 6000);
 
     // Connexion au Serveur d'Enregistrement
     while(connexionToSE(&sdSE, nomUtilisateur) != 0);
 
     // affichage du menu et traitement du choix
-    afficherMenu();
-    choix = choisir();
-    switch(choix) {
-        case 1:
-            // creation du nouvelle partie et mise en place des threads necessaires
-            req.idReq = 303;
-            strcpy(req.verbReq, "CreerPartie");
-            strcpy(req.optReq, nomUtilisateur);
-            envoyer(&sdSE, (generic)&req, (pFct) req2str);
-            break;
-        case 2:
-            printf("Rejoindre la partie d'un utilisateur\n");
-            // recherche de la partie de l'utilisateur et connexion
-            demanderAffichagePartiesUtilisateur();
-            break;
-        case 3:
-            printf("Rejoindre une partie aleatoire\n");
-            break;
-        case 4:
-            printf("Quitter\n");
-            break;
-        default:
-            printf("Demande non traitée, réessayez\n");
+    while(1) {
+        afficherMenu();
+        choix = choisir();
+        switch(choix) {
+            case 1:
+                // creation d'une nouvelle partie
+                if(creerPartieSe(&sdSE, nomUtilisateur) == 0) {
+                    printf("Partie créée avec succès !\n");
+                    printf("En attente de joueurs pour rejoindre la partie...\n");
+                    
+                    // Initialiser le tableau des joueurs
+                    int nbPlayers = 0;
+                    
+                    // Ajouter le serveur comme joueur 0
+                    if (!addPlayer(players, &nbPlayers)) {
+                        printf("Erreur lors de l'initialisation du serveur comme joueur\n");
+                        break;
+                    }
+                    players[0]->sock = NULL;  // Le serveur est un joueur local (pas de socket)
+                    printf("Vous êtes le joueur 1 (serveur)\n");
+                    
+                    // Attendre que 3 joueurs se connectent
+                    for(int i = 0; i < 3; i++) {
+                        printf("En attente du joueur %d...\n", i + 2);
+                        
+                        // Accepter la connexion d'un client
+                        playerSocks[i] = accepterClt(se);
+                        
+                        // Ajouter ce joueur à la structure
+                        if (!addPlayer(players, &nbPlayers)) {
+                            printf("Erreur lors de l'ajout du joueur %d\n", i + 2);
+                            break;
+                        }
+                        
+                        // Assigner la socket au joueur distant
+                        players[nbPlayers - 1]->sock = &playerSocks[i];
+                        
+                        printf("Joueur %d connecté ! (%d/4)\n", i + 2, nbPlayers);
+                    }
+                    
+                    // Vérifier que tous les joueurs sont bien là
+                    if (nbPlayers == PLAYERS_MAX) {
+                        printf("\n=== Tous les joueurs sont connectés ===\n");
+                        printf("Démarrage de la partie de Belote...\n\n");
+                        
+                        // LANCER LE MOTEUR DE JEU
+                        game(players);
+                        
+                        printf("\n=== Partie terminée ===\n");
+                        
+                        // Nettoyage : fermer les connexions avec les clients
+                        for(int i = 1; i < PLAYERS_MAX; i++) {
+                            if (players[i] != NULL && players[i]->sock != NULL) {
+                                close(players[i]->sock->fd);
+                            }
+                        }
+                        
+                        // Libérer la mémoire des joueurs
+                        for(int i = 0; i < PLAYERS_MAX; i++) {
+                            if (players[i] != NULL) {
+                                free(players[i]);
+                                players[i] = NULL;
+                            }
+                        }
+                    } else {
+                        printf("Erreur : impossible de démarrer la partie (joueurs manquants)\n");
+                    }
+                }
+                else {
+                    printf("Erreur lors de la création de la partie\n");
+                }
+                break;
+            case 2:
+                printf("Rejoindre la partie d'un utilisateur\n");
+                // recherche de la partie de l'utilisateur et connexion
+                demanderAffichagePartiesUtilisateur();
+                break;
+            case 3:
+                printf("Rejoindre une partie aleatoire\n");
+                break;
+            case 4:
+                printf("A la prochaine !\n");
+                exit(0);
+                break;
+            default:
+                printf("Demande non traitée, réessayez\n");
+        }
     }
 }
 
@@ -60,8 +132,6 @@ int choisir () {
     scanf("%d", &choix);
     return choix;
 }
-
-
 
 int connexionToSE (socket_t *sdSE, char * nomUtilisateur) {
 
@@ -93,6 +163,32 @@ int connexionToSE (socket_t *sdSE, char * nomUtilisateur) {
     }
 }
 
-int creerPartieSE (socket_t *sdSE, char * nomUtilisateur) {
-    // à implémenter
+int creerPartieSe (socket_t *sdSE, char * nomUtilisateur) {
+    requete_t req;
+    reponse_t rep;
+
+    // montage de la requête
+    req.idReq = 303;
+    strcpy(req.verbReq, "CreerPartie");
+    strcpy(req.optReq, nomUtilisateur);
+
+    // envoie de la requête
+    envoyer(sdSE, (generic)&req, (pFct) req2str);
+
+    // traitement de la réponse du serveur
+    recevoir(sdSE, (generic)&rep, (pFct) str2rep);
+
+    if (rep.idRep == 401) {
+        printf("Partie créée avec succès !\n");
+        return 0;
+    }
+    else {
+        printf("Erreur lors de la création de la partie\n");
+        return -1;
+    }
+}
+
+void demanderAffichagePartiesUtilisateur () {
+    printf("Fonctionnalité non encore implémentée\n");
+    return;
 }

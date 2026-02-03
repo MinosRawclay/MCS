@@ -10,41 +10,41 @@
 #include "../include/session.h"
 
 
-// DANS MOTEUR.H :
+// // DANS MOTEUR.H :
 
-// Pas terminée
-void showCard(enum card c){
+// // Pas terminée
+// void showCard(enum card c){
 
-    const char colorSymbols[4] = {'♥', '⯁', '♠', '♣'};
+//     const char colorSymbols[4] = {'♥', '⯁', '♠', '♣'};
 
-    printf("%s\n", colorSymbols[c / 8]);
+//     printf("%s\n", colorSymbols[c / 8]);
 
-}
+// }
 
 
-/**
- *	\fn			void showPlayerCards(const player_t *player)
- *	\brief		Affiche les cartes d'un joueur
- *	\note		
- *	\result		
- */
-void showPlayerCards(const player_t *player){
+// /**
+//  *	\fn			void showPlayerCards(const player_t *player)
+//  *	\brief		Affiche les cartes d'un joueur
+//  *	\note		
+//  *	\result		
+//  */
+// void showPlayerCards(const player_t *player){
 
-    if (player == NULL){
-        return;
-    }
+//     if (player == NULL){
+//         return;
+//     }
 
-    for (char i = 0; i < nbCards / 2 - 1; i++){
-        printf("%d : %s\t\t|\t\t%d : %s\n", i, showCard(player->cards[i]), i + 1, showCard(player->cards[i]));
-    }
+//     for (char i = 0; i < nbCards / 2 - 1; i++){
+//         printf("%d : %s\t\t|\t\t%d : %s\n", i, showCard(player->cards[i]), i + 1, showCard(player->cards[i]));
+//     }
 
-    // Nombre de cartes impaire :
-    if (nbCards % 2 == 1){
-        printf("%d : %s\t\t|\n", nbCards - 1, showCard(player->cards[nbCards - 1]));
-    }
-}
+//     // Nombre de cartes impaire :
+//     if (nbCards % 2 == 1){
+//         printf("%d : %s\t\t|\n", nbCards - 1, showCard(player->cards[nbCards - 1]));
+//     }
+// }
 
-// FIN
+// // FIN
 
 
 /**
@@ -74,12 +74,11 @@ void threadClient(void){
     // Attente début de la partie :
     waitForRequest(&saServer, &request, REQ_LANCER_PARTIE);
 
-
     // Partie lancée :
 
     // Début d'une manche :
 
-    gameRequestHandler(&saServer, &request);
+    gameRequestHandler(&saServer, &request, &player);
 
     return;
 }
@@ -96,10 +95,10 @@ void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t request
 
     request->idReq = -1;
 
-    while (request.idReq != requestCode){
+    while (request->idReq != requestCode){
         recevoir(sockEch, request, str2req);
 
-        if (request.idReq != requestCode){
+        if (request->idReq != requestCode){
 
             // Réponse PAS OK à faire
 
@@ -119,22 +118,35 @@ void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t request
 
 void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *currentPlayer){
 
+    player_t newPlayer;
+    pli_t pli;
+
     while (1){
 
-        recevoir(sockEch, request, str2req);
+        recevoir(sockEch, request, req2str);
 
         switch (request->idReq){
 
             case REQ_ENVOYER_DECK:
-                getCards(sockEch, currentPlayer);
+
+                // requestToCards
+                req2player(request, &newPlayer);
+
+                getCards(sockEch, currentPlayer, &newPlayer);
                 break;
 
             case REQ_ENVOYER_PLI:
-                getPli();
+
+                req2pli(request, &pli);
+
+                getPli(sockEch, currentPlayer, &pli);
                 break;
 
             case REQ_CHOIX_ATOUT:
-                keepTrump();
+
+                req2pli(request, &pli);
+
+                keepTrump(sockEch, currentPlayer, &pli);
                 break;
 
             case REQ_ENVOYER_SCORE:
@@ -152,56 +164,47 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
 
 }
 
-void getCards(socket_t *sockEch, player_t *currentPlayer){
+void getCards(socket_t *sockEch, player_t *currentPlayer, const player_t *newPlayer){
 
-    requete_t *request;
     reponse_t *response;
 
-    player_t *player;
+    // recevoir(sockEch, request, str2req);
 
-    recevoir(sockEch, request, str2req);
-
-    response->idRep = REQ_OK;
+    response->idRep = REP_ACK_ENVOYER_DECK;
     strcpy(response->verbRep, "OK");
 
     envoyer(sockEch, response, rep2str);
 
     // Ajout des cartes au deck :
-    memcpy(currentPlayer->cards + len(currentPlayer->cards), player->cards, sizeof(len(player->cards)));
+    memcpy(currentPlayer->cards + getCardsAmount(currentPlayer->cards), newPlayer->cards, sizeof(getCardsAmount(newPlayer->cards)));
 
     
 }
 
-void getPli(socket_t *sockEch, player_t *currentPlayer){
-
-    requete_t *request;
+void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
+;
     reponse_t *response;
 
-    pli_t pli;
-
-
-    recevoir(sockEch, request, str2req);
+    response->idRep = REP_ACK_ENVOYER_PLI;
+    strcpy(response->verbRep, "OK");
 
     // Affichage du pli :
     printf("Le pli est : ...\n");
 
-    envoyer(sockEch, REP_ACK_ENVOYER_PLI, ...);
+    envoyer(sockEch, response, rep2str);
 
     return;
 
 }
 
 
-void keepTrump(){
+void keepTrump(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
 
-    requete_t *request;
     reponse_t *response;
 
     pli_t pli;
 
     char userResponse;
-
-    recevoir(sockEch, request, str2req);
 
     // Affichage du pli :
     printf("L'atout est : ...\n");
@@ -243,6 +246,8 @@ void playMove(socket_t *sockEch, player_t *currentPlayer){
     printf("Affichage de vos cartes :\n");
     showCards(currentPlayer);
 
+    const char nbCards = getCardsAmount(currentPlayer);
+
     while (selectedCard < 0 || nbCards - 1 < selectedCard){
         
         printf("Entrez l'indice de la carte à jouer (entre 0 et %d) : ", nbCards - 1);
@@ -258,6 +263,32 @@ void playMove(socket_t *sockEch, player_t *currentPlayer){
 
     // Envoi de la réponse au serveur :
     envoyer(sockEch, response, ...);
+
+}
+
+
+char getCardsAmount(player_t *player){
+
+    for (char i = 0; i < NB_CARD_HAND; i++){
+        if (player->cards[i] == NOTHING){
+            return i;
+        }
+    }
+
+    return NB_CARD_HAND;
+
+}
+
+
+void req2player(const requete_t *request, player_t *player){
+
+    // ...
+
+}
+
+void req2pli(const requete_t *request, pli_t *pli){
+
+    // ...
 
 }
 // ...

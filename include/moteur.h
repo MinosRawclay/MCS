@@ -15,6 +15,9 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "../include/libRepReq.h"
+
+
 // ==================== CONSTANTS =============================================
 
 #define PLAYERS_MAX 4        ///< Maximum number of players (corresponds to Belote rules)
@@ -86,6 +89,7 @@ typedef struct player {
     int num;                    ///< Player number (0-3)
     enum state s;               ///< Current player state
     int cards[NB_CARD_HAND];    ///< Cards in player's hand
+    socket_t sock;              ///< Socket for player communication
 } player_t;
 
 /**

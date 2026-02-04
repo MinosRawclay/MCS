@@ -192,4 +192,6 @@ int userFromSocket(socket_t * sDial);
 
 
 void ipPort(requete_t * req, reponse_t * rep);
+
+int getNbUsers();
 #endif /* USERS_H */

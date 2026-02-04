@@ -266,3 +266,6 @@ void ipPort(requete_t * req, reponse_t * rep){
             strcpy(req->optReq, buffer);
 }
 
+int getnbUsers(){
+    return users.nbUsers;
+}

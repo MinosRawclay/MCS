@@ -201,7 +201,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             // Join a random available game
 			req.idReq = 402;
 
-            for(int i = 0; i < users.nbUsers; i++){
+            for(int i = 0; i < getnbUsers(); i++){
                 if(!isFull(i)){
                     modifierDest(userFromSocket(sDial), nameUser(i));
                     ipPort(&req , rep);

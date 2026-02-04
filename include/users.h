@@ -1,9 +1,19 @@
 /**
- *	\file		users.h
- *	\brief		Spécification du gestionnaire d'utilisateurs et de leurs sessions
- *	\author		Samir El Khattabi
- *	\date		23 Janvier 2026
- *	\version	1.0
+ * @file users.h
+ * @brief Spécification du gestionnaire d'utilisateurs et de leurs sessions
+ * @details Ce fichier définit les structures de données et les prototypes
+ *          nécessaires à la gestion des utilisateurs côté serveur :
+ *          - stockage des utilisateurs connectés
+ *          - association utilisateur ↔ socket
+ *          - gestion des destinations de communication
+ *          - gestion des parties (création, nombre de joueurs)
+ *
+ *          Il est utilisé par les modules serveur responsables de
+ *          l’authentification, de la communication et de la gestion des parties.
+ *
+ * @author Samir El Khattabi
+ * @date 23 Janvier 2026
+ * @version 1.0
  */
 
 #ifndef USERS_H
@@ -11,154 +21,166 @@
 
 #include "session.h"
 
+/*============================================================================*/
+/*                           CONSTANTES                                       */
+/*============================================================================*/
 
 /**
- *	\def		MAX_USERS
- *	\brief		Nombre maximal de joueurs/utilisateurs autorisés
+ * @def MAX_USERS
+ * @brief Nombre maximal d'utilisateurs autorisés sur le serveur
  */
-#define MAX_USERS	16
+#define MAX_USERS 16
 
 /**
- *	\def		MAX_NAME
- *	\brief		Taille maximale du nom d'un utilisateur (incluant le \0)
+ * @def MAX_NAME
+ * @brief Taille maximale du nom d'un utilisateur (incluant le caractère '\0')
  */
-#define MAX_NAME    64
+#define MAX_NAME 64
 
-
-
-/*
- * S T R U C T U R E S   DE   D O N N E E S
- */
+/*============================================================================*/
+/*                       TYPES ET STRUCTURES DE DONNÉES                        */
+/*============================================================================*/
 
 /**
- *	\typedef	name_t
- *	\brief		Type pour le nom de l'utilisateur
+ * @typedef name_t
+ * @brief Type représentant le nom d'un utilisateur
  */
 typedef char name_t[MAX_NAME];
 
 struct user_s;
-
 typedef struct user_s user_t;
 
-
 /**
- *	\struct		party_t
- *	\brief		Structure globale de gestion d'une party
+ * @struct party_t
+ * @brief Structure représentant une partie de jeu
+ * @details Une partie peut contenir jusqu'à 4 joueurs.
+ *          Le tableau `list` contient des pointeurs vers les utilisateurs
+ *          participant à la partie.
  */
 typedef struct {
-	user_t *list[4];	/**< Tableau des utilisateurs */
-	int nbJoueurs;			/**< Nombre actuel d'utilisateurs enregistrés */
+    user_t *list[4];   /**< Tableau des joueurs de la partie */
+    int nbJoueurs;     /**< Nombre actuel de joueurs dans la partie */
 } party_t;
 
 /**
- *	\struct		user_t
- *	\brief		Représente un utilisateur connecté ou enregistré
+ * @struct user_t
+ * @brief Représente un utilisateur du système
+ * @details Un utilisateur est identifié par un nom, une socket de dialogue,
+ *          un éventuel destinataire pour la communication, et une partie
+ *          associée.
  */
 struct user_s {
-	name_t name; 		/**< Nom de l'utilisateur */
-	socket_t *sDial;	/**< Pointeur vers la socket de dialogue active */
-	int indDest;		/**< Index de l'interlocuteur (ligne destinataire) */
-	party_t party;
-} ;
+    name_t name;        /**< Nom de l'utilisateur */
+    socket_t *sDial;    /**< Socket de dialogue associée */
+    int indDest;        /**< Index de l'utilisateur destinataire (-1 si aucun) */
+    party_t party;      /**< Partie associée à l'utilisateur */
+};
 
 /**
- *	\struct		users_t
- *	\brief		Structure globale de gestion des utilisateurs
+ * @struct users_t
+ * @brief Structure globale de gestion des utilisateurs
+ * @details Contient l'ensemble des utilisateurs enregistrés et le nombre
+ *          courant d'utilisateurs actifs.
  */
 typedef struct {
-	user_t tab[MAX_USERS];	/**< Tableau des utilisateurs */
-	int nbUsers;			/**< Nombre actuel d'utilisateurs enregistrés */
+    user_t tab[MAX_USERS]; /**< Tableau des utilisateurs */
+    int nbUsers;           /**< Nombre d'utilisateurs enregistrés */
 } users_t;
 
-/*
- * P R O T O T Y P E S   DES   F O N C T I O N S
- */
+/*============================================================================*/
+/*                     PROTOTYPES DES FONCTIONS                                */
+/*============================================================================*/
 
 /**
- *	\fn			int afficherUsers(char *cde)
- *	\brief		Affiche l'état actuel de la table des utilisateurs sur la sortie standard
- *	\param 		cde : Chaîne de caractères descriptive (contexte de l'appel)
- *	\return		0 
+ * @brief Affiche l'état actuel de la table des utilisateurs
+ * @param cde Chaîne descriptive indiquant le contexte d'appel
+ * @return 0
  */
-int afficherUsers(char *cde); 
+int afficherUsers(char *cde);
 
 /**
- *	\fn			int trouverUser(name_t nom)
- *	\brief		Recherche un utilisateur par son nom
- *	\param 		nom : Le nom de l'utilisateur recherché
- *	\return		L'index de l'utilisateur dans le tableau, ou -1 s'il n'existe pas
+ * @brief Recherche un utilisateur à partir de son nom
+ * @param nom Nom de l'utilisateur recherché
+ * @return Index de l'utilisateur dans la table, ou -1 s'il n'existe pas
  */
 int trouverUser(name_t nom);
 
 /**
- *	\fn			int creerUser(name_t nom, socket_t *sDial)
- *	\brief		Ajoute un nouvel utilisateur à la table
- *	\param 		nom : Nom du nouvel utilisateur
- *	\param 		sDial : Pointeur vers sa socket de dialogue
- *	\return		L'index du nouvel utilisateur, ou -1 si la table est pleine
+ * @brief Crée un nouvel utilisateur
+ * @param nom Nom du nouvel utilisateur
+ * @param sDial Socket de dialogue associée
+ * @return Index du nouvel utilisateur ou -1 si la table est pleine
  */
 int creerUser(name_t nom, socket_t *sDial);
 
 /**
- *	\fn			int identifierUser(socket_t *sDial)
- *	\brief		Gère la phase d'identification (lecture de la requête ID)
- *	\param 		sDial : Socket sur laquelle on attend l'identification
- *	\return		L'index de l'utilisateur identifié/créé, ou -1 en cas d'erreur
+ * @brief Identifie un utilisateur à partir d'une requête réseau
+ * @details Si l'utilisateur existe déjà, ses informations sont mises à jour.
+ *          Sinon, un nouvel utilisateur est créé.
+ * @param sDial Socket sur laquelle la requête est reçue
+ * @return Index de l'utilisateur identifié ou -1 en cas d'erreur
  */
 int identifierUser(socket_t *sDial);
 
 /**
- *	\fn			void deconnecterUser(int indUser)
- *	\brief		Ferme la connexion d'un utilisateur et réinitialise ses paramètres
- *	\param 		indUser : Index de l'utilisateur à déconnecter
+ * @brief Déconnecte un utilisateur
+ * @details Ferme la socket associée et réinitialise les informations
+ *          de communication de l'utilisateur.
+ * @param indUser Index de l'utilisateur à déconnecter
  */
 void deconnecterUser(int indUser);
 
 /**
- *	\fn			void modifierDest(int indUser, name_t destName)
- *	\brief		Définit l'interlocuteur d'un utilisateur
- *	\param 		indUser : Index de l'utilisateur source
- *	\param 		destName : Nom de l'utilisateur cible
+ * @brief Définit le destinataire de communication d'un utilisateur
+ * @param indUser Index de l'utilisateur source
+ * @param destName Nom de l'utilisateur destinataire
  */
 void modifierDest(int indUser, name_t destName);
 
 /**
- *	\fn			int indiceDest(int indUser)
- *	\brief		Récupère l'index du destinataire d'un utilisateur
- *	\param 		indUser : Index de l'utilisateur source
- *	\return		Index du destinataire (-1 si aucun)
+ * @brief Récupère l'index du destinataire d'un utilisateur
+ * @param indUser Index de l'utilisateur
+ * @return Index du destinataire ou -1 si aucun
  */
 int indiceDest(int indUser);
 
 /**
- *	\fn			char * nameUser(int indUser)
- *	\brief		Récupère le nom d'un utilisateur par son index
- *	\param 		indUser : Index de l'utilisateur
- *	\return		Pointeur vers la chaîne de caractères du nom, ou NULL si index invalide
+ * @brief Récupère le nom d'un utilisateur
+ * @param indUser Index de l'utilisateur
+ * @return Pointeur vers le nom ou NULL si index invalide
  */
-char * nameUser(int indUser);
+char *nameUser(int indUser);
 
 /**
- *	\fn			socket_t *socketUser(int indUser)
- *	\brief		Récupère la socket associée à un utilisateur
- *	\param 		indUser : Index de l'utilisateur
- *	\return		Pointeur vers la structure socket_t, ou NULL si index invalide
+ * @brief Récupère la socket associée à un utilisateur
+ * @param indUser Index de l'utilisateur
+ * @return Pointeur vers la socket ou NULL si index invalide
  */
 socket_t *socketUser(int indUser);
 
 /**
- *	\fn			void lireUsers(void)
- *	\brief		Charge la base des utilisateurs depuis le fichier "users.dat"
+ * @brief Charge les utilisateurs depuis le fichier de sauvegarde
+ * @details Les utilisateurs sont lus depuis le fichier "users.dat".
  */
 void lireUsers(void);
 
 /**
- *	\fn			void ecrireUsers(void)
- *	\brief		Sauvegarde la base actuelle des utilisateurs dans le fichier "users.dat"
+ * @brief Sauvegarde les utilisateurs dans le fichier de persistance
+ * @details Les utilisateurs sont écrits dans le fichier "users.dat".
  */
 void ecrireUsers(void);
 
-void creerPartie(socket_t * sDial);
+/**
+ * @brief Crée une nouvelle partie et désigne l'utilisateur comme hôte
+ * @param sDial Socket de l'utilisateur créateur
+ */
+void creerPartie(socket_t *sDial);
+
+/**
+ * @brief Vérifie si une partie est pleine ou invalide
+ * @param idUser Index de l'utilisateur hôte
+ * @return 1 si la partie est pleine ou invalide, 0 sinon
+ */
 int isFull(int idUser);
 
 #endif /* USERS_H */

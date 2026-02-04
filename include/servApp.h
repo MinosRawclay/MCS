@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include "libRepReq.h"
 #include "moteur.h"
+#include "client.h"
 
 // ==================== FUNCTION PROTOTYPES ===================================
 

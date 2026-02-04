@@ -128,7 +128,7 @@ int demanderAffichagePartiesUtilisateur (socket_t *sdSE) {
     recevoir(sdSE, (generic)&rep, (pFct) str2rep);
 
     // affichage des parties
-    if (rep.idRep == 401) {
+    if (rep.idRep == 403) {
         char * parties = strtok(rep.optRep, "|");
         while (parties != NULL) {
             printf("Partie : %s\n", parties);

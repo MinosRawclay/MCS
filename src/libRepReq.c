@@ -216,7 +216,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
         case 306:
 			strcpy(req.verbReq, "list games");
             // List all available games
-            req.idReq = 404;
+            req.idReq = 403;
             req.optReq[0] = '\0';
             for(int i = 0; i < MAX_USERS; i++){
                 if(!isFull(i)){

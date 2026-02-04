@@ -1,17 +1,86 @@
 /**
- * @file moteur.h
+ * @file moteur.c
  * @brief Include of Implementation of the Belote card game
  * @details This program implements the French card game Belote for 4 players in 2 teams.
  *          It handles card dealing, trump selection, trick playing, and scoring.
  * @author Raphael ALLO
- * @date 02/02/2026
+ * @date 04/02/2026
  */
 #include "../include/moteur.h"
-#include "../include/libRepReq.h"
 
 #define MAX_LINE 1024
 
 // ==================== COMMUNICATION =====================================================
+
+/**
+ * @brief Converts the current trick to a string format for sending
+ * @param[out] pliStr String buffer to store the result
+ * @param[in] pli Current trick (4 cards)
+ */
+void pli2str(char*pliStr, pli_t pli){
+    pliStr[0] = '\0';  // Initialize the string buffer
+    for (int i = 0; i < PLAYERS_MAX; i++) {
+        if (i > 0) strcat(pliStr, "|");
+        if (pli[i] != NOTHING) {
+            strcat(pliStr, getNameCard(pli[i]));
+        } else {
+            strcat(pliStr, "NOTHING");
+        }
+    }
+    return;
+}
+
+/**
+ * @brief Converts a player's cards to a string format for sending
+ * @param[out] cardsStr String buffer to store the result
+ * @param[in] player Pointer to the player
+ */
+void playerCards2str(char* cardsStr, player_t* player){
+    cardsStr[0] = '\0';  // Initialize the string buffer
+    for (int i = 0; i < NB_CARD_HAND; i++) {
+        if (player->cards[i] != NOTHING) {
+            if (strlen(cardsStr) > 0) {
+                strcat(cardsStr, "|");
+            }
+            strcat(cardsStr, getNameCard(player->cards[i]));
+        }
+    }
+    return;
+}
+
+/**
+ * @brief Converts a string format back to an array of cards
+ * @param[in] str String representation of cards (e.g., "H_AS|C_10|P_V")
+ * @param[out] cards Array to store the resulting cards
+ * @param[in] maxCards Maximum number of cards to parse
+ */
+void str2Cards(const char* str, enum card* cards, int maxCards){
+    char buffer[MAX_LINE];
+    int nbCards = 0;
+    strncpy(buffer, str, MAX_LINE);
+    buffer[MAX_LINE - 1] = '\0';  // Ensure null-termination
+
+    char* token = strtok(buffer, "|");
+    int index = 0;
+    while (token != NULL && index < maxCards) {
+        enum card c;
+        if (string_to_card(token, &c)) {
+            cards[index++] = c;
+        } else {
+            cards[index++] = NOTHING;  // Handle invalid card names
+        }
+        token = strtok(NULL, "|");
+    }
+    // Fill remaining slots with NOTHING
+    while (index < maxCards) {
+        cards[index++] = NOTHING;
+    }
+    return;
+}
+
+
+
+
 
 /**
  * @brief Adds a new player to the game
@@ -27,7 +96,6 @@ bool addPlayer(players_t players, int *nbPlayer){
         return false;
     }
     players[*nbPlayer]->num=*nbPlayer;
-    players[*nbPlayer]->s = FINISH;
     players[*nbPlayer]->sock = NULL;  // Initialiser la socket à NULL
     for (int i = 0; i < NB_CARD_HAND; i++)
     {
@@ -53,23 +121,7 @@ void okCard(players_t players, int player){
     req.idReq = 121;  // REQ_OK_CARD
     strcpy(req.verbReq, "OkCard");
     strcpy(req.optReq, "OK");
-    
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
-    // Attendre l'accusé de réception
-    reponse_t rep;
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    if (players[player]->sock == NULL) {
-        // Joueur local : pas besoin d'envoyer de confirmation
-        return;
-    }
-    
-    // Joueur distant : envoyer confirmation
-    requete_t req;
-    req.idReq = 121;  // REQ_OK_CARD
-    strcpy(req.verbReq, "OkCard");
-    strcpy(req.optReq, "OK");
-    
+
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
     
     // Attendre l'accusé de réception
@@ -85,6 +137,8 @@ void okCard(players_t players, int player){
 void giveCard(players_t players, int player){
     if (players[player]->sock == NULL) {
         // Joueur local : pas besoin d'envoyer
+        printf("Player %d cards:\n", player);
+        afficherCards(players[player]->cards,NB_CARD_HAND);    
         return;
     }
     
@@ -93,17 +147,7 @@ void giveCard(players_t players, int player){
     requete_t req;
     req.idReq = 110;  // REQ_GIVE_CARDS
     strcpy(req.verbReq, "GiveCards");
-    
-    char cardsStr[200] = "";
-    for (int i = 0; i < NB_CARD_HAND; i++) {
-        if (players[player]->cards[i] != NOTHING) {
-            if (strlen(cardsStr) > 0) {
-                strcat(cardsStr, "|");
-            }
-            strcat(cardsStr, getNameCard(players[player]->cards[i]));
-        }
-    }
-    strcpy(req.optReq, cardsStr);
+    playerCards2str(req.optReq, players[player]);
     
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
     
@@ -156,20 +200,11 @@ void givePli(players_t players, pli_t pli){
     
     // Envoyer aux joueurs distants
     // Format: carte1|carte2|carte3|carte4
-    char pliStr[100] = "";
-    for (int i = 0; i < PLAYERS_MAX; i++) {
-        if (i > 0) strcat(pliStr, "|");
-        if (pli[i] != NOTHING) {
-            strcat(pliStr, getNameCard(pli[i]));
-        } else {
-            strcat(pliStr, "NOTHING");
-        }
-    }
     
     requete_t req;
     req.idReq = 110;  // REQ_GIVE_PLI
     strcpy(req.verbReq, "GivePli");
-    strcpy(req.optReq, pliStr);
+    pli2str(req.optReq, pli);
     
     // Envoyer à tous les joueurs distants
     for (int i = 0; i < PLAYERS_MAX; i++) {
@@ -188,10 +223,11 @@ void givePli(players_t players, pli_t pli){
 /**
  * @brief Asks a player if they want to take the revealed trump card (first round)
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] player Index of the player being asked
  * @return true if player accepts, false otherwise
  */
-bool askTakeAtout(players_t players, int player){
+bool askTakeAtout(players_t players, pli_t pli, int player){
     if (players[player]->sock == NULL) {
         // Joueur local
         printf("Tu prends l'atout ? (1=oui, 0=non) : ");
@@ -204,8 +240,10 @@ bool askTakeAtout(players_t players, int player){
     requete_t req;
     req.idReq = 311;  // REQ_ASK_ATOUT_T1
     strcpy(req.verbReq, "AskAtoutT1");
-    strcpy(req.optReq, "");
     
+    //send a pli
+    pli2str(req.optReq, pli);
+
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
     
     reponse_t rep;
@@ -225,25 +263,23 @@ bool askTakeAtout(players_t players, int player){
 /**
  * @brief Asks a player if they want to choose trump (second round) and which suit
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] player Index of the player being asked
  * @param[out] c Chosen trump suit (if player accepts)
  * @return true if player accepts and chooses a suit, false otherwise
  */
-bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
+bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard *c){
     if (players[player]->sock == NULL) {
         // Joueur local
         char color = 0;
         char choice = 0;
         printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
         scanf(" %c", &choice);
-        
         if (choice == '0') return false;
-        
         do {
             printf("Quelle couleur (H/C/P/T) : ");
             scanf(" %c", &color);
         } while (!verifColor(color));
-        
         *c = color;
         printf("Couleur choisie : %c\n", color);
         return true;
@@ -253,66 +289,8 @@ bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c){
     requete_t req;
     req.idReq = 312;  // REQ_ASK_ATOUT_T2
     strcpy(req.verbReq, "AskAtoutT2");
-    strcpy(req.optReq, "");
-    
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
-    reponse_t rep;
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    
-    // Format réponse: "0" (refus) ou "1|H" (accepte + couleur)
-    if (strcmp(rep.optRep, "0") == 0) {
-        return false;
-    }
-    
-    // Parser "1|H" pour extraire la couleur
-    char* separator = strchr(rep.optRep, '|');
-    if (separator != NULL) {
-        *c = *(separator + 1);  // Caractère après le |
-        return true;
-    }
-    
-    return false;
-    char color=0;
-    char choice=0;
-    printf("Player %d Tu prend l'atout T2 ? \n", player);
-    printf("yes=1,no=0 :");
-    scanf(" %c",&choice);
-    
-    if(choice == '0') return false; 
-    do
-    {
-        printf("color (H,C,P,T) ? \n");
-        scanf(" %c",&color);
-    } while (!verifColor(color));
-    
-    *c=color;
-    printf("Color : %c\n",color);
-    return true;
-    if (players[player]->sock == NULL) {
-        // Joueur local
-        char color = 0;
-        char choice = 0;
-        printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
-        scanf(" %c", &choice);
-        
-        if (choice == '0') return false;
-        
-        do {
-            printf("Quelle couleur (H/C/P/T) : ");
-            scanf(" %c", &color);
-        } while (!verifColor(color));
-        
-        *c = color;
-        printf("Couleur choisie : %c\n", color);
-        return true;
-    }
-    
-    // Joueur distant
-    requete_t req;
-    req.idReq = 312;  // REQ_ASK_ATOUT_T2
-    strcpy(req.verbReq, "AskAtoutT2");
-    strcpy(req.optReq, "");
+    //send a pli
+    pli2str(req.optReq, pli);
     
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
     
@@ -344,9 +322,11 @@ enum card askCard(players_t players, int player){
     if (players[player]->sock == NULL) {
         // Joueur local - logique simple
         printf("Tu mets quelle carte ? \n");
-        char choice;
-        scanf(" %c", &choice);
-        if(choice == '1') return H_AS;  // TODO: logique à améliorer
+        int choice;
+        scanf(" %d", &choice);
+        if (choice >= 0 && choice < NB_CARD_HAND) {
+            return players[player]->cards[choice];
+        }
         return NOTHING;
     }
     
@@ -367,15 +347,6 @@ enum card askCard(players_t players, int player){
         return c;
     }
     
-    return NOTHING;
-    // if(player == 0){CLient INTERNE}
-    printf("Player %d cards:\n", player);
-    afficherCards(players[player]->cards,NB_CARD_HAND);
-    printf("Player %d Tu met quel card ? \n", player);
-    int choice;
-    scanf(" %d",&choice);
-    printf("Choice : %d\n",choice);
-    if(choice >= 0 && choice < NB_CARD_HAND) return players[player]->cards[choice]; 
     return NOTHING;
 }
 
@@ -497,7 +468,6 @@ void resetCards(pileCard_t* pileDeck,pileCard_t* pileEq1,pileCard_t* pileEq2, pl
     for (int i = 0; i < PLAYERS_MAX; i++){
         for (int j = 0; j < NB_CARD_HAND; j++)
             {players[i]->cards[j]=NOTHING;}
-        players[i]->s = FINISH; 
         //players[i]->num = i;   
     }
 }
@@ -987,20 +957,21 @@ void firstDeal(pileCard_t* deck, players_t players, int * startPlayer, pli_t pli
 /**
  * @brief Conducts the trump selection phase
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] turn Round of bidding (1 or 2)
  * @param[in] startPlayer Pointer to the starting player index
  * @param[out] c Chosen trump suit (only set in round 2)
  * @return Index of player who accepted trump, or -1 if all passed
  */
-int playerTurnAtout(players_t players, int turn,int * startPlayer,enum colorCard *c){
+int playerTurnAtout(players_t players, pli_t pli, int turn,int * startPlayer,enum colorCard *c){
     int i=0;
     int playingPlayer=nextPlayingPlayer(startPlayer,i);
     do
     {
         if(turn == 1)
-            {if(askTakeAtout(players, playingPlayer))return playingPlayer;}
+            {if(askTakeAtout(players, pli, playingPlayer))return playingPlayer;}
         else
-            {if(askTakeAtoutTurn2(players,playingPlayer,c))return playingPlayer;}
+            {if(askTakeAtoutTurn2(players,pli,playingPlayer,c))return playingPlayer;}
         i++;   
     } while ((playingPlayer=nextPlayingPlayer(startPlayer,i))!=*startPlayer);
     return -1;
@@ -1072,8 +1043,8 @@ bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, playe
     firstDeal(deck,players,startPlayer,pli);
     secondDeal(deck,players,startPlayer,pli);
     givePli(players,pli);
-    if((p = playerTurnAtout(players,1,startPlayer,c))==-1)
-        if((p = playerTurnAtout(players,2,startPlayer,c))==-1)
+    if((p = playerTurnAtout(players,pli,1,startPlayer,c))==-1)
+        if((p = playerTurnAtout(players,pli,2,startPlayer,c))==-1)
             return false;
     *c=card2Color(pli[0]);
     printf("Player %d took the atout of color %d\n",p,*c);
@@ -1362,7 +1333,7 @@ void afficherDeck(pileCard_t* pileDeck){
 void afficherPlayers(players_t players){
     for (int i = 0; i < PLAYERS_MAX; i++)
     {
-        printf("player n°%d : state=%d\n",players[i]->num,players[i]->s);
+        printf("player n°%d\n",players[i]->num);
         for (int j = 0; j < NB_CARD_HAND; j++)
         {
             if(players[i]->cards[j]==NOTHING){
@@ -1437,9 +1408,34 @@ int main(int argc, char const *argv[])
     
     enum card* cards;
     cards = malloc(sizeof(enum card)*15);
+    char str[200];
+
     printf("Appuyez sur une touche pour continuer...\n");
     fgetc(stdin);
-    game(players);
+    //game(players);
 
+    pli[0] = H_9; // 5 de coeur
+    pli[1] = C_9; // 5 de carreau
+    pli[2] = P_9; // 5 de pique
+    pli[3] = T_9; // 5 de trefle
+
+    players[0]->cards[0] = H_7; // 7 de coeur
+    players[0]->cards[1] = H_8; // 6 de coeur
+    players[0]->cards[2] = NOTHING;
+
+    
+
+    pli2str(str, pli);
+    printf("Pli en string : %s\n", str);
+    str2Cards(str, cards, 4);
+    printf("Pli après conversion string->cards :\n");
+    afficherCards(cards, 4);
+
+    playerCards2str(str, players[0]);
+    printf("Main du joueur 0 en string : %s\n", str);
+    str2Cards(str, cards, NB_CARD_HAND);
+    printf("Main du joueur 0 après conversion string->cards :\n");
+    afficherCards(cards, NB_CARD_HAND);
+    
     return 0;
 }

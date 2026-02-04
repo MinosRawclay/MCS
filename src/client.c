@@ -80,7 +80,7 @@ void clientHandler(const char *serverAddr, int serverPort){
     
 
     // Connexion avec le serveur :
-    saServer = creerSocketAdr(SOCK_STREAM, serverAddr, serverPort);
+    saServer = connecterClt2Srv(serverAddr, serverPort);
 
     printf("Vous avez rejoint la partie de ...\n");
 

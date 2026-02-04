@@ -2,7 +2,7 @@
 \hypertarget{structuser__t}{}\label{structuser__t}\index{user\_t@{user\_t}}
 
 
-Représente un utilisateur connecté ou enregistré  
+Représente un utilisateur du système.  
 
 
 
@@ -11,48 +11,10 @@ Représente un utilisateur connecté ou enregistré
 
 
 
-Collaboration diagram for user\+\_\+t\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=132pt]{structuser__t__coll__graph}
-\end{center}
-\end{figure}
-\doxysubsubsection*{Public Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}} \mbox{\hyperlink{structuser__t_a0ef2da1eb4b58111c0c2505a9e9185e9}{name}}
-\item 
-\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structuser__t_abecd62c9ddcac09aad396edd2447e69c}{s\+Dial}}
-\item 
-int \mbox{\hyperlink{structuser__t_aac048deae4f13bfd937ceedb9e7e221a}{ind\+Dest}}
-\end{DoxyCompactItemize}
-
-
 \doxysubsection{Detailed Description}
-Représente un utilisateur connecté ou enregistré 
+Représente un utilisateur du système. 
 
-\doxysubsection{Member Data Documentation}
-\Hypertarget{structuser__t_aac048deae4f13bfd937ceedb9e7e221a}\label{structuser__t_aac048deae4f13bfd937ceedb9e7e221a} 
-\index{user\_t@{user\_t}!indDest@{indDest}}
-\index{indDest@{indDest}!user\_t@{user\_t}}
-\doxysubsubsection{\texorpdfstring{indDest}{indDest}}
-{\footnotesize\ttfamily int user\+\_\+t\+::ind\+Dest}
-
-Index de l\textquotesingle{}interlocuteur (ligne destinataire) \Hypertarget{structuser__t_a0ef2da1eb4b58111c0c2505a9e9185e9}\label{structuser__t_a0ef2da1eb4b58111c0c2505a9e9185e9} 
-\index{user\_t@{user\_t}!name@{name}}
-\index{name@{name}!user\_t@{user\_t}}
-\doxysubsubsection{\texorpdfstring{name}{name}}
-{\footnotesize\ttfamily \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\+\_\+t}} user\+\_\+t\+::name}
-
-Nom de l\textquotesingle{}utilisateur \Hypertarget{structuser__t_abecd62c9ddcac09aad396edd2447e69c}\label{structuser__t_abecd62c9ddcac09aad396edd2447e69c} 
-\index{user\_t@{user\_t}!sDial@{sDial}}
-\index{sDial@{sDial}!user\_t@{user\_t}}
-\doxysubsubsection{\texorpdfstring{sDial}{sDial}}
-{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}\texorpdfstring{$\ast$}{*} user\+\_\+t\+::s\+Dial}
-
-Pointeur vers la socket de dialogue active 
+Un utilisateur est identifié par un nom, une socket de dialogue, un éventuel destinataire pour la communication, et une partie associée. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

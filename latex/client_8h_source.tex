@@ -1,0 +1,55 @@
+\doxysection{client.\+h}
+\hypertarget{client_8h_source}{}\label{client_8h_source}\index{include/client.h@{include/client.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ CLIENT\_H}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ CLIENT\_H}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{session_8h}{session.h}}>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{libRepReq_8h}{libRepReq.h}}>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{moteur_8h}{moteur.h}}>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00022\ \textcolor{keywordtype}{void}\ clientHandler(\textcolor{keywordtype}{char}\ *serverAddr,\ \textcolor{keywordtype}{int}\ serverPort);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00032\ \textcolor{keywordtype}{void}\ waitForRequest(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *request,\ requeteList\_t\ requestCode);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ gameRequestHandler(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *request,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{void}\ getCards(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structplayer}{player\_t}}\ *newPlayer);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ getPli(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\_t}}\ *pli);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ keepTrump(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}\ atout);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{void}\ keepTrump2(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer,\ \textcolor{keyword}{const}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}\ atout);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{void}\ playMove(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sockEch,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *currentPlayer);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{int}\ getCardsAmount(\textcolor{keyword}{const}\ \mbox{\hyperlink{structplayer}{player\_t}}\ *\mbox{\hyperlink{structplayer}{player}});}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00109\ \textcolor{keywordtype}{void}\ req2player(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *request,\ \mbox{\hyperlink{structplayer}{player\_t}}\ *\mbox{\hyperlink{structplayer}{player}});}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00118\ \textcolor{keywordtype}{void}\ req2pli(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *request,\ \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\_t}}\ *pli);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00127\ \textcolor{keywordtype}{void}\ req2card(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *request,\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}\ *c);}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00135\ \textcolor{keywordtype}{int}\ askYesNo(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *message);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{void}\ afficherScore(\textcolor{keywordtype}{int}\ score1,\ \textcolor{keywordtype}{int}\ score2);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

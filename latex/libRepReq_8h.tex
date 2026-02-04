@@ -1,0 +1,495 @@
+\doxysection{include/lib\+Rep\+Req.h File Reference}
+\hypertarget{libRepReq_8h}{}\label{libRepReq_8h}\index{include/libRepReq.h@{include/libRepReq.h}}
+
+
+Declarations of request/response management structures and functions.  
+
+
+{\ttfamily \#include "{}data.\+h"{}}\newline
+{\ttfamily \#include "{}users.\+h"{}}\newline
+Include dependency graph for lib\+Rep\+Req.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structrequete}{requete}}
+\begin{DoxyCompactList}\small\item\em Structure representing a protocol request. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structreponse}{reponse}}
+\begin{DoxyCompactList}\small\item\em Structure representing a protocol response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{libRepReq_8h_afc0530e16d6136608d53b1d0f1e46bad}{REQ\+\_\+\+STR\+\_\+\+OUT}}~"{}\%i\+:\%s\+:\%s"{}
+\begin{DoxyCompactList}\small\item\em Output format to convert a request to a string. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{libRepReq_8h_ae1a1926e7fc4956a08ba518bf6544934}{REQ\+\_\+\+STR\+\_\+\+IN}}~"{}\%i\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\+:\mbox{]}\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}n\mbox{]}"{}
+\begin{DoxyCompactList}\small\item\em Input format to parse a string into a request. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{libRepReq_8h_a36d61a263858f2ae3c6be901b4ea65f1}{REP\+\_\+\+STR\+\_\+\+OUT}}~"{}\%i\+:\%s\+:\%s"{}
+\begin{DoxyCompactList}\small\item\em Output format to convert a response to a string. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{libRepReq_8h_ad2f6c849df5906d59c5843eb72620550}{REP\+\_\+\+STR\+\_\+\+IN}}~"{}\%i\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\+:\mbox{]}\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}n\mbox{]}"{}
+\begin{DoxyCompactList}\small\item\em Input format to parse a string into a response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{libRepReq_8h_a9bf37c88ba4733af2bc0ff3aac83a33a}\label{libRepReq_8h_a9bf37c88ba4733af2bc0ff3aac83a33a} 
+typedef struct \mbox{\hyperlink{structrequete}{requete}} {\bfseries requete\+\_\+t}
+\item 
+\Hypertarget{libRepReq_8h_a9527d21e9fb38d56745d03a9c22db9d1}\label{libRepReq_8h_a9527d21e9fb38d56745d03a9c22db9d1} 
+typedef struct \mbox{\hyperlink{structreponse}{reponse}} {\bfseries reponse\+\_\+t}
+\item 
+\Hypertarget{libRepReq_8h_aa717bab7709113f69f6aa5a7f2576a1b}\label{libRepReq_8h_aa717bab7709113f69f6aa5a7f2576a1b} 
+typedef enum \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3}{requete\+List}} {\bfseries requete\+List\+\_\+t}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3}{requete\+List}} \{ \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a40951184973c82a7bdcd507767d9b161}{ERR\+\_\+\+MAUVAISE\+\_\+\+CONNEXION}} = 1
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a6fbe598f045622d74987db0ef7f3efc3}{ERR\+\_\+\+PARTIE\+\_\+\+PLEINE}} = 2
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1b1905f287d7ad28c8825e9784571272}{ERR\+\_\+\+SERVEUR\+\_\+\+PLEIN}} = 3
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a579b0bd2f0dbe1f61c305a30ba74baaa}{ERR\+\_\+\+MAUVAIS\+\_\+\+CODE}} = 4
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aaa0644df0ac9feb9064fc7602ad48fd5}{ERR\+\_\+\+SERVEUR\+\_\+\+NON\+\_\+\+DISPO}} = 5
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3acaccb107f10a8e8d4b9fa42cd2307708}{REQ\+\_\+\+LANCER\+\_\+\+PARTIE}} = 100
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aac8251b47537f4ac2cf2863c15bc495e}{REQ\+\_\+\+ENVOYER\+\_\+\+DECK}} = 110
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a41c3f3e1233fca137ff85cdbda526b85}{REQ\+\_\+\+ENVOYER\+\_\+\+PLI}} = 111
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a62feda7cec04d602af9f306d18a7360e}{REQ\+\_\+\+ENVOYER\+\_\+\+SCORE}} = 112
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a4f3b4ab59f8a3ba353404fb68df82eb9}{REQ\+\_\+\+JOUER}} = 120
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a2aed5b42d55c681500b41edbad1c9c07}{REQ\+\_\+\+CARTE\+\_\+\+LEGALE}} = 121
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac07424f944e61fd15777d3e4fea4da0f}{REQ\+\_\+\+CHOIX\+\_\+\+ATOUT}} = 122
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1f4d9888ab49618aa7a73c0622e3fab5}{REQ\+\_\+\+CHOIX\+\_\+\+ATOUT\+\_\+\+COULEUR}} = 123
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1a7f0eb86a883061e6a160e436b70a07}{REP\+\_\+\+ACK\+\_\+\+LANCER\+\_\+\+PARTIE}} = 200
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aba4a158243ee86335d74938cf9b72f9b}{REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+DECK}} = 210
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ad0ee80d234db56a3855aa738cf82f72d}{REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+PLI}} = 211
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac5ed959bd97e0c9c06adc896c384f764}{REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+SCORE}} = 212
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a980f985df178aedbd67f3a05e4acf4d0}{REP\+\_\+\+ENVOI\+\_\+\+CARTE}} = 220
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a379b9ce0d76ea8b84e1526ce3ec4b7a2}{REP\+\_\+\+ACK\+\_\+\+CARTE\+\_\+\+LEGALE}} = 221
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a303dd7e8b3bf45e3771c00317ef0f05b}{REP\+\_\+\+CHOIX\+\_\+\+ATOUT}} = 222
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aedbac5abeec4724a2308adec46b652f7}{REP\+\_\+\+CHOIX\+\_\+\+ATOUT\+\_\+\+COULEUR}} = 223
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a9c1ce23d48089c9c0785fea2ddfeb23e}{COM\+\_\+\+CONNECTER}} = 301
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a95887c49b6de899cdd0aa22ce2abf7a6}{COM\+\_\+\+DECONNECTER}} = 302
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a263613f4c135e0ae8297b5ceab867de6}{COM\+\_\+\+CREER\+\_\+\+PARTIE}} = 303
+, \newline
+\mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a60c13b0afc005d84dcfd550b2c7b800e}{COM\+\_\+\+REJOINDRE\+\_\+\+PARTIE}} = 304
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a3b96ed5a6926d33f8e8066b4d96d3931}{COM\+\_\+\+REJOINDRE\+\_\+\+ALEA}} = 305
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a45a19436d16edf178a11b86dd2cf24be}{REP\+\_\+\+ACK\+\_\+\+CONNECTER}} = 401
+, \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac9f7c7f09e642f0841a8a2f71a4db76c}{REP\+\_\+\+LIST\+\_\+\+USERS}} = 403
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration of all request, response and communication codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{libRepReq_8h_a62a5306a1eea2c6098382dd57485dfb1}{req2str}} (const \mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}req, char \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em Converts a request structure to a string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a7460cf3b8b42732d21e426e9800f8207}{str2req}} (const char \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
+\begin{DoxyCompactList}\small\item\em Converts a string to a request structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a64a6424749b143970424cb8cf09b3fc7}{rep2str}} (const \mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}rep, char \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em Converts a response structure to a string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a55e932aa54f9e4e57ee527918efbcf4e}{str2rep}} (const char \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}rep)
+\begin{DoxyCompactList}\small\item\em Converts a string to a response structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a3d736011e62098027294082d3c3a59e7}{traiter\+Req101}} (\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
+\begin{DoxyCompactList}\small\item\em Processes a request of type 101. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a3f7edf2cc9494c6d5f4c09fc0f535f1f}{traiter\+Req102}} (\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
+\begin{DoxyCompactList}\small\item\em Processes a request of type 102. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_ab102c09aea4457b3e2ddce641bcf5030}{traiter\+Req103}} (\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}req)
+\begin{DoxyCompactList}\small\item\em Processes a request of type 103. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a9e278326ab5d1ae7178267cbbc3e2495}{traiter\+Rep}} (\mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}rep)
+\begin{DoxyCompactList}\small\item\em Processes a generic response. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_aa68d485193ec7f59c772376f3415b821}{Dial\+Srv}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sock\+Ecoute)
+\begin{DoxyCompactList}\small\item\em Server-\/side dialogue function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libRepReq_8h_a43f4f5f673a2d337279666aaf4380411}{DialC}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sd)
+\begin{DoxyCompactList}\small\item\em Client-\/side dialogue function. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \mbox{\hyperlink{libRepReq_8h_a8659c391ba60322c5d03c2400722390e}{traiter\+Register}} (\mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}rep, \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}s\+Dial)
+\begin{DoxyCompactList}\small\item\em Processes registration and game management requests. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declarations of request/response management structures and functions. 
+
+This header file defines data structures for requests and responses in the communication protocol, as well as formatting macros for conversion between structures and strings. It also declares the complete enumeration of request, response and communication codes for the Belote card game. \begin{DoxyAuthor}{Author}
+Breviere Alexandre 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+04/02/2026 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{libRepReq_8h_ad2f6c849df5906d59c5843eb72620550}\label{libRepReq_8h_ad2f6c849df5906d59c5843eb72620550} 
+\index{libRepReq.h@{libRepReq.h}!REP\_STR\_IN@{REP\_STR\_IN}}
+\index{REP\_STR\_IN@{REP\_STR\_IN}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{REP\_STR\_IN}{REP\_STR\_IN}}
+{\footnotesize\ttfamily \#define REP\+\_\+\+STR\+\_\+\+IN~"{}\%i\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\+:\mbox{]}\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}n\mbox{]}"{}}
+
+
+
+Input format to parse a string into a response. 
+
+Captures\+: id\+Rep (integer), verb\+Rep (up to \textquotesingle{}\+:\textquotesingle{}), opt\+Rep (up to newline) \Hypertarget{libRepReq_8h_a36d61a263858f2ae3c6be901b4ea65f1}\label{libRepReq_8h_a36d61a263858f2ae3c6be901b4ea65f1} 
+\index{libRepReq.h@{libRepReq.h}!REP\_STR\_OUT@{REP\_STR\_OUT}}
+\index{REP\_STR\_OUT@{REP\_STR\_OUT}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{REP\_STR\_OUT}{REP\_STR\_OUT}}
+{\footnotesize\ttfamily \#define REP\+\_\+\+STR\+\_\+\+OUT~"{}\%i\+:\%s\+:\%s"{}}
+
+
+
+Output format to convert a response to a string. 
+
+Format\+: "{}id\+Rep\+:verb\+Rep\+:opt\+Rep"{} \Hypertarget{libRepReq_8h_ae1a1926e7fc4956a08ba518bf6544934}\label{libRepReq_8h_ae1a1926e7fc4956a08ba518bf6544934} 
+\index{libRepReq.h@{libRepReq.h}!REQ\_STR\_IN@{REQ\_STR\_IN}}
+\index{REQ\_STR\_IN@{REQ\_STR\_IN}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{REQ\_STR\_IN}{REQ\_STR\_IN}}
+{\footnotesize\ttfamily \#define REQ\+\_\+\+STR\+\_\+\+IN~"{}\%i\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\+:\mbox{]}\+:\%\mbox{[}\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}n\mbox{]}"{}}
+
+
+
+Input format to parse a string into a request. 
+
+Captures\+: id\+Req (integer), verb\+Req (up to \textquotesingle{}\+:\textquotesingle{}), opt\+Req (up to newline) \Hypertarget{libRepReq_8h_afc0530e16d6136608d53b1d0f1e46bad}\label{libRepReq_8h_afc0530e16d6136608d53b1d0f1e46bad} 
+\index{libRepReq.h@{libRepReq.h}!REQ\_STR\_OUT@{REQ\_STR\_OUT}}
+\index{REQ\_STR\_OUT@{REQ\_STR\_OUT}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{REQ\_STR\_OUT}{REQ\_STR\_OUT}}
+{\footnotesize\ttfamily \#define REQ\+\_\+\+STR\+\_\+\+OUT~"{}\%i\+:\%s\+:\%s"{}}
+
+
+
+Output format to convert a request to a string. 
+
+Format\+: "{}id\+Req\+:verb\+Req\+:opt\+Req"{} 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3} 
+\index{libRepReq.h@{libRepReq.h}!requeteList@{requeteList}}
+\index{requeteList@{requeteList}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{requeteList}{requeteList}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3}{requete\+List}}}
+
+
+
+Enumeration of all request, response and communication codes. 
+
+Organizes codes by categories\+:
+\begin{DoxyItemize}
+\item Error codes (1-\/5)
+\item Game requests (100-\/123)
+\item Game responses (200-\/223)
+\item Server communications (301-\/305)
+\item Communication responses (401-\/403) 
+\end{DoxyItemize}\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERR\_MAUVAISE\_CONNEXION@{ERR\_MAUVAISE\_CONNEXION}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!ERR\_MAUVAISE\_CONNEXION@{ERR\_MAUVAISE\_CONNEXION}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a40951184973c82a7bdcd507767d9b161}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a40951184973c82a7bdcd507767d9b161} 
+ERR\+\_\+\+MAUVAISE\+\_\+\+CONNEXION&Server connection error. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERR\_PARTIE\_PLEINE@{ERR\_PARTIE\_PLEINE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!ERR\_PARTIE\_PLEINE@{ERR\_PARTIE\_PLEINE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a6fbe598f045622d74987db0ef7f3efc3}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a6fbe598f045622d74987db0ef7f3efc3} 
+ERR\+\_\+\+PARTIE\+\_\+\+PLEINE&Game is full (4 players) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERR\_SERVEUR\_PLEIN@{ERR\_SERVEUR\_PLEIN}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!ERR\_SERVEUR\_PLEIN@{ERR\_SERVEUR\_PLEIN}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1b1905f287d7ad28c8825e9784571272}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1b1905f287d7ad28c8825e9784571272} 
+ERR\+\_\+\+SERVEUR\+\_\+\+PLEIN&Server cannot accept more players. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERR\_MAUVAIS\_CODE@{ERR\_MAUVAIS\_CODE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!ERR\_MAUVAIS\_CODE@{ERR\_MAUVAIS\_CODE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a579b0bd2f0dbe1f61c305a30ba74baaa}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a579b0bd2f0dbe1f61c305a30ba74baaa} 
+ERR\+\_\+\+MAUVAIS\+\_\+\+CODE&Invalid request/response code. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERR\_SERVEUR\_NON\_DISPO@{ERR\_SERVEUR\_NON\_DISPO}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!ERR\_SERVEUR\_NON\_DISPO@{ERR\_SERVEUR\_NON\_DISPO}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aaa0644df0ac9feb9064fc7602ad48fd5}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aaa0644df0ac9feb9064fc7602ad48fd5} 
+ERR\+\_\+\+SERVEUR\+\_\+\+NON\+\_\+\+DISPO&Server unavailable. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_LANCER\_PARTIE@{REQ\_LANCER\_PARTIE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_LANCER\_PARTIE@{REQ\_LANCER\_PARTIE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3acaccb107f10a8e8d4b9fa42cd2307708}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3acaccb107f10a8e8d4b9fa42cd2307708} 
+REQ\+\_\+\+LANCER\+\_\+\+PARTIE&Request to start the game. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_ENVOYER\_DECK@{REQ\_ENVOYER\_DECK}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_ENVOYER\_DECK@{REQ\_ENVOYER\_DECK}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aac8251b47537f4ac2cf2863c15bc495e}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aac8251b47537f4ac2cf2863c15bc495e} 
+REQ\+\_\+\+ENVOYER\+\_\+\+DECK&Request to send the deck (player\textquotesingle{}s hand) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_ENVOYER\_PLI@{REQ\_ENVOYER\_PLI}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_ENVOYER\_PLI@{REQ\_ENVOYER\_PLI}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a41c3f3e1233fca137ff85cdbda526b85}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a41c3f3e1233fca137ff85cdbda526b85} 
+REQ\+\_\+\+ENVOYER\+\_\+\+PLI&Request to send the current trick. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_ENVOYER\_SCORE@{REQ\_ENVOYER\_SCORE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_ENVOYER\_SCORE@{REQ\_ENVOYER\_SCORE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a62feda7cec04d602af9f306d18a7360e}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a62feda7cec04d602af9f306d18a7360e} 
+REQ\+\_\+\+ENVOYER\+\_\+\+SCORE&Request to send scores. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_JOUER@{REQ\_JOUER}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_JOUER@{REQ\_JOUER}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a4f3b4ab59f8a3ba353404fb68df82eb9}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a4f3b4ab59f8a3ba353404fb68df82eb9} 
+REQ\+\_\+\+JOUER&Request player to play a card. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_CARTE\_LEGALE@{REQ\_CARTE\_LEGALE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_CARTE\_LEGALE@{REQ\_CARTE\_LEGALE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a2aed5b42d55c681500b41edbad1c9c07}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a2aed5b42d55c681500b41edbad1c9c07} 
+REQ\+\_\+\+CARTE\+\_\+\+LEGALE&Notification that played card is legal. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_CHOIX\_ATOUT@{REQ\_CHOIX\_ATOUT}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_CHOIX\_ATOUT@{REQ\_CHOIX\_ATOUT}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac07424f944e61fd15777d3e4fea4da0f}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac07424f944e61fd15777d3e4fea4da0f} 
+REQ\+\_\+\+CHOIX\+\_\+\+ATOUT&Request to take trump (round 1) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQ\_CHOIX\_ATOUT\_COULEUR@{REQ\_CHOIX\_ATOUT\_COULEUR}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REQ\_CHOIX\_ATOUT\_COULEUR@{REQ\_CHOIX\_ATOUT\_COULEUR}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1f4d9888ab49618aa7a73c0622e3fab5}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1f4d9888ab49618aa7a73c0622e3fab5} 
+REQ\+\_\+\+CHOIX\+\_\+\+ATOUT\+\_\+\+COULEUR&Request to choose trump suit (round 2) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_LANCER\_PARTIE@{REP\_ACK\_LANCER\_PARTIE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_LANCER\_PARTIE@{REP\_ACK\_LANCER\_PARTIE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1a7f0eb86a883061e6a160e436b70a07}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1a7f0eb86a883061e6a160e436b70a07} 
+REP\+\_\+\+ACK\+\_\+\+LANCER\+\_\+\+PARTIE&Acknowledgment of game start. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_ENVOYER\_DECK@{REP\_ACK\_ENVOYER\_DECK}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_ENVOYER\_DECK@{REP\_ACK\_ENVOYER\_DECK}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aba4a158243ee86335d74938cf9b72f9b}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aba4a158243ee86335d74938cf9b72f9b} 
+REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+DECK&Acknowledgment of deck received. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_ENVOYER\_PLI@{REP\_ACK\_ENVOYER\_PLI}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_ENVOYER\_PLI@{REP\_ACK\_ENVOYER\_PLI}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ad0ee80d234db56a3855aa738cf82f72d}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ad0ee80d234db56a3855aa738cf82f72d} 
+REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+PLI&Acknowledgment of trick received. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_ENVOYER\_SCORE@{REP\_ACK\_ENVOYER\_SCORE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_ENVOYER\_SCORE@{REP\_ACK\_ENVOYER\_SCORE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac5ed959bd97e0c9c06adc896c384f764}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac5ed959bd97e0c9c06adc896c384f764} 
+REP\+\_\+\+ACK\+\_\+\+ENVOYER\+\_\+\+SCORE&Acknowledgment of scores received. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ENVOI\_CARTE@{REP\_ENVOI\_CARTE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ENVOI\_CARTE@{REP\_ENVOI\_CARTE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a980f985df178aedbd67f3a05e4acf4d0}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a980f985df178aedbd67f3a05e4acf4d0} 
+REP\+\_\+\+ENVOI\+\_\+\+CARTE&Send card played by player. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_CARTE\_LEGALE@{REP\_ACK\_CARTE\_LEGALE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_CARTE\_LEGALE@{REP\_ACK\_CARTE\_LEGALE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a379b9ce0d76ea8b84e1526ce3ec4b7a2}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a379b9ce0d76ea8b84e1526ce3ec4b7a2} 
+REP\+\_\+\+ACK\+\_\+\+CARTE\+\_\+\+LEGALE&Acknowledgment of legal card. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_CHOIX\_ATOUT@{REP\_CHOIX\_ATOUT}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_CHOIX\_ATOUT@{REP\_CHOIX\_ATOUT}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a303dd7e8b3bf45e3771c00317ef0f05b}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a303dd7e8b3bf45e3771c00317ef0f05b} 
+REP\+\_\+\+CHOIX\+\_\+\+ATOUT&Response to trump choice (1=yes, 0=no) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_CHOIX\_ATOUT\_COULEUR@{REP\_CHOIX\_ATOUT\_COULEUR}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_CHOIX\_ATOUT\_COULEUR@{REP\_CHOIX\_ATOUT\_COULEUR}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aedbac5abeec4724a2308adec46b652f7}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aedbac5abeec4724a2308adec46b652f7} 
+REP\+\_\+\+CHOIX\+\_\+\+ATOUT\+\_\+\+COULEUR&Response with chosen suit (format\+: "{}1\texorpdfstring{$\vert$}{|}\+H"{}) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COM\_CONNECTER@{COM\_CONNECTER}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!COM\_CONNECTER@{COM\_CONNECTER}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a9c1ce23d48089c9c0785fea2ddfeb23e}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a9c1ce23d48089c9c0785fea2ddfeb23e} 
+COM\+\_\+\+CONNECTER&Request to connect to server. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COM\_DECONNECTER@{COM\_DECONNECTER}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!COM\_DECONNECTER@{COM\_DECONNECTER}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a95887c49b6de899cdd0aa22ce2abf7a6}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a95887c49b6de899cdd0aa22ce2abf7a6} 
+COM\+\_\+\+DECONNECTER&Request to disconnect from server. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COM\_CREER\_PARTIE@{COM\_CREER\_PARTIE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!COM\_CREER\_PARTIE@{COM\_CREER\_PARTIE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a263613f4c135e0ae8297b5ceab867de6}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a263613f4c135e0ae8297b5ceab867de6} 
+COM\+\_\+\+CREER\+\_\+\+PARTIE&Request to create a new game. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COM\_REJOINDRE\_PARTIE@{COM\_REJOINDRE\_PARTIE}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!COM\_REJOINDRE\_PARTIE@{COM\_REJOINDRE\_PARTIE}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a60c13b0afc005d84dcfd550b2c7b800e}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a60c13b0afc005d84dcfd550b2c7b800e} 
+COM\+\_\+\+REJOINDRE\+\_\+\+PARTIE&Request to join a specific game. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COM\_REJOINDRE\_ALEA@{COM\_REJOINDRE\_ALEA}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!COM\_REJOINDRE\_ALEA@{COM\_REJOINDRE\_ALEA}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a3b96ed5a6926d33f8e8066b4d96d3931}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a3b96ed5a6926d33f8e8066b4d96d3931} 
+COM\+\_\+\+REJOINDRE\+\_\+\+ALEA&Request to join a random game. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_ACK\_CONNECTER@{REP\_ACK\_CONNECTER}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_ACK\_CONNECTER@{REP\_ACK\_CONNECTER}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a45a19436d16edf178a11b86dd2cf24be}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a45a19436d16edf178a11b86dd2cf24be} 
+REP\+\_\+\+ACK\+\_\+\+CONNECTER&Acknowledgment of successful connection. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REP\_LIST\_USERS@{REP\_LIST\_USERS}!libRepReq.h@{libRepReq.h}}\index{libRepReq.h@{libRepReq.h}!REP\_LIST\_USERS@{REP\_LIST\_USERS}}}\Hypertarget{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac9f7c7f09e642f0841a8a2f71a4db76c}\label{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac9f7c7f09e642f0841a8a2f71a4db76c} 
+REP\+\_\+\+LIST\+\_\+\+USERS&List of available users/games. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{libRepReq_8h_a43f4f5f673a2d337279666aaf4380411}\label{libRepReq_8h_a43f4f5f673a2d337279666aaf4380411} 
+\index{libRepReq.h@{libRepReq.h}!DialC@{DialC}}
+\index{DialC@{DialC}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{DialC()}{DialC()}}
+{\footnotesize\ttfamily void DialC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sd }\end{DoxyParamCaption})}
+
+
+
+Client-\/side dialogue function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sd} & Dialogue socket with the server \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_aa68d485193ec7f59c772376f3415b821}{Dial\+Srv()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_aa68d485193ec7f59c772376f3415b821}\label{libRepReq_8h_aa68d485193ec7f59c772376f3415b821} 
+\index{libRepReq.h@{libRepReq.h}!DialSrv@{DialSrv}}
+\index{DialSrv@{DialSrv}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{DialSrv()}{DialSrv()}}
+{\footnotesize\ttfamily void Dial\+Srv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sock\+Ecoute }\end{DoxyParamCaption})}
+
+
+
+Server-\/side dialogue function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sock\+Ecoute} & Listening socket to accept client connections \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_a43f4f5f673a2d337279666aaf4380411}{Dial\+C()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_a64a6424749b143970424cb8cf09b3fc7}\label{libRepReq_8h_a64a6424749b143970424cb8cf09b3fc7} 
+\index{libRepReq.h@{libRepReq.h}!rep2str@{rep2str}}
+\index{rep2str@{rep2str}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{rep2str()}{rep2str()}}
+{\footnotesize\ttfamily void rep2str (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rep,  }\item[{char \texorpdfstring{$\ast$}{*}}]{str }\end{DoxyParamCaption})}
+
+
+
+Converts a response structure to a string. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em rep} & Pointer to the response structure to convert \\
+\hline
+\mbox{\texttt{ out}}  & {\em str} & String buffer to store the result \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_a55e932aa54f9e4e57ee527918efbcf4e}{str2rep()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_a62a5306a1eea2c6098382dd57485dfb1}\label{libRepReq_8h_a62a5306a1eea2c6098382dd57485dfb1} 
+\index{libRepReq.h@{libRepReq.h}!req2str@{req2str}}
+\index{req2str@{req2str}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{req2str()}{req2str()}}
+{\footnotesize\ttfamily void req2str (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req,  }\item[{char \texorpdfstring{$\ast$}{*}}]{str }\end{DoxyParamCaption})}
+
+
+
+Converts a request structure to a string. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em req} & Pointer to the request structure to convert \\
+\hline
+\mbox{\texttt{ out}}  & {\em str} & String buffer to store the result \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_a7460cf3b8b42732d21e426e9800f8207}{str2req()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_a55e932aa54f9e4e57ee527918efbcf4e}\label{libRepReq_8h_a55e932aa54f9e4e57ee527918efbcf4e} 
+\index{libRepReq.h@{libRepReq.h}!str2rep@{str2rep}}
+\index{str2rep@{str2rep}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{str2rep()}{str2rep()}}
+{\footnotesize\ttfamily void str2rep (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str,  }\item[{\mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rep }\end{DoxyParamCaption})}
+
+
+
+Converts a string to a response structure. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em str} & String to parse \\
+\hline
+\mbox{\texttt{ out}}  & {\em rep} & Pointer to the response structure to fill \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_a64a6424749b143970424cb8cf09b3fc7}{rep2str()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_a7460cf3b8b42732d21e426e9800f8207}\label{libRepReq_8h_a7460cf3b8b42732d21e426e9800f8207} 
+\index{libRepReq.h@{libRepReq.h}!str2req@{str2req}}
+\index{str2req@{str2req}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{str2req()}{str2req()}}
+{\footnotesize\ttfamily void str2req (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str,  }\item[{\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+
+
+
+Converts a string to a request structure. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em str} & String to parse \\
+\hline
+\mbox{\texttt{ out}}  & {\em req} & Pointer to the request structure to fill \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libRepReq_8h_a62a5306a1eea2c6098382dd57485dfb1}{req2str()} 
+\end{DoxySeeAlso}
+\Hypertarget{libRepReq_8h_a8659c391ba60322c5d03c2400722390e}\label{libRepReq_8h_a8659c391ba60322c5d03c2400722390e} 
+\index{libRepReq.h@{libRepReq.h}!traiterRegister@{traiterRegister}}
+\index{traiterRegister@{traiterRegister}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{traiterRegister()}{traiterRegister()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structrequete}{requete\+\_\+t}} traiter\+Register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rep,  }\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{s\+Dial }\end{DoxyParamCaption})}
+
+
+
+Processes registration and game management requests. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em rep} & Pointer to the received response to process \\
+\hline
+\mbox{\texttt{ in}}  & {\em s\+Dial} & Pointer to the client\textquotesingle{}s dialogue socket \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Generated request in response to processing 
+\end{DoxyReturn}
+\Hypertarget{libRepReq_8h_a9e278326ab5d1ae7178267cbbc3e2495}\label{libRepReq_8h_a9e278326ab5d1ae7178267cbbc3e2495} 
+\index{libRepReq.h@{libRepReq.h}!traiterRep@{traiterRep}}
+\index{traiterRep@{traiterRep}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{traiterRep()}{traiterRep()}}
+{\footnotesize\ttfamily void traiter\+Rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structreponse}{reponse\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rep }\end{DoxyParamCaption})}
+
+
+
+Processes a generic response. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em rep} & Pointer to the response to process \\
+\hline
+\end{DoxyParams}
+\Hypertarget{libRepReq_8h_a3d736011e62098027294082d3c3a59e7}\label{libRepReq_8h_a3d736011e62098027294082d3c3a59e7} 
+\index{libRepReq.h@{libRepReq.h}!traiterReq101@{traiterReq101}}
+\index{traiterReq101@{traiterReq101}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{traiterReq101()}{traiterReq101()}}
+{\footnotesize\ttfamily void traiter\+Req101 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+
+
+
+Processes a request of type 101. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em req} & Pointer to the request to process \\
+\hline
+\end{DoxyParams}
+\Hypertarget{libRepReq_8h_a3f7edf2cc9494c6d5f4c09fc0f535f1f}\label{libRepReq_8h_a3f7edf2cc9494c6d5f4c09fc0f535f1f} 
+\index{libRepReq.h@{libRepReq.h}!traiterReq102@{traiterReq102}}
+\index{traiterReq102@{traiterReq102}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{traiterReq102()}{traiterReq102()}}
+{\footnotesize\ttfamily void traiter\+Req102 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+
+
+
+Processes a request of type 102. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em req} & Pointer to the request to process \\
+\hline
+\end{DoxyParams}
+\Hypertarget{libRepReq_8h_ab102c09aea4457b3e2ddce641bcf5030}\label{libRepReq_8h_ab102c09aea4457b3e2ddce641bcf5030} 
+\index{libRepReq.h@{libRepReq.h}!traiterReq103@{traiterReq103}}
+\index{traiterReq103@{traiterReq103}!libRepReq.h@{libRepReq.h}}
+\doxysubsubsection{\texorpdfstring{traiterReq103()}{traiterReq103()}}
+{\footnotesize\ttfamily void traiter\+Req103 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structrequete}{requete\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{req }\end{DoxyParamCaption})}
+
+
+
+Processes a request of type 103. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em req} & Pointer to the request to process \\
+\hline
+\end{DoxyParams}

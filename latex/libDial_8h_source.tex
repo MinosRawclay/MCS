@@ -1,13 +1,22 @@
 \doxysection{lib\+Dial.\+h}
 \hypertarget{libDial_8h_source}{}\label{libDial_8h_source}\index{include/libDial.h@{include/libDial.h}}
-
+\mbox{\hyperlink{libDial_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{comment}{//\ fichier\ :\ libDial.h}}
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}libRepReq.h"{}}}
-\DoxyCodeLine{00003\ \textcolor{comment}{//\ include\ des\ fichier}}
-\DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{comment}{//\ prototypes\ des\ fonctions}}
-\DoxyCodeLine{00006\ \textcolor{keywordtype}{void}\ DialSrv(\mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
-\DoxyCodeLine{00007\ \textcolor{keywordtype}{void}\ DialC(\mbox{\hyperlink{structsocket}{socket\_t}}\ sd);}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#ifndef\ LIBDIAL\_H}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ LIBDIAL\_H}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ fichier\ :\ libDial.h}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{libRepReq_8h}{libRepReq.h}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ ====================\ FUNCTION\ PROTOTYPES\ ====================}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libDial_8h_aa68d485193ec7f59c772376f3415b821}{DialSrv}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libDial_8h_a43f4f5f673a2d337279666aaf4380411}{DialC}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ sd);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libDial_8h_a0f6432a126aaaee27722968b114ded6f}{DialRegister}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ sd);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ LIBDIAL\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

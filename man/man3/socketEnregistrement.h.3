@@ -1,0 +1,220 @@
+.TH "include/socketEnregistrement.h" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/socketEnregistrement.h \- Declarations for the registration socket server with multi-threading\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'libRepReq\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCHECK_ZERO\fP(status,  msg)"
+.br
+.RI "Macro to check pthread function return values\&. "
+.ti -1c
+.RI "#define \fBIP_HOST\fP   '127\&.0\&.0\&.1'"
+.br
+.RI "Server listening IP address\&. "
+.ti -1c
+.RI "#define \fBPORT\fP   50000"
+.br
+.RI "Server listening port number\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef void *(* \fBpFctThread\fP) (void *)"
+.br
+.RI "Function pointer type for thread functions\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBthreadLogic\fP (void *arg)"
+.br
+.RI "Thread logic function to handle individual client connections\&. "
+.ti -1c
+.RI "int \fBmain\fP (void)"
+.br
+.RI "Main entry point of the registration server\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Declarations for the registration socket server with multi-threading\&. 
+
+This header file provides the necessary declarations, macros, and includes for implementing a multi-threaded registration server for the Belote game\&. It defines thread function pointer types, error checking macros, and server configuration constants (IP address and port)\&. The server uses POSIX threads to handle multiple simultaneous client connections independently\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Breviere Alexandre 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+04/02/2026 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CHECK_ZERO(status, msg)"
+\fBValue:\fP.PP
+.nf
+    if (0 != (status)) { \\
+        fprintf(stderr, "pthread erreur : %s\\n", msg); \\
+        exit(EXIT_FAILURE); \\
+    }
+.fi
+
+.PP
+Macro to check pthread function return values\&. Verifies that a pthread function returned 0 (success)\&. If the status is non-zero (error), prints an error message to stderr and terminates the program with EXIT_FAILURE\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIstatus\fP Return value from a pthread function to check 
+.br
+\fImsg\fP Error message to display if check fails
+.RE
+.PP
+\fBNote\fP
+.RS 4
+This macro is specifically designed for pthread functions that return 0 on success 
+.RE
+.PP
+\fBWarning\fP
+.RS 4
+Terminates the program on error - use only for critical failures
+.RE
+.PP
+Example usage: 
+.PP
+.nf
+CHECK_ZERO(pthread_create(&thread, NULL, thread_func, arg), "Failed to create thread");
+
+.fi
+.PP
+ 
+.SS "#define IP_HOST   '127\&.0\&.0\&.1'"
+
+.PP
+Server listening IP address\&. Defines the IP address on which the server will listen for connections\&. '0\&.0\&.0\&.0' means the server listens on all available network interfaces\&. 
+.SS "#define PORT   50000"
+
+.PP
+Server listening port number\&. Defines the port number on which the server will listen for client connections\&. Port 50000 is used for the registration and game management server\&. 
+.SH "Typedef Documentation"
+.PP 
+.SS "pFctThread"
+
+.PP
+Function pointer type for thread functions\&. Defines the signature for functions that can be passed to pthread_create()\&. Thread functions must take a void* argument and return a void* result\&. 
+.SH "Function Documentation"
+.PP 
+.SS "int main (void)"
+
+.PP
+Main entry point of the registration server\&. Initializes and runs a multi-threaded server that handles client registrations\&. The server creates a listening socket on IP_HOST:PORT and enters an infinite loop that:
+.IP "\(bu" 2
+Accepts incoming client connections via \fBaccepterClt()\fP
+.IP "\(bu" 2
+Initializes thread attributes for detached threads
+.IP "\(bu" 2
+Creates a new detached thread for each client using \fBthreadLogic()\fP
+.PP
+.PP
+Each client connection is handled independently in its own thread, allowing multiple simultaneous client registrations and game management\&.
+.PP
+\fBReturns\fP
+.RS 4
+Exit status code (never reached due to infinite loop)
+.RE
+.PP
+\fBNote\fP
+.RS 4
+The server listens on IP_HOST (0\&.0\&.0\&.0) and PORT (50000) 
+.PP
+All threads are created in detached state (PTHREAD_CREATE_DETACHED) 
+.RE
+.PP
+\fBWarning\fP
+.RS 4
+The infinite loop means the server runs continuously until terminated 
+.PP
+Each thread must properly handle its own socket cleanup 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBthreadLogic()\fP 
+.RE
+.PP
+
+.SS "void * threadLogic (void * arg)"
+
+.PP
+Thread logic function to handle individual client connections\&. This function runs in a separate thread for each connected client\&. It continuously reads messages from the client, processes registration requests via \fBtraiterRegister()\fP, and sends appropriate responses\&. The thread performs the following operations in a loop:
+.IP "\(bu" 2
+Reads incoming data from the client socket
+.IP "\(bu" 2
+Receives and parses the client's response
+.IP "\(bu" 2
+Processes the registration request
+.IP "\(bu" 2
+Sends back the generated request to the client
+.IP "\(bu" 2
+Logs all requests and responses to stderr
+.PP
+.PP
+\fBParameters\fP
+.RS 4
+\fIarg\fP Pointer to the socket_t structure for client communication 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+NULL when the thread terminates
+.RE
+.PP
+\fBNote\fP
+.RS 4
+The socket is automatically closed when the client disconnects 
+.PP
+This function terminates when read() returns 0 or negative value 
+.RE
+.PP
+\fBWarning\fP
+.RS 4
+This function is designed to be called by pthread_create() 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBmain()\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

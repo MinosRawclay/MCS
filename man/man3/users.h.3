@@ -14,9 +14,12 @@ include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs ses
 
 .in +1c
 .ti -1c
-.RI "struct \fBuser_t\fP"
+.RI "struct \fBparty_t\fP"
 .br
-.RI "Représente un utilisateur connecté ou enregistré "
+.RI "Structure représentant une partie de jeu\&. "
+.ti -1c
+.RI "struct \fBuser_s\fP"
+.br
 .ti -1c
 .RI "struct \fBusers_t\fP"
 .br
@@ -28,19 +31,28 @@ include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs ses
 .ti -1c
 .RI "#define \fBMAX_USERS\fP   16"
 .br
-.RI "Nombre maximal de joueurs/utilisateurs autorisés\&. "
+.RI "Nombre maximal d'utilisateurs autorisés sur le serveur\&. "
 .ti -1c
 .RI "#define \fBMAX_NAME\fP   64"
 .br
-.RI "Taille maximale du nom d'un utilisateur (incluant le \\0) "
+.RI "Taille maximale du nom d'un utilisateur (incluant le caractère '\\0') "
 .in -1c
 .SS "Typedefs"
 
 .in +1c
 .ti -1c
+.RI "typedef struct \fBrequete\fP \fBrequete_t\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBreponse\fP \fBreponse_t\fP"
+.br
+.ti -1c
 .RI "typedef char \fBname_t\fP[\fBMAX_NAME\fP]"
 .br
-.RI "Type pour le nom de l'utilisateur\&. "
+.RI "Type représentant le nom d'un utilisateur\&. "
+.ti -1c
+.RI "typedef struct \fBuser_s\fP \fBuser_t\fP"
+.br
 .in -1c
 .SS "Functions"
 
@@ -48,27 +60,27 @@ include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs ses
 .ti -1c
 .RI "int \fBafficherUsers\fP (char *cde)"
 .br
-.RI "Affiche l'état actuel de la table des utilisateurs sur la sortie standard\&. "
+.RI "Affiche l'état actuel de la table des utilisateurs\&. "
 .ti -1c
 .RI "int \fBtrouverUser\fP (\fBname_t\fP nom)"
 .br
-.RI "Recherche un utilisateur par son nom\&. "
+.RI "Recherche un utilisateur à partir de son nom\&. "
 .ti -1c
 .RI "int \fBcreerUser\fP (\fBname_t\fP nom, \fBsocket_t\fP *sDial)"
 .br
-.RI "Ajoute un nouvel utilisateur à la table\&. "
+.RI "Crée un nouvel utilisateur\&. "
 .ti -1c
-.RI "int \fBidentifierUser\fP (\fBsocket_t\fP *sDial)"
+.RI "int \fBidentifierUser\fP (\fBsocket_t\fP *sDial, \fBrequete_t\fP *req)"
 .br
-.RI "Gère la phase d'identification (lecture de la requête ID) "
+.RI "Identifie un utilisateur à partir d'une requête réseau\&. "
 .ti -1c
 .RI "void \fBdeconnecterUser\fP (int indUser)"
 .br
-.RI "Ferme la connexion d'un utilisateur et réinitialise ses paramètres\&. "
+.RI "Déconnecte un utilisateur\&. "
 .ti -1c
 .RI "void \fBmodifierDest\fP (int indUser, \fBname_t\fP destName)"
 .br
-.RI "Définit l'interlocuteur d'un utilisateur\&. "
+.RI "Définit le destinataire de communication d'un utilisateur\&. "
 .ti -1c
 .RI "int \fBindiceDest\fP (int indUser)"
 .br
@@ -76,7 +88,7 @@ include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs ses
 .ti -1c
 .RI "char * \fBnameUser\fP (int indUser)"
 .br
-.RI "Récupère le nom d'un utilisateur par son index\&. "
+.RI "Récupère le nom d'un utilisateur\&. "
 .ti -1c
 .RI "\fBsocket_t\fP * \fBsocketUser\fP (int indUser)"
 .br
@@ -84,17 +96,45 @@ include/users.h \- Spécification du gestionnaire d'utilisateurs et de leurs ses
 .ti -1c
 .RI "void \fBlireUsers\fP (void)"
 .br
-.RI "Charge la base des utilisateurs depuis le fichier 'users\&.dat'\&. "
+.RI "Charge les utilisateurs depuis le fichier de sauvegarde\&. "
 .ti -1c
 .RI "void \fBecrireUsers\fP (void)"
 .br
-.RI "Sauvegarde la base actuelle des utilisateurs dans le fichier 'users\&.dat'\&. "
+.RI "Sauvegarde les utilisateurs dans le fichier de persistance\&. "
+.ti -1c
+.RI "void \fBcreerPartieBDD\fP (\fBsocket_t\fP *sDial, int gamePort)"
+.br
+.RI "Crée une nouvelle partie et désigne l'utilisateur comme hôte\&. "
+.ti -1c
+.RI "int \fBisFull\fP (int idUser)"
+.br
+.RI "Vérifie si une partie est pleine ou invalide\&. "
+.ti -1c
+.RI "int \fBuserFromSocket\fP (\fBsocket_t\fP *sDial)"
+.br
+.ti -1c
+.RI "void \fBipPort\fP (\fBrequete_t\fP *req, \fBreponse_t\fP *rep)"
+.br
+.ti -1c
+.RI "int \fBgetNbUsers\fP ()"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
 Spécification du gestionnaire d'utilisateurs et de leurs sessions\&. 
 
-
+Ce fichier définit les structures de données et les prototypes nécessaires à la gestion des utilisateurs côté serveur :
+.IP "\(bu" 2
+stockage des utilisateurs connectés
+.IP "\(bu" 2
+association utilisateur ↔ socket
+.IP "\(bu" 2
+gestion des destinations de communication
+.IP "\(bu" 2
+gestion des parties (création, nombre de joueurs)
+.PP
+.PP
+Il est utilisé par les modules serveur responsables de l’authentification, de la communication et de la gestion des parties\&.
 .PP
 \fBAuthor\fP
 .RS 4
@@ -117,11 +157,11 @@ Samir El Khattabi
 .SS "int afficherUsers (char * cde)"
 
 .PP
-Affiche l'état actuel de la table des utilisateurs sur la sortie standard\&. 
+Affiche l'état actuel de la table des utilisateurs\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fIcde\fP : Chaîne de caractères descriptive (contexte de l'appel) 
+\fIcde\fP Chaîne descriptive indiquant le contexte d'appel 
 .RE
 .PP
 \fBReturns\fP
@@ -130,48 +170,65 @@ Affiche l'état actuel de la table des utilisateurs sur la sortie standard\&.
 .RE
 .PP
 
-.SS "int creerUser (\fBname_t\fP nom, \fBsocket_t\fP * sDial)"
+.SS "void creerPartieBDD (\fBsocket_t\fP * sDial, int gamePort)"
 
 .PP
-Ajoute un nouvel utilisateur à la table\&. 
+Crée une nouvelle partie et désigne l'utilisateur comme hôte\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fInom\fP : Nom du nouvel utilisateur 
+\fIsDial\fP Socket de l'utilisateur créateur 
 .br
-\fIsDial\fP : Pointeur vers sa socket de dialogue 
+\fIgamePort\fP Port du serveur de jeu créé par l'utilisateur 
+.RE
+.PP
+
+.SS "int creerUser (\fBname_t\fP nom, \fBsocket_t\fP * sDial)"
+
+.PP
+Crée un nouvel utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInom\fP Nom du nouvel utilisateur 
+.br
+\fIsDial\fP Socket de dialogue associée 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-L'index du nouvel utilisateur, ou -1 si la table est pleine 
+Index du nouvel utilisateur ou -1 si la table est pleine 
 .RE
 .PP
 
 .SS "void deconnecterUser (int indUser)"
 
 .PP
-Ferme la connexion d'un utilisateur et réinitialise ses paramètres\&. 
+Déconnecte un utilisateur\&. Ferme la socket associée et réinitialise les informations de communication de l'utilisateur\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fIindUser\fP : Index de l'utilisateur à déconnecter 
+\fIindUser\fP Index de l'utilisateur à déconnecter 
 .RE
 .PP
 
-.SS "int identifierUser (\fBsocket_t\fP * sDial)"
+.SS "void ecrireUsers (void)"
 
 .PP
-Gère la phase d'identification (lecture de la requête ID) 
+Sauvegarde les utilisateurs dans le fichier de persistance\&. Les utilisateurs sont écrits dans le fichier 'users\&.dat'\&. 
+.SS "int identifierUser (\fBsocket_t\fP * sDial, \fBrequete_t\fP * req)"
+
+.PP
+Identifie un utilisateur à partir d'une requête réseau\&. Si l'utilisateur existe déjà, ses informations sont mises à jour\&. Sinon, un nouvel utilisateur est créé\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fIsDial\fP : Socket sur laquelle on attend l'identification 
+\fIsDial\fP Socket sur laquelle la requête est reçue 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-L'index de l'utilisateur identifié/créé, ou -1 en cas d'erreur 
+Index de l'utilisateur identifié ou -1 en cas d'erreur 
 .RE
 .PP
 
@@ -182,41 +239,61 @@ Récupère l'index du destinataire d'un utilisateur\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIindUser\fP : Index de l'utilisateur source 
+\fIindUser\fP Index de l'utilisateur 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-Index du destinataire (-1 si aucun) 
+Index du destinataire ou -1 si aucun 
 .RE
 .PP
 
-.SS "void modifierDest (int indUser, \fBname_t\fP destName)"
+.SS "int isFull (int idUser)"
 
 .PP
-Définit l'interlocuteur d'un utilisateur\&. 
+Vérifie si une partie est pleine ou invalide\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fIindUser\fP : Index de l'utilisateur source 
+\fIidUser\fP Index de l'utilisateur hôte 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+1 si la partie est pleine ou invalide, 0 sinon 
+.RE
+.PP
+
+.SS "void lireUsers (void)"
+
+.PP
+Charge les utilisateurs depuis le fichier de sauvegarde\&. Les utilisateurs sont lus depuis le fichier 'users\&.dat'\&. 
+.SS "void modifierDest (int indUser, \fBname_t\fP destName)"
+
+.PP
+Définit le destinataire de communication d'un utilisateur\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIindUser\fP Index de l'utilisateur source 
 .br
-\fIdestName\fP : Nom de l'utilisateur cible 
+\fIdestName\fP Nom de l'utilisateur destinataire 
 .RE
 .PP
 
 .SS "char * nameUser (int indUser)"
 
 .PP
-Récupère le nom d'un utilisateur par son index\&. 
+Récupère le nom d'un utilisateur\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fIindUser\fP : Index de l'utilisateur 
+\fIindUser\fP Index de l'utilisateur 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-Pointeur vers la chaîne de caractères du nom, ou NULL si index invalide 
+Pointeur vers le nom ou NULL si index invalide 
 .RE
 .PP
 
@@ -227,28 +304,28 @@ Récupère la socket associée à un utilisateur\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIindUser\fP : Index de l'utilisateur 
+\fIindUser\fP Index de l'utilisateur 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-Pointeur vers la structure socket_t, ou NULL si index invalide 
+Pointeur vers la socket ou NULL si index invalide 
 .RE
 .PP
 
 .SS "int trouverUser (\fBname_t\fP nom)"
 
 .PP
-Recherche un utilisateur par son nom\&. 
+Recherche un utilisateur à partir de son nom\&. 
 .PP
 \fBParameters\fP
 .RS 4
-\fInom\fP : Le nom de l'utilisateur recherché 
+\fInom\fP Nom de l'utilisateur recherché 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-L'index de l'utilisateur dans le tableau, ou -1 s'il n'existe pas 
+Index de l'utilisateur dans la table, ou -1 s'il n'existe pas 
 .RE
 .PP
 

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['trouveruser_0',['trouverUser',['../users_8h.html#a4013c0def6984f01a5a43fb72212809f',1,'users.h']]]
+  ['nameuser_0',['nameUser',['../users_8h.html#a25dad20d785f93a629f6fc554f483140',1,'users.h']]],
+  ['nextplayingplayer_1',['nextPlayingPlayer',['../moteur_8h.html#a316c4dafcc11a4d78042553af4a13876',1,'moteur.h']]]
 ];

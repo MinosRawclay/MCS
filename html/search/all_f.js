@@ -1,6 +1,24 @@
 var searchData=
 [
-  ['user_5ft_0',['user_t',['../structuser__t.html',1,'']]],
-  ['users_2eh_1',['users.h',['../users_8h.html',1,'']]],
-  ['users_5ft_2',['users_t',['../structusers__t.html',1,'']]]
+  ['sdial_0',['sDial',['../structuser__s.html#acbb2b040a2e7907bc37ed89f56c9647a',1,'user_s']]],
+  ['searchmaxcardinhand_1',['searchMaxCardInHand',['../moteur_8h.html#a92c48b7f6e45ce35bd8575a4a3213c01',1,'moteur.h']]],
+  ['searchmaxcardinpli_2',['searchMaxCardInPli',['../moteur_8h.html#a29af759c15a674cbcf2064060488c332',1,'moteur.h']]],
+  ['seconddeal_3',['secondDeal',['../moteur_8h.html#a0c3279e232d1350b9953bd55ae16b5ae',1,'moteur.h']]],
+  ['servapp_2eh_4',['servApp.h',['../servApp_8h.html',1,'']]],
+  ['session_2eh_5',['session.h',['../session_8h.html',1,'']]],
+  ['sock_6',['sock',['../structplayer.html#ac5908b1a832242c9a4f50b49671b970f',1,'player']]],
+  ['socket_7',['socket',['../structsocket.html',1,'']]],
+  ['socket_5ft_8',['socket_t',['../session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416',1,'session.h']]],
+  ['socketenregistrement_2eh_9',['socketEnregistrement.h',['../socketEnregistrement_8h.html',1,'']]],
+  ['socketuser_10',['socketUser',['../users_8h.html#aca03269c785a082463a03c1368103193',1,'users.h']]],
+  ['str2cards_11',['str2Cards',['../moteur_8h.html#ac0d7a325df0cc479b3d0d8264f37c866',1,'moteur.h']]],
+  ['str2rep_12',['str2rep',['../libRepReq_8h.html#a55e932aa54f9e4e57ee527918efbcf4e',1,'libRepReq.h']]],
+  ['str2req_13',['str2req',['../libRepReq_8h.html#a7460cf3b8b42732d21e426e9800f8207',1,'libRepReq.h']]],
+  ['str_5fbleu_5fstart_14',['STR_BLEU_START',['../moteur_8h.html#ae09aba95c4629095e11f0fa780e41ced',1,'moteur.h']]],
+  ['str_5fcolor_15',['str_color',['../moteur_8h.html#afa25619b5065a0ed61d45731a0819f9a',1,'moteur.h']]],
+  ['str_5fcolor_5fend_16',['STR_COLOR_END',['../moteur_8h.html#a847743c5e5f6d9ced50e6b11c3b83c58',1,'moteur.h']]],
+  ['str_5fmagenta_5fstart_17',['STR_MAGENTA_START',['../moteur_8h.html#a73efa0fc57acdbff37ab3ba0fb60cb69',1,'moteur.h']]],
+  ['str_5frouge_5fstart_18',['STR_ROUGE_START',['../moteur_8h.html#a8460322d5e2c249cb600ce153bc7c8d6',1,'moteur.h']]],
+  ['str_5fvert_5fstart_19',['STR_VERT_START',['../moteur_8h.html#afa6b4645d3832828bdc087db62c01485',1,'moteur.h']]],
+  ['string_5fto_5fcard_20',['string_to_card',['../moteur_8h.html#a6dd0549f89cae2b3e97e9081553ed028',1,'moteur.h']]]
 ];

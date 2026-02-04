@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['inddest_0',['indDest',['../structuser__t.html#aac048deae4f13bfd937ceedb9e7e221a',1,'user_t']]]
+  ['deck_0',['deck',['../structpileCard.html#a0759ea7e7fff4e51d4a94541db815f14',1,'pileCard']]]
 ];

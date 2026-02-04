@@ -1,0 +1,207 @@
+\doxysection{include/serv\+App.h File Reference}
+\hypertarget{servApp_8h}{}\label{servApp_8h}\index{include/servApp.h@{include/servApp.h}}
+
+
+Header file for the application server of the Belote card game.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include "{}lib\+Rep\+Req.\+h"{}}\newline
+{\ttfamily \#include "{}moteur.\+h"{}}\newline
+{\ttfamily \#include "{}client.\+h"{}}\newline
+Include dependency graph for serv\+App.\+h\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{servApp_8h_ab4ce73efb37dd498fc93d1b6f709fe00}{afficher\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays the main menu with available game options. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a22f45428f2086291b6dbb93516d2fe9c}{choisir}} ()
+\begin{DoxyCompactList}\small\item\em Prompts the user to enter their menu choice. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a27abc55a30adc7b380c6d9df98695741}{connexion\+To\+SE}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE, char \texorpdfstring{$\ast$}{*}nom\+Utilisateur)
+\begin{DoxyCompactList}\small\item\em Establishes a connection to the registration server (SE) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a97c310ba6a15fe130e0866c2e637e3b3}{creer\+Partie\+Se}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE, char \texorpdfstring{$\ast$}{*}nom\+Utilisateur)
+\begin{DoxyCompactList}\small\item\em Creates a new game session on the registration server. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a9b447a7c8ff46abb9c0fe797e7efd7fa}{demander\+Affichage\+Parties\+Utilisateur}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE)
+\begin{DoxyCompactList}\small\item\em Requests and displays the list of available games with users. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a3dedc99eb9acf58091565fd754bb702c}{choisir\+Partie\+Utilisateur}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE, char \texorpdfstring{$\ast$}{*}IPUtilisateur, int \texorpdfstring{$\ast$}{*}port\+Utilisateur)
+\begin{DoxyCompactList}\small\item\em Allows the user to select and join a specific user\textquotesingle{}s game. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servApp_8h_a6961386a1614ec6ffbaca2fc1db2ea99}{gestion\+Partie}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE, char \texorpdfstring{$\ast$}{*}nom\+Utilisateur)
+\begin{DoxyCompactList}\small\item\em Manages a game as the host server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servApp_8h_a94180abdbf400997f544cb58414290b7}{rejoindre\+Partie}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE)
+\begin{DoxyCompactList}\small\item\em Joins an existing game hosted by another user. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{servApp_8h_a7684d7ad90bdd12a81cab1a4b69ca13e}{rejoindre\+Partie\+Aleatoire}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}sd\+SE, char \texorpdfstring{$\ast$}{*}nom\+Utilisateur)
+\begin{DoxyCompactList}\small\item\em Joins a random available game or creates a new one if none exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for the application server of the Belote card game. 
+
+This header defines the data structures, enumerations, and function prototypes for implementing the French card game Belote for 4 players in 2 teams. \begin{DoxyAuthor}{Author}
+Vaniet Quentin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+04/02/2026 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{servApp_8h_ab4ce73efb37dd498fc93d1b6f709fe00}\label{servApp_8h_ab4ce73efb37dd498fc93d1b6f709fe00} 
+\index{servApp.h@{servApp.h}!afficherMenu@{afficherMenu}}
+\index{afficherMenu@{afficherMenu}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{afficherMenu()}{afficherMenu()}}
+{\footnotesize\ttfamily void afficher\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the main menu with available game options. 
+
+Shows options to create a game, join a user\textquotesingle{}s game, join a random game, or quit \Hypertarget{servApp_8h_a22f45428f2086291b6dbb93516d2fe9c}\label{servApp_8h_a22f45428f2086291b6dbb93516d2fe9c} 
+\index{servApp.h@{servApp.h}!choisir@{choisir}}
+\index{choisir@{choisir}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{choisir()}{choisir()}}
+{\footnotesize\ttfamily int choisir (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Prompts the user to enter their menu choice. 
+
+\begin{DoxyReturn}{Returns}
+The integer value corresponding to the user\textquotesingle{}s choice 
+\end{DoxyReturn}
+\Hypertarget{servApp_8h_a3dedc99eb9acf58091565fd754bb702c}\label{servApp_8h_a3dedc99eb9acf58091565fd754bb702c} 
+\index{servApp.h@{servApp.h}!choisirPartieUtilisateur@{choisirPartieUtilisateur}}
+\index{choisirPartieUtilisateur@{choisirPartieUtilisateur}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{choisirPartieUtilisateur()}{choisirPartieUtilisateur()}}
+{\footnotesize\ttfamily int choisir\+Partie\+Utilisateur (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE,  }\item[{char \texorpdfstring{$\ast$}{*}}]{IPUtilisateur,  }\item[{int \texorpdfstring{$\ast$}{*}}]{port\+Utilisateur }\end{DoxyParamCaption})}
+
+
+
+Allows the user to select and join a specific user\textquotesingle{}s game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+{\em IPUtilisateur} & Buffer to store the IP address of the selected game host \\
+\hline
+{\em port\+Utilisateur} & Pointer to store the port number of the selected game host \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure (game full or error) 
+\end{DoxyReturn}
+\Hypertarget{servApp_8h_a27abc55a30adc7b380c6d9df98695741}\label{servApp_8h_a27abc55a30adc7b380c6d9df98695741} 
+\index{servApp.h@{servApp.h}!connexionToSE@{connexionToSE}}
+\index{connexionToSE@{connexionToSE}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{connexionToSE()}{connexionToSE()}}
+{\footnotesize\ttfamily int connexion\+To\+SE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nom\+Utilisateur }\end{DoxyParamCaption})}
+
+
+
+Establishes a connection to the registration server (SE) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+{\em nom\+Utilisateur} & Buffer to store the username entered by the user \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+\Hypertarget{servApp_8h_a97c310ba6a15fe130e0866c2e637e3b3}\label{servApp_8h_a97c310ba6a15fe130e0866c2e637e3b3} 
+\index{servApp.h@{servApp.h}!creerPartieSe@{creerPartieSe}}
+\index{creerPartieSe@{creerPartieSe}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{creerPartieSe()}{creerPartieSe()}}
+{\footnotesize\ttfamily int creer\+Partie\+Se (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nom\+Utilisateur }\end{DoxyParamCaption})}
+
+
+
+Creates a new game session on the registration server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+{\em nom\+Utilisateur} & The username of the player creating the game \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+\Hypertarget{servApp_8h_a9b447a7c8ff46abb9c0fe797e7efd7fa}\label{servApp_8h_a9b447a7c8ff46abb9c0fe797e7efd7fa} 
+\index{servApp.h@{servApp.h}!demanderAffichagePartiesUtilisateur@{demanderAffichagePartiesUtilisateur}}
+\index{demanderAffichagePartiesUtilisateur@{demanderAffichagePartiesUtilisateur}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{demanderAffichagePartiesUtilisateur()}{demanderAffichagePartiesUtilisateur()}}
+{\footnotesize\ttfamily int demander\+Affichage\+Parties\+Utilisateur (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE }\end{DoxyParamCaption})}
+
+
+
+Requests and displays the list of available games with users. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+\Hypertarget{servApp_8h_a6961386a1614ec6ffbaca2fc1db2ea99}\label{servApp_8h_a6961386a1614ec6ffbaca2fc1db2ea99} 
+\index{servApp.h@{servApp.h}!gestionPartie@{gestionPartie}}
+\index{gestionPartie@{gestionPartie}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{gestionPartie()}{gestionPartie()}}
+{\footnotesize\ttfamily void gestion\+Partie (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nom\+Utilisateur }\end{DoxyParamCaption})}
+
+
+
+Manages a game as the host server. 
+
+Creates a listening socket, waits for 3 players to connect, initializes the game engine, and handles game execution and cleanup 
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+{\em nom\+Utilisateur} & The username of the player hosting the game \\
+\hline
+\end{DoxyParams}
+\Hypertarget{servApp_8h_a94180abdbf400997f544cb58414290b7}\label{servApp_8h_a94180abdbf400997f544cb58414290b7} 
+\index{servApp.h@{servApp.h}!rejoindrePartie@{rejoindrePartie}}
+\index{rejoindrePartie@{rejoindrePartie}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{rejoindrePartie()}{rejoindrePartie()}}
+{\footnotesize\ttfamily void rejoindre\+Partie (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE }\end{DoxyParamCaption})}
+
+
+
+Joins an existing game hosted by another user. 
+
+Displays available games and prompts the user to select one to join 
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+\end{DoxyParams}
+\Hypertarget{servApp_8h_a7684d7ad90bdd12a81cab1a4b69ca13e}\label{servApp_8h_a7684d7ad90bdd12a81cab1a4b69ca13e} 
+\index{servApp.h@{servApp.h}!rejoindrePartieAleatoire@{rejoindrePartieAleatoire}}
+\index{rejoindrePartieAleatoire@{rejoindrePartieAleatoire}!servApp.h@{servApp.h}}
+\doxysubsubsection{\texorpdfstring{rejoindrePartieAleatoire()}{rejoindrePartieAleatoire()}}
+{\footnotesize\ttfamily int rejoindre\+Partie\+Aleatoire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sd\+SE,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nom\+Utilisateur }\end{DoxyParamCaption})}
+
+
+
+Joins a random available game or creates a new one if none exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sd\+SE} & Pointer to the socket descriptor for the registration server \\
+\hline
+{\em nom\+Utilisateur} & The username of the player \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}

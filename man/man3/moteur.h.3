@@ -1,0 +1,1184 @@
+.TH "include/moteur.h" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/moteur.h \- Header file for the Belote card game implementation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdbool\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include '\&.\&./include/data\&.h'\fP
+.br
+\fC#include '\&.\&./include/libRepReq\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBplayer\fP"
+.br
+.RI "Structure representing a player\&. "
+.ti -1c
+.RI "struct \fBpileCard\fP"
+.br
+.RI "Structure representing a pile of cards (deck or team's won cards) "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPLAYERS_MAX\fP   4"
+.br
+.RI "Maximum number of players (corresponds to Belote rules) "
+.ti -1c
+.RI "#define \fBNB_CARD_HAND\fP   8"
+.br
+.RI "Number of cards per player's hand\&. "
+.ti -1c
+.RI "#define \fBNB_CARD_DECK\fP   32"
+.br
+.RI "Total number of cards in the deck\&. "
+.ti -1c
+.RI "#define \fBPOINT_WIN\fP   1500"
+.br
+.RI "Points needed to win the game\&. "
+.ti -1c
+.RI "#define \fBMAX_LINE\fP   1024"
+.br
+.RI "Max char in a string\&. "
+.ti -1c
+.RI "#define \fBSTR_ROUGE_START\fP   printf('\\033[31m')"
+.br
+.RI "ANSI code to start red text\&. "
+.ti -1c
+.RI "#define \fBSTR_MAGENTA_START\fP   printf('\\033[35m')"
+.br
+.RI "ANSI code to start magenta text\&. "
+.ti -1c
+.RI "#define \fBSTR_VERT_START\fP   printf('\\033[32m')"
+.br
+.RI "ANSI code to start green text\&. "
+.ti -1c
+.RI "#define \fBSTR_BLEU_START\fP   printf('\\033[34m')"
+.br
+.RI "ANSI code to start blue text\&. "
+.ti -1c
+.RI "#define \fBSTR_COLOR_END\fP   printf('\\033[0m')"
+.br
+.RI "ANSI code to reset text color\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBplayer\fP \fBplayer_t\fP"
+.br
+.ti -1c
+.RI "typedef \fBplayer_t\fP * \fBplayers_t\fP[\fBPLAYERS_MAX\fP]"
+.br
+.RI "Array of pointers to all players in the game\&. "
+.ti -1c
+.RI "typedef struct \fBpileCard\fP \fBpileCard_t\fP"
+.br
+.ti -1c
+.RI "typedef enum \fBcard\fP \fBpli_t\fP[\fBPLAYERS_MAX\fP]"
+.br
+.RI "Array representing the current trick (4 cards) "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBcard\fP { \fBH_AS\fP, \fBH_7\fP, \fBH_8\fP, \fBH_9\fP, \fBH_10\fP, \fBH_V\fP, \fBH_D\fP, \fBH_R\fP, \fBC_AS\fP, \fBC_7\fP, \fBC_8\fP, \fBC_9\fP, \fBC_10\fP, \fBC_V\fP, \fBC_D\fP, \fBC_R\fP, \fBP_AS\fP, \fBP_7\fP, \fBP_8\fP, \fBP_9\fP, \fBP_10\fP, \fBP_V\fP, \fBP_D\fP, \fBP_R\fP, \fBT_AS\fP, \fBT_7\fP, \fBT_8\fP, \fBT_9\fP, \fBT_10\fP, \fBT_V\fP, \fBT_D\fP, \fBT_R\fP, \fBNOTHING\fP = -1 }"
+.br
+.RI "Enumeration of all cards in the deck\&. "
+.ti -1c
+.RI "enum \fBcolorCard\fP { \fBH\fP, \fBC\fP, \fBP\fP, \fBT\fP, \fBNONE\fP }"
+.br
+.RI "Enumeration of card suits\&. "
+.ti -1c
+.RI "enum \fBequipe\fP { \fBEQUIPE1\fP, \fBEQUIPE2\fP }"
+.br
+.RI "Enumeration of teams\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBpli2str\fP (char *pliStr, \fBpli_t\fP pli)"
+.br
+.RI "Converts the current trick to a string format for sending\&. "
+.ti -1c
+.RI "void \fBplayerCards2str\fP (char *cardsStr, \fBplayer_t\fP *\fBplayer\fP)"
+.br
+.RI "Converts a player's cards to a string format for sending\&. "
+.ti -1c
+.RI "void \fBstr2Cards\fP (const char *str, enum \fBcard\fP *cards, int maxCards)"
+.br
+.RI "Converts a string format back to an array of cards\&. "
+.ti -1c
+.RI "bool \fBaddPlayer\fP (\fBplayers_t\fP players, int *nbPlayer)"
+.br
+.RI "Adds a new player to the game\&. "
+.ti -1c
+.RI "void \fBgiveCard\fP (\fBplayers_t\fP players, int \fBplayer\fP)"
+.br
+.RI "Sends all cards in hand to the player\&. "
+.ti -1c
+.RI "void \fBokCard\fP (\fBplayers_t\fP players, int \fBplayer\fP)"
+.br
+.RI "Confirms to the player that their card is valid\&. "
+.ti -1c
+.RI "void \fBgivePli\fP (\fBplayers_t\fP players, \fBpli_t\fP pli)"
+.br
+.RI "Sends the current trick to all players for display\&. "
+.ti -1c
+.RI "bool \fBaskTakeAtout\fP (\fBplayers_t\fP players, \fBpli_t\fP pli, int \fBplayer\fP)"
+.br
+.RI "Asks a player if they want to take the revealed trump card (first round) "
+.ti -1c
+.RI "bool \fBaskTakeAtoutTurn2\fP (\fBplayers_t\fP players, \fBpli_t\fP pli, int \fBplayer\fP, enum \fBcolorCard\fP *c)"
+.br
+.RI "Asks a player if they want to choose trump (second round) and which suit\&. "
+.ti -1c
+.RI "enum \fBcard\fP \fBaskCard\fP (\fBplayers_t\fP players, int \fBplayer\fP)"
+.br
+.RI "Asks a player which card they want to play\&. "
+.ti -1c
+.RI "bool \fBgiveScore\fP (\fBplayers_t\fP players, int scoreEq1, int scoreEq2)"
+.br
+.RI "Sends the final scores to all players at the end of the game\&. "
+.ti -1c
+.RI "int \fBgetValueCard\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Gets the point value of a non-trump card\&. "
+.ti -1c
+.RI "int \fBgetValueAtoutCard\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Gets the point value of a trump card\&. "
+.ti -1c
+.RI "char * \fBgetNameCard\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Gets the name of a card as a string\&. "
+.ti -1c
+.RI "char * \fBgetValueCardString\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Gets the string representation of a card's value\&. "
+.ti -1c
+.RI "char * \fBgetCouleurCardString\fP (enum \fBcolorCard\fP color)"
+.br
+.RI "Gets the string representation of a card's suit\&. "
+.ti -1c
+.RI "char * \fBgetAsciiColor\fP (enum \fBcolorCard\fP color)"
+.br
+.RI "Gets the ASCII color code for a card suit\&. "
+.ti -1c
+.RI "enum \fBcard\fP \fBdealCard\fP (\fBpileCard_t\fP *pileDeck)"
+.br
+.RI "Deals one card from the deck\&. "
+.ti -1c
+.RI "void \fBresetCards\fP (\fBpileCard_t\fP *pileDeck, \fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2, \fBplayers_t\fP players)"
+.br
+.RI "Resets all cards to initial state for a new round\&. "
+.ti -1c
+.RI "int \fBstring_to_card\fP (const char *s, enum \fBcard\fP *out)"
+.br
+.RI "Converts a card name string to its enum value\&. "
+.ti -1c
+.RI "int \fBpoint_of_gain\fP (\fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2, enum \fBequipe\fP eq, enum \fBcolorCard\fP c)"
+.br
+.RI "Calculates points earned by a team from their won cards\&. "
+.ti -1c
+.RI "void \fBcardShuffle\fP (\fBpileCard_t\fP *pileDeck)"
+.br
+.RI "Shuffles the deck randomly\&. "
+.ti -1c
+.RI "bool \fBverifColor\fP (char color)"
+.br
+.RI "Verifies if a character represents a valid card suit\&. "
+.ti -1c
+.RI "int \fBbetterInPli\fP (\fBpli_t\fP pli, enum \fBcolorCard\fP c)"
+.br
+.RI "Determines which player wins the trick\&. "
+.ti -1c
+.RI "enum \fBcolorCard\fP \fBcard2Color\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Converts a card to its suit\&. "
+.ti -1c
+.RI "enum \fBcard\fP \fBsearchMaxCardInHand\fP (\fBplayers_t\fP players, int \fBplayer\fP, enum \fBcolorCard\fP color, enum \fBcolorCard\fP colorAtout)"
+.br
+.RI "Finds the highest value card of a specific suit in a player's hand\&. "
+.ti -1c
+.RI "bool \fBverifCard\fP (\fBplayers_t\fP players, \fBpli_t\fP pli, int \fBplayer\fP, enum \fBcolorCard\fP colorAtout, enum \fBcolorCard\fP *colorPli, enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Validates if a card can be legally played according to Belote rules\&. "
+.ti -1c
+.RI "enum \fBcard\fP \fBsearchMaxCardInPli\fP (\fBpli_t\fP pli, enum \fBcolorCard\fP color, enum \fBcolorCard\fP colorAtout)"
+.br
+.RI "Finds the highest value card of a specific suit in the current trick\&. "
+.ti -1c
+.RI "bool \fBisOvercut\fP (enum \fBcard\fP maxPlayerCard, enum \fBcard\fP maxPliCard, enum \fBcolorCard\fP colorAtout, enum \fBcolorCard\fP colorPli)"
+.br
+.RI "Determines if a player's card beats the current best card in the trick\&. "
+.ti -1c
+.RI "void \fBremoveCardFromHand\fP (\fBplayers_t\fP players, int \fBplayer\fP, enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Removes a card from a player's hand and shifts remaining cards\&. "
+.ti -1c
+.RI "void \fBinitPile\fP (\fBpileCard_t\fP **pile)"
+.br
+.RI "Initializes a card pile by allocating memory\&. "
+.ti -1c
+.RI "void \fBfirstDeal\fP (\fBpileCard_t\fP *deck, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli)"
+.br
+.RI "Performs the first deal (3 cards to each player) "
+.ti -1c
+.RI "int \fBplayerTurnAtout\fP (\fBplayers_t\fP players, \fBpli_t\fP pli, int turn, int *startPlayer, enum \fBcolorCard\fP *c)"
+.br
+.RI "Conducts the trump selection phase\&. "
+.ti -1c
+.RI "void \fBsecondDeal\fP (\fBpileCard_t\fP *deck, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli)"
+.br
+.RI "Performs the second deal (2 cards to each player + reveal trump card) "
+.ti -1c
+.RI "void \fBthirdDeal\fP (\fBpileCard_t\fP *deck, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli, int playerTakeAtout)"
+.br
+.RI "Performs the third deal (3 cards to each player, trump taker gets revealed card) "
+.ti -1c
+.RI "bool \fBturnDeal\fP (\fBpileCard_t\fP *deck, \fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP *c)"
+.br
+.RI "Manages the complete dealing phase including trump selection\&. "
+.ti -1c
+.RI "int \fBnextPlayingPlayer\fP (int *startPlayer, int nbNextPlayer)"
+.br
+.RI "Calculates the next player in turn order\&. "
+.ti -1c
+.RI "void \fBturnNormal\fP (\fBpileCard_t\fP *deck, \fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP *c)"
+.br
+.RI "Manages one complete trick of play\&. "
+.ti -1c
+.RI "bool \fBmanche\fP (\fBpileCard_t\fP *deck, \fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2, \fBplayers_t\fP players, int *startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP *c, int *scoreEq1, int *scoreEq2)"
+.br
+.RI "Manages one complete round (manche) of Belote\&. "
+.ti -1c
+.RI "void \fBgame\fP (\fBplayers_t\fP players)"
+.br
+.RI "Main game loop managing complete Belote game until a team wins\&. "
+.ti -1c
+.RI "void \fBstr_color\fP (enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Sets console text color based on card suit\&. "
+.ti -1c
+.RI "void \fBafficher_carte\fP (const enum \fBcard\fP \fBcard\fP)"
+.br
+.RI "Displays a single card in a formatted manner\&. "
+.ti -1c
+.RI "void \fBafficherCards\fP (const enum \fBcard\fP *cards, const int size)"
+.br
+.RI "Displays multiple cards side by side in a formatted manner\&. "
+.ti -1c
+.RI "void \fBafficherGainEq\fP (\fBpileCard_t\fP *pileDeck, \fBpileCard_t\fP *pileEq1, \fBpileCard_t\fP *pileEq2)"
+.br
+.RI "Displays all cards: deck and both teams' won piles\&. "
+.ti -1c
+.RI "void \fBafficherEq\fP (\fBpileCard_t\fP *pileEq)"
+.br
+.RI "Displays all cards in a team's won pile\&. "
+.ti -1c
+.RI "void \fBafficherDeck\fP (\fBpileCard_t\fP *pileDeck)"
+.br
+.RI "Displays remaining cards in the deck\&. "
+.ti -1c
+.RI "void \fBafficherPlayers\fP (\fBplayers_t\fP players)"
+.br
+.RI "Displays all players and their hands\&. "
+.ti -1c
+.RI "void \fBafficherPli\fP (\fBpli_t\fP pli)"
+.br
+.RI "Displays the current trick\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for the Belote card game implementation\&. 
+
+This header defines the data structures, enumerations, and function prototypes for implementing the French card game Belote for 4 players in 2 teams\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Raphael ALLO 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+02/02/2026 
+.RE
+.PP
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBcard\fP"
+
+.PP
+Enumeration of all cards in the deck\&. Cards are organized by suit: Hearts (H), Clubs (C), Spades (P), Diamonds (T) Each suit contains: AS, 7, 8, 9, 10, V (Jack), D (Queen), R (King) 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINOTHING \fP\fP
+Represents no card or empty slot\&. 
+.SS "enum \fBcolorCard\fP"
+
+.PP
+Enumeration of card suits\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIH \fP\fP
+Hearts (Coeur) 
+.TP
+\fB\fIC \fP\fP
+Diamonds (Carreau) 
+.TP
+\fB\fIP \fP\fP
+Spades (Pique) 
+.TP
+\fB\fIT \fP\fP
+Clubs (Trèfle) 
+.TP
+\fB\fINONE \fP\fP
+No suit\&. 
+.SS "enum \fBequipe\fP"
+
+.PP
+Enumeration of teams\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIEQUIPE1 \fP\fP
+Team 1 (players 0 and 2) 
+.TP
+\fB\fIEQUIPE2 \fP\fP
+Team 2 (players 1 and 3) 
+.SH "Function Documentation"
+.PP 
+.SS "bool addPlayer (\fBplayers_t\fP players, int * nbPlayer)"
+
+.PP
+Adds a new player to the game\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fInbPlayer\fP Current number of players, incremented if successful 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if player was added successfully, false if game is full or allocation failed 
+.RE
+.PP
+
+.SS "void afficher_carte (const enum \fBcard\fP card)"
+
+.PP
+Displays a single card in a formatted manner\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to display 
+.RE
+.PP
+
+.SS "void afficherCards (const enum \fBcard\fP * cards, const int size)"
+
+.PP
+Displays multiple cards side by side in a formatted manner\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcards\fP Array of cards to display 
+.br
+\fIsize\fP Number of cards in the array 
+.RE
+.PP
+
+.SS "void afficherDeck (\fBpileCard_t\fP * pileDeck)"
+
+.PP
+Displays remaining cards in the deck\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileDeck\fP Deck to display 
+.RE
+.PP
+
+.SS "void afficherEq (\fBpileCard_t\fP * pileEq)"
+
+.PP
+Displays all cards in a team's won pile\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileEq\fP Team's card pile to display 
+.RE
+.PP
+
+.SS "void afficherGainEq (\fBpileCard_t\fP * pileDeck, \fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2)"
+
+.PP
+Displays all cards: deck and both teams' won piles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileDeck\fP Remaining cards in deck 
+.br
+\fIpileEq1\fP Team 1's won cards 
+.br
+\fIpileEq2\fP Team 2's won cards 
+.RE
+.PP
+
+.SS "void afficherPlayers (\fBplayers_t\fP players)"
+
+.PP
+Displays all players and their hands\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of players to display 
+.RE
+.PP
+
+.SS "void afficherPli (\fBpli_t\fP pli)"
+
+.PP
+Displays the current trick\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpli\fP Trick to display 
+.RE
+.PP
+
+.SS "enum \fBcard\fP askCard (\fBplayers_t\fP players, int player)"
+
+.PP
+Asks a player which card they want to play\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIplayer\fP Index of the player being asked 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The card chosen by the player 
+.RE
+.PP
+
+.SS "bool askTakeAtout (\fBplayers_t\fP players, \fBpli_t\fP pli, int player)"
+
+.PP
+Asks a player if they want to take the revealed trump card (first round) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIpli\fP Current trick (contains revealed trump card) 
+.br
+\fIplayer\fP Index of the player being asked 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if player accepts, false otherwise 
+.RE
+.PP
+
+.SS "bool askTakeAtoutTurn2 (\fBplayers_t\fP players, \fBpli_t\fP pli, int player, enum \fBcolorCard\fP * c)"
+
+.PP
+Asks a player if they want to choose trump (second round) and which suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIpli\fP Current trick (contains revealed trump card) 
+.br
+\fIplayer\fP Index of the player being asked 
+.br
+\fIc\fP Chosen trump suit (if player accepts) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if player accepts and chooses a suit, false otherwise 
+.RE
+.PP
+
+.SS "int betterInPli (\fBpli_t\fP pli, enum \fBcolorCard\fP c)"
+
+.PP
+Determines which player wins the trick\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpli\fP The trick (4 cards) 
+.br
+\fIc\fP Trump suit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Index of the winning player 
+.RE
+.PP
+
+.SS "enum \fBcolorCard\fP card2Color (enum \fBcard\fP card)"
+
+.PP
+Converts a card to its suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to convert 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The suit of the card, or NONE if card is NOTHING 
+.RE
+.PP
+
+.SS "void cardShuffle (\fBpileCard_t\fP * pileDeck)"
+
+.PP
+Shuffles the deck randomly\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileDeck\fP Deck to shuffle 
+.RE
+.PP
+
+.SS "enum \fBcard\fP dealCard (\fBpileCard_t\fP * pileDeck)"
+
+.PP
+Deals one card from the deck\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileDeck\fP Pointer to the deck 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The dealt card 
+.RE
+.PP
+
+.SS "void firstDeal (\fBpileCard_t\fP * deck, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli)"
+
+.PP
+Performs the first deal (3 cards to each player) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Deck to deal from 
+.br
+\fIplayers\fP Players receiving cards 
+.br
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fIpli\fP Current trick (for display) 
+.RE
+.PP
+
+.SS "void game (\fBplayers_t\fP players)"
+
+.PP
+Main game loop managing complete Belote game until a team wins\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of 4 players 
+.RE
+.PP
+
+.SS "char * getAsciiColor (enum \fBcolorCard\fP color)"
+
+.PP
+Gets the ASCII color code for a card suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcolor\fP Suit to get the ASCII color for 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+ASCII color code string 
+.RE
+.PP
+
+.SS "char * getCouleurCardString (enum \fBcolorCard\fP color)"
+
+.PP
+Gets the string representation of a card's suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcolor\fP Suit to get the string of 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+String representation of the suit 
+.RE
+.PP
+
+.SS "char * getNameCard (enum \fBcard\fP card)"
+
+.PP
+Gets the name of a card as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to get the name of 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+String representation of the card 
+.RE
+.PP
+
+.SS "int getValueAtoutCard (enum \fBcard\fP card)"
+
+.PP
+Gets the point value of a trump card\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to evaluate 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Point value of the card 
+.RE
+.PP
+
+.SS "int getValueCard (enum \fBcard\fP card)"
+
+.PP
+Gets the point value of a non-trump card\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to evaluate 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Point value of the card 
+.RE
+.PP
+
+.SS "char * getValueCardString (enum \fBcard\fP card)"
+
+.PP
+Gets the string representation of a card's value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card to get the value string of 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+String representation of the card's value 
+.RE
+.PP
+
+.SS "void giveCard (\fBplayers_t\fP players, int player)"
+
+.PP
+Sends all cards in hand to the player\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIplayer\fP Index of the player to send cards to 
+.RE
+.PP
+
+.SS "void givePli (\fBplayers_t\fP players, \fBpli_t\fP pli)"
+
+.PP
+Sends the current trick to all players for display\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIpli\fP Current trick (4 cards) 
+.RE
+.PP
+
+.SS "bool giveScore (\fBplayers_t\fP players, int scoreEq1, int scoreEq2)"
+
+.PP
+Sends the final scores to all players at the end of the game\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIscoreEq1\fP Final score of team 1 
+.br
+\fIscoreEq2\fP Final score of team 2 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if scores were sent successfully, false if any error occurred 
+.RE
+.PP
+
+.SS "void initPile (\fBpileCard_t\fP ** pile)"
+
+.PP
+Initializes a card pile by allocating memory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpile\fP Pointer to pile pointer to initialize 
+.RE
+.PP
+
+.SS "bool isOvercut (enum \fBcard\fP maxPlayerCard, enum \fBcard\fP maxPliCard, enum \fBcolorCard\fP colorAtout, enum \fBcolorCard\fP colorPli)"
+
+.PP
+Determines if a player's card beats the current best card in the trick\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImaxPlayerCard\fP Player's card to check 
+.br
+\fImaxPliCard\fP Current best card in the trick 
+.br
+\fIcolorAtout\fP Trump suit 
+.br
+\fIcolorPli\fP Suit led in the trick 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if player's card beats the trick card, false otherwise 
+.RE
+.PP
+
+.SS "bool manche (\fBpileCard_t\fP * deck, \fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP * c, int * scoreEq1, int * scoreEq2)"
+
+.PP
+Manages one complete round (manche) of Belote\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Game deck 
+.br
+\fIpileEq1\fP Team 1's won cards pile 
+.br
+\fIpileEq2\fP Team 2's won cards pile 
+.br
+\fIplayers\fP Array of players 
+.br
+\fIstartPlayer\fP Pointer to starting player 
+.br
+\fIpli\fP Current trick 
+.br
+\fIc\fP Trump suit 
+.br
+\fIscoreEq1\fP Team 1's score (updated) 
+.br
+\fIscoreEq2\fP Team 2's score (updated) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if round completed successfully, false if all players passed on trump 
+.RE
+.PP
+
+.SS "int nextPlayingPlayer (int * startPlayer, int nbNextPlayer)"
+
+.PP
+Calculates the next player in turn order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fInbNextPlayer\fP Number of positions to advance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Index of the next player (0-3) 
+.RE
+.PP
+
+.SS "void okCard (\fBplayers_t\fP players, int player)"
+
+.PP
+Confirms to the player that their card is valid\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIplayer\fP Index of the player to notify 
+.RE
+.PP
+
+.SS "void playerCards2str (char * cardsStr, \fBplayer_t\fP * player)"
+
+.PP
+Converts a player's cards to a string format for sending\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcardsStr\fP String buffer to store the result 
+.br
+\fIplayer\fP Pointer to the player 
+.RE
+.PP
+
+.SS "int playerTurnAtout (\fBplayers_t\fP players, \fBpli_t\fP pli, int turn, int * startPlayer, enum \fBcolorCard\fP * c)"
+
+.PP
+Conducts the trump selection phase\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIpli\fP Current trick (contains revealed trump card) 
+.br
+\fIturn\fP Round of bidding (1 or 2) 
+.br
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fIc\fP Chosen trump suit (only set in round 2) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Index of player who accepted trump, or -1 if all passed 
+.RE
+.PP
+
+.SS "void pli2str (char * pliStr, \fBpli_t\fP pli)"
+
+.PP
+Converts the current trick to a string format for sending\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpliStr\fP String buffer to store the result 
+.br
+\fIpli\fP Current trick (4 cards) 
+.RE
+.PP
+
+.SS "int point_of_gain (\fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2, enum \fBequipe\fP eq, enum \fBcolorCard\fP c)"
+
+.PP
+Calculates points earned by a team from their won cards\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileEq1\fP Team 1's won cards pile 
+.br
+\fIpileEq2\fP Team 2's won cards pile 
+.br
+\fIeq\fP Team to calculate points for 
+.br
+\fIc\fP Trump suit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Total points earned by the specified team 
+.RE
+.PP
+
+.SS "void removeCardFromHand (\fBplayers_t\fP players, int player, enum \fBcard\fP card)"
+
+.PP
+Removes a card from a player's hand and shifts remaining cards\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIplayer\fP Index of the player 
+.br
+\fIcard\fP Card to remove 
+.RE
+.PP
+
+.SS "void resetCards (\fBpileCard_t\fP * pileDeck, \fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2, \fBplayers_t\fP players)"
+
+.PP
+Resets all cards to initial state for a new round\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpileDeck\fP Deck to reset 
+.br
+\fIpileEq1\fP Team 1's won cards pile to reset 
+.br
+\fIpileEq2\fP Team 2's won cards pile to reset 
+.br
+\fIplayers\fP Array of players whose hands will be cleared 
+.RE
+.PP
+
+.SS "enum \fBcard\fP searchMaxCardInHand (\fBplayers_t\fP players, int player, enum \fBcolorCard\fP color, enum \fBcolorCard\fP colorAtout)"
+
+.PP
+Finds the highest value card of a specific suit in a player's hand\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIplayer\fP Index of the player 
+.br
+\fIcolor\fP Suit to search for 
+.br
+\fIcolorAtout\fP Trump suit (affects value calculation) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The highest card of the specified suit, or NOTHING if none found 
+.RE
+.PP
+
+.SS "enum \fBcard\fP searchMaxCardInPli (\fBpli_t\fP pli, enum \fBcolorCard\fP color, enum \fBcolorCard\fP colorAtout)"
+
+.PP
+Finds the highest value card of a specific suit in the current trick\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpli\fP Current trick 
+.br
+\fIcolor\fP Suit to search for 
+.br
+\fIcolorAtout\fP Trump suit (affects value calculation) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The highest card of the specified suit, or NOTHING if none found 
+.RE
+.PP
+
+.SS "void secondDeal (\fBpileCard_t\fP * deck, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli)"
+
+.PP
+Performs the second deal (2 cards to each player + reveal trump card) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Deck to deal from 
+.br
+\fIplayers\fP Players receiving cards 
+.br
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fIpli\fP Current trick (stores revealed trump card) 
+.RE
+.PP
+
+.SS "void str2Cards (const char * str, enum \fBcard\fP * cards, int maxCards)"
+
+.PP
+Converts a string format back to an array of cards\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP String representation of cards (e\&.g\&., 'H_AS|C_10|P_V') 
+.br
+\fIcards\fP Array to store the resulting cards 
+.br
+\fImaxCards\fP Maximum number of cards to parse 
+.RE
+.PP
+
+.SS "void str_color (enum \fBcard\fP card)"
+
+.PP
+Sets console text color based on card suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcard\fP Card whose suit determines the color 
+.RE
+.PP
+
+.SS "int string_to_card (const char * s, enum \fBcard\fP * out)"
+
+.PP
+Converts a card name string to its enum value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP String representation of the card (e\&.g\&., 'H_AS') 
+.br
+\fIout\fP Pointer to store the resulting card enum 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+1 if conversion successful, 0 if card name not found 
+.RE
+.PP
+
+.SS "void thirdDeal (\fBpileCard_t\fP * deck, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli, int playerTakeAtout)"
+
+.PP
+Performs the third deal (3 cards to each player, trump taker gets revealed card) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Deck to deal from 
+.br
+\fIplayers\fP Players receiving cards 
+.br
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fIpli\fP Current trick (trump card will be taken) 
+.br
+\fIplayerTakeAtout\fP Index of player who accepted trump 
+.RE
+.PP
+
+.SS "bool turnDeal (\fBpileCard_t\fP * deck, \fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP * c)"
+
+.PP
+Manages the complete dealing phase including trump selection\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Deck to deal from 
+.br
+\fIpileEq1\fP Team 1's won cards pile (cleared) 
+.br
+\fIpileEq2\fP Team 2's won cards pile (cleared) 
+.br
+\fIplayers\fP Players receiving cards 
+.br
+\fIstartPlayer\fP Pointer to the starting player index 
+.br
+\fIpli\fP Current trick 
+.br
+\fIc\fP Trump suit determined 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if trump was selected, false if all players passed 
+.RE
+.PP
+
+.SS "void turnNormal (\fBpileCard_t\fP * deck, \fBpileCard_t\fP * pileEq1, \fBpileCard_t\fP * pileEq2, \fBplayers_t\fP players, int * startPlayer, \fBpli_t\fP pli, enum \fBcolorCard\fP * c)"
+
+.PP
+Manages one complete trick of play\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdeck\fP Game deck (unused in this function) 
+.br
+\fIpileEq1\fP Team 1's won cards pile 
+.br
+\fIpileEq2\fP Team 2's won cards pile 
+.br
+\fIplayers\fP Array of players 
+.br
+\fIstartPlayer\fP Pointer to starting player (updated to winner) 
+.br
+\fIpli\fP Current trick 
+.br
+\fIc\fP Trump suit 
+.RE
+.PP
+
+.SS "bool verifCard (\fBplayers_t\fP players, \fBpli_t\fP pli, int player, enum \fBcolorCard\fP colorAtout, enum \fBcolorCard\fP * colorPli, enum \fBcard\fP card)"
+
+.PP
+Validates if a card can be legally played according to Belote rules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplayers\fP Array of player pointers 
+.br
+\fIpli\fP Current trick 
+.br
+\fIplayer\fP Index of player attempting to play 
+.br
+\fIcolorAtout\fP Trump suit 
+.br
+\fIcolorPli\fP Suit led in the trick (updated if first card) 
+.br
+\fIcard\fP Card the player wants to play 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if card is legal, false otherwise 
+.RE
+.PP
+
+.SS "bool verifColor (char color)"
+
+.PP
+Verifies if a character represents a valid card suit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcolor\fP Character to verify (H, C, P, or T) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+true if valid suit, false otherwise 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

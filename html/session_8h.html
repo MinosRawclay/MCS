@@ -82,7 +82,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Spécification de la couche Session.  
+<p>Session layer specification for socket management.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -144,43 +144,60 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsocket.html">socket</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Définition de la structure de données socket.  <a href="structsocket.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket data structure definition.  <a href="structsocket.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a5ef0f2ca252f36a0c8d046d2eb67b416" id="r_a5ef0f2ca252f36a0c8d046d2eb67b416"><td class="memItemLeft" align="right" valign="top"><a id="a5ef0f2ca252f36a0c8d046d2eb67b416" name="a5ef0f2ca252f36a0c8d046d2eb67b416"></a>
-typedef struct <a class="el" href="structsocket.html">socket</a>&#160;</td><td class="memItemRight" valign="bottom"><b>socket_t</b></td></tr>
-<tr class="memdesc:a5ef0f2ca252f36a0c8d046d2eb67b416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Définition du type de données socket_t. <br /></td></tr>
+<tr class="memitem:a5ef0f2ca252f36a0c8d046d2eb67b416" id="r_a5ef0f2ca252f36a0c8d046d2eb67b416"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsocket.html">socket</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a></td></tr>
+<tr class="memdesc:a5ef0f2ca252f36a0c8d046d2eb67b416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket data type definition.  <br /></td></tr>
 <tr class="separator:a5ef0f2ca252f36a0c8d046d2eb67b416"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a33abe921a88df75673f623e49227139e" id="r_a33abe921a88df75673f623e49227139e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a33abe921a88df75673f623e49227139e">adr2struct</a> (struct sockaddr_in *addr, char *adrIP, short port)</td></tr>
-<tr class="memdesc:a33abe921a88df75673f623e49227139e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transformer une adresse au format humain en structure SocketBSD.  <br /></td></tr>
+<tr class="memdesc:a33abe921a88df75673f623e49227139e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts human-readable address format to BSD socket structure.  <br /></td></tr>
 <tr class="separator:a33abe921a88df75673f623e49227139e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afac73db40b85a0897ae36d9342188ab7" id="r_afac73db40b85a0897ae36d9342188ab7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#afac73db40b85a0897ae36d9342188ab7">creerSocket</a> (int mode)</td></tr>
-<tr class="memdesc:afac73db40b85a0897ae36d9342188ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Création d'une socket de type DGRAM/STREAM.  <br /></td></tr>
+<tr class="memdesc:afac73db40b85a0897ae36d9342188ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a socket of type DGRAM or STREAM.  <br /></td></tr>
 <tr class="separator:afac73db40b85a0897ae36d9342188ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d9908d2192f6364a4f8812cdaa1f7d1" id="r_a5d9908d2192f6364a4f8812cdaa1f7d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a5d9908d2192f6364a4f8812cdaa1f7d1">creerSocketAdr</a> (int mode, char *adrIP, short port)</td></tr>
-<tr class="memdesc:a5d9908d2192f6364a4f8812cdaa1f7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Création d'une socket de type DGRAM/STREAM.  <br /></td></tr>
+<tr class="memdesc:a5d9908d2192f6364a4f8812cdaa1f7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a socket of type DGRAM/STREAM with specified addressing.  <br /></td></tr>
 <tr class="separator:a5d9908d2192f6364a4f8812cdaa1f7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf7b35a6e085a114fb06ec3208bf3c90" id="r_adf7b35a6e085a114fb06ec3208bf3c90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#adf7b35a6e085a114fb06ec3208bf3c90">creerSocketEcoute</a> (char *adrIP, short port)</td></tr>
-<tr class="memdesc:adf7b35a6e085a114fb06ec3208bf3c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Création d'une socket d'écoute avec l'adressage fourni en paramètre.  <br /></td></tr>
-<tr class="separator:adf7b35a6e085a114fb06ec3208bf3c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03d4dd64d2b50bfe1e93055e6ee10976" id="r_a03d4dd64d2b50bfe1e93055e6ee10976"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a03d4dd64d2b50bfe1e93055e6ee10976">creerSocketEcoute</a> (char *adrIP, short port)</td></tr>
+<tr class="memdesc:a03d4dd64d2b50bfe1e93055e6ee10976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a listening socket with the provided addressing.  <br /></td></tr>
+<tr class="separator:a03d4dd64d2b50bfe1e93055e6ee10976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bf8e2cd5daab300c5354e8efaf065c9" id="r_a1bf8e2cd5daab300c5354e8efaf065c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a1bf8e2cd5daab300c5354e8efaf065c9">accepterClt</a> (const <a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a> sockEcoute)</td></tr>
-<tr class="memdesc:a1bf8e2cd5daab300c5354e8efaf065c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceptation d'une demande de connexion d'un client.  <br /></td></tr>
+<tr class="memdesc:a1bf8e2cd5daab300c5354e8efaf065c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts a client connection request.  <br /></td></tr>
 <tr class="separator:a1bf8e2cd5daab300c5354e8efaf065c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f5e8ef98743c3001ba36b42a46f1561" id="r_a7f5e8ef98743c3001ba36b42a46f1561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="session_8h.html#a7f5e8ef98743c3001ba36b42a46f1561">connecterClt2Srv</a> (char *adrIP, short port)</td></tr>
-<tr class="memdesc:a7f5e8ef98743c3001ba36b42a46f1561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre.  <br /></td></tr>
+<tr class="memdesc:a7f5e8ef98743c3001ba36b42a46f1561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a calling socket and connects to a server.  <br /></td></tr>
 <tr class="separator:a7f5e8ef98743c3001ba36b42a46f1561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Spécification de la couche Session. </p>
-<dl class="section author"><dt>Author</dt><dd>Samir El Khattabi </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>3 mars 2023 </dd></dl>
+<div class="textblock"><p>Session layer specification for socket management. </p>
+<p>This header file provides the specification for the session layer, defining data structures and function prototypes for socket operations. It supports both TCP (SOCK_STREAM) and UDP (SOCK_DGRAM) socket modes, providing a high-level interface for creating, binding, listening, accepting, and connecting sockets in client-server applications. </p><dl class="section author"><dt>Author</dt><dd>Samir El Khattabi </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>March 3, 2023 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a5ef0f2ca252f36a0c8d046d2eb67b416" name="a5ef0f2ca252f36a0c8d046d2eb67b416"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef0f2ca252f36a0c8d046d2eb67b416">&#9670;&#160;</a></span>socket_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Socket data type definition. </p>
+<p>Convenient type alias for struct socket </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a1bf8e2cd5daab300c5354e8efaf065c9" name="a1bf8e2cd5daab300c5354e8efaf065c9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1bf8e2cd5daab300c5354e8efaf065c9">&#9670;&#160;</a></span>accepterClt()</h2>
 
@@ -197,14 +214,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Acceptation d'une demande de connexion d'un client. </p>
+<p>Accepts a client connection request. </p>
+<p>Blocks waiting for an incoming connection on the listening socket, then accepts it and returns a new socket for communication with the connected client. The client's address information is stored in the returned socket structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sockEcoute</td><td>: socket d'écoute pour réception de la demande </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sockEcoute</td><td>Listening socket to receive the connection request </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>socket (dialogue) connectée portpar le serveur avec un client </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Dialogue socket connected by the server with a client</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function blocks until a client connection request arrives </dd>
+<dd>
+The returned socket is ready for bidirectional communication </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#a03d4dd64d2b50bfe1e93055e6ee10976" title="Creates a listening socket with the provided addressing.">creerSocketEcoute()</a> </dd></dl>
 
 </div>
 </div>
@@ -240,17 +262,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Transformer une adresse au format humain en structure SocketBSD. </p>
+<p>Converts human-readable address format to BSD socket structure. </p>
+<p>Transforms an IP address string and port number into a sockaddr_in structure suitable for use with Berkeley sockets API. Handles address family configuration, byte order conversion, and structure initialization.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">addr</td><td>: structure d'adressage BSD d'une socket INET </td></tr>
-    <tr><td class="paramname">adrIP</td><td>: adresse IP de la socket créée </td></tr>
-    <tr><td class="paramname">port</td><td>: port de la socket créée </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">addr</td><td>BSD socket addressing structure to fill (INET domain) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adrIP</td><td>IP address string of the socket (e.g., "192.168.1.1" or "0.0.0.0") </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port number of the socket</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Le domaine dépend du mode choisi (TCP/UDP) </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>paramètre *adr modifié </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The domain depends on the chosen mode (TCP/UDP) </dd>
+<dd>
+The addr parameter is modified by this function </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#a5d9908d2192f6364a4f8812cdaa1f7d1" title="Creates a socket of type DGRAM/STREAM with specified addressing.">creerSocketAdr()</a> </dd></dl>
 
 </div>
 </div>
@@ -280,15 +305,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre. </p>
+<p>Creates a calling socket and connects to a server. </p>
+<p>Creates a TCP socket and initiates a connection to the server whose address is provided as parameter. This function is used by client applications to establish connections to servers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">adrIP</td><td>: adresse IP du serveur à connecter </td></tr>
-    <tr><td class="paramname">port</td><td>: port TCP du serveur à connecter </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adrIP</td><td>IP address of the server to connect to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>TCP port of the server to connect to </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>socket connectée au serveur fourni en paramètre </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Socket connected to the server provided as parameter</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Always creates a SOCK_STREAM (TCP) socket </dd>
+<dd>
+This function blocks until connection is established or fails </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#afac73db40b85a0897ae36d9342188ab7" title="Creates a socket of type DGRAM or STREAM.">creerSocket()</a> </dd></dl>
 
 </div>
 </div>
@@ -308,14 +338,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Création d'une socket de type DGRAM/STREAM. </p>
+<p>Creates a socket of type DGRAM or STREAM. </p>
+<p>Creates a socket using the Berkeley sockets API with the specified mode. Supports both connection-oriented (SOCK_STREAM/TCP) and connectionless (SOCK_DGRAM/UDP) communication modes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mode</td><td>: mode connecté (STREAM) ou non (DGRAM) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Connection mode: SOCK_STREAM (connected/TCP) or SOCK_DGRAM (connectionless/UDP) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>socket créée selon le mode choisi </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Socket created according to the chosen mode</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If an invalid mode is provided, defaults to SOCK_STREAM </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#a5d9908d2192f6364a4f8812cdaa1f7d1" title="Creates a socket of type DGRAM/STREAM with specified addressing.">creerSocketAdr()</a> </dd></dl>
 
 </div>
 </div>
@@ -351,27 +384,29 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Création d'une socket de type DGRAM/STREAM. </p>
+<p>Creates a socket of type DGRAM/STREAM with specified addressing. </p>
+<p>Creates a socket with the specified mode and binds it to the provided IP address and port. This function combines socket creation and address binding in a single operation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mode</td><td>: adresse IP de la socket créée </td></tr>
-    <tr><td class="paramname">adrIP</td><td>: adresse IP de la socket créée </td></tr>
-    <tr><td class="paramname">port</td><td>: port de la socket créée </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Connection mode: SOCK_STREAM (TCP) or SOCK_DGRAM (UDP) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adrIP</td><td>IP address to bind the socket to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Port number to bind the socket to </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>socket créée dans le domaine choisi avec l'adressage fourni </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Socket created in the chosen domain with the provided addressing</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#afac73db40b85a0897ae36d9342188ab7" title="Creates a socket of type DGRAM or STREAM.">creerSocket()</a>, <a class="el" href="session_8h.html#a33abe921a88df75673f623e49227139e" title="Converts human-readable address format to BSD socket structure.">adr2struct()</a> </dd></dl>
 
 </div>
 </div>
-<a id="adf7b35a6e085a114fb06ec3208bf3c90" name="adf7b35a6e085a114fb06ec3208bf3c90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf7b35a6e085a114fb06ec3208bf3c90">&#9670;&#160;</a></span>creerSocketEcoute()</h2>
+<a id="a03d4dd64d2b50bfe1e93055e6ee10976" name="a03d4dd64d2b50bfe1e93055e6ee10976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03d4dd64d2b50bfe1e93055e6ee10976">&#9670;&#160;</a></span>creerSocketEcoute()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">creerSocketEcoute </td>
+          <td class="memname"><a class="el" href="session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416">socket_t</a> creerSocketEcoute </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>adrIP</em>, </td>
@@ -390,16 +425,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Création d'une socket d'écoute avec l'adressage fourni en paramètre. </p>
+<p>Creates a listening socket with the provided addressing. </p>
+<p>Creates a TCP socket, binds it to the specified address and port, and puts it in listening mode to accept incoming client connections. This function is specifically designed for server applications.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">adrIP</td><td>: adresse IP du serveur à mettre en écoute </td></tr>
-    <tr><td class="paramname">port</td><td>: port TCP du serveur à mettre en écoute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adrIP</td><td>IP address of the server to put in listening mode </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>TCP port of the server to put in listening mode </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>socket créée avec l'adressage fourni en paramètre et dans un état d'écoute </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Le domaine est nécessairement STREAM </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Socket created with the provided addressing and in listening state</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The mode is necessarily SOCK_STREAM (TCP) </dd>
+<dd>
+Listen backlog is configured for pending connections </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="session_8h.html#a1bf8e2cd5daab300c5354e8efaf065c9" title="Accepts a client connection request.">accepterClt()</a> </dd></dl>
 
 </div>
 </div>

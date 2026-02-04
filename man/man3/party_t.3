@@ -1,0 +1,36 @@
+.TH "party_t" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+party_t \- Structure représentant une partie de jeu\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <users\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBuser_t\fP * \fBlist\fP [4]"
+.br
+.ti -1c
+.RI "int \fBnbJoueurs\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structure représentant une partie de jeu\&. 
+
+Une partie peut contenir jusqu'à 4 joueurs\&. Le tableau \fClist\fP contient des pointeurs vers les utilisateurs participant à la partie\&. 
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBuser_t\fP* party_t::list[4]"
+Tableau des joueurs de la partie 
+.SS "int party_t::nbJoueurs"
+Nombre actuel de joueurs dans la partie 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

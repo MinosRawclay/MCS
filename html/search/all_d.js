@@ -1,8 +1,20 @@
 var searchData=
 [
-  ['sdial_0',['sDial',['../structuser__t.html#abecd62c9ddcac09aad396edd2447e69c',1,'user_t']]],
-  ['session_2eh_1',['session.h',['../session_8h.html',1,'']]],
-  ['socket_2',['socket',['../structsocket.html',1,'']]],
-  ['socket_5ft_3',['socket_t',['../session_8h.html#a5ef0f2ca252f36a0c8d046d2eb67b416',1,'session.h']]],
-  ['socketuser_4',['socketUser',['../users_8h.html#aca03269c785a082463a03c1368103193',1,'users.h']]]
+  ['p_0',['P',['../moteur_8h.html#a8ef4e2109b1ef55076f453ef7a0e695aa82f05f38f6a17b117cdd2b83227912c6',1,'moteur.h']]],
+  ['party_1',['party',['../structuser__s.html#ab2b0b38aaeac0747ca157601769fb851',1,'user_s']]],
+  ['party_5ft_2',['party_t',['../structparty__t.html',1,'']]],
+  ['pause_3',['PAUSE',['../data_8h.html#a04c10e619b22ff247ade9e18e9082fa0',1,'data.h']]],
+  ['pfct_4',['pFct',['../data_8h.html#aff0a816c1aa078dc74b95c5074a14b6c',1,'data.h']]],
+  ['pfctthread_5',['pFctThread',['../socketEnregistrement_8h.html#abf45d33e7548cac6cab52775312d78a1',1,'socketEnregistrement.h']]],
+  ['pilecard_6',['pileCard',['../structpileCard.html',1,'']]],
+  ['player_7',['player',['../structplayer.html',1,'']]],
+  ['playercards2str_8',['playerCards2str',['../moteur_8h.html#a560139b2a386f8e4b2bff3284dc4b3db',1,'moteur.h']]],
+  ['players_5fmax_9',['PLAYERS_MAX',['../moteur_8h.html#a0e78ceae5c1082769a3dbb0087ea29fb',1,'moteur.h']]],
+  ['players_5ft_10',['players_t',['../moteur_8h.html#a47ab0170de1f185f9cd4bb39c5ae3363',1,'moteur.h']]],
+  ['playerturnatout_11',['playerTurnAtout',['../moteur_8h.html#ae6db2b944730275f4c0b5e05039c3423',1,'moteur.h']]],
+  ['pli2str_12',['pli2str',['../moteur_8h.html#a5799042572c7f85b37994597b849f3aa',1,'moteur.h']]],
+  ['pli_5ft_13',['pli_t',['../moteur_8h.html#a6a3f77606fc731b7f4977d69a89cf440',1,'moteur.h']]],
+  ['point_5fof_5fgain_14',['point_of_gain',['../moteur_8h.html#ad5d5b5d5b739f41d96d32e2d620d0c29',1,'moteur.h']]],
+  ['point_5fwin_15',['POINT_WIN',['../moteur_8h.html#a5d275b06efb849f4060e13f53968c537',1,'moteur.h']]],
+  ['port_16',['PORT',['../socketEnregistrement_8h.html#a614217d263be1fb1a5f76e2ff7be19a2',1,'socketEnregistrement.h']]]
 ];

@@ -1,0 +1,426 @@
+.TH "include/libRepReq.h" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/libRepReq.h \- Declarations of request/response management structures and functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'data\&.h'\fP
+.br
+\fC#include 'users\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBrequete\fP"
+.br
+.RI "Structure representing a protocol request\&. "
+.ti -1c
+.RI "struct \fBreponse\fP"
+.br
+.RI "Structure representing a protocol response\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBREQ_STR_OUT\fP   '%i:%s:%s'"
+.br
+.RI "Output format to convert a request to a string\&. "
+.ti -1c
+.RI "#define \fBREQ_STR_IN\fP   '%i:%[^:]:%[^\\n]'"
+.br
+.RI "Input format to parse a string into a request\&. "
+.ti -1c
+.RI "#define \fBREP_STR_OUT\fP   '%i:%s:%s'"
+.br
+.RI "Output format to convert a response to a string\&. "
+.ti -1c
+.RI "#define \fBREP_STR_IN\fP   '%i:%[^:]:%[^\\n]'"
+.br
+.RI "Input format to parse a string into a response\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBrequete\fP \fBrequete_t\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBreponse\fP \fBreponse_t\fP"
+.br
+.ti -1c
+.RI "typedef enum \fBrequeteList\fP \fBrequeteList_t\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBrequeteList\fP { \fBERR_MAUVAISE_CONNEXION\fP = 1, \fBERR_PARTIE_PLEINE\fP = 2, \fBERR_SERVEUR_PLEIN\fP = 3, \fBERR_MAUVAIS_CODE\fP = 4, \fBERR_SERVEUR_NON_DISPO\fP = 5, \fBREQ_LANCER_PARTIE\fP = 100, \fBREQ_ENVOYER_DECK\fP = 110, \fBREQ_ENVOYER_PLI\fP = 111, \fBREQ_ENVOYER_SCORE\fP = 112, \fBREQ_JOUER\fP = 120, \fBREQ_CARTE_LEGALE\fP = 121, \fBREQ_CHOIX_ATOUT\fP = 122, \fBREQ_CHOIX_ATOUT_COULEUR\fP = 123, \fBREP_ACK_LANCER_PARTIE\fP = 200, \fBREP_ACK_ENVOYER_DECK\fP = 210, \fBREP_ACK_ENVOYER_PLI\fP = 211, \fBREP_ACK_ENVOYER_SCORE\fP = 212, \fBREP_ENVOI_CARTE\fP = 220, \fBREP_ACK_CARTE_LEGALE\fP = 221, \fBREP_CHOIX_ATOUT\fP = 222, \fBREP_CHOIX_ATOUT_COULEUR\fP = 223, \fBCOM_CONNECTER\fP = 301, \fBCOM_DECONNECTER\fP = 302, \fBCOM_CREER_PARTIE\fP = 303, \fBCOM_REJOINDRE_PARTIE\fP = 304, \fBCOM_REJOINDRE_ALEA\fP = 305, \fBREP_ACK_CONNECTER\fP = 401, \fBREP_LIST_USERS\fP = 403 }"
+.br
+.RI "Enumeration of all request, response and communication codes\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBreq2str\fP (const \fBrequete_t\fP *req, char *str)"
+.br
+.RI "Converts a request structure to a string\&. "
+.ti -1c
+.RI "void \fBstr2req\fP (const char *str, \fBrequete_t\fP *req)"
+.br
+.RI "Converts a string to a request structure\&. "
+.ti -1c
+.RI "void \fBrep2str\fP (const \fBreponse_t\fP *rep, char *str)"
+.br
+.RI "Converts a response structure to a string\&. "
+.ti -1c
+.RI "void \fBstr2rep\fP (const char *str, \fBreponse_t\fP *rep)"
+.br
+.RI "Converts a string to a response structure\&. "
+.ti -1c
+.RI "void \fBtraiterReq101\fP (\fBrequete_t\fP *req)"
+.br
+.RI "Processes a request of type 101\&. "
+.ti -1c
+.RI "void \fBtraiterReq102\fP (\fBrequete_t\fP *req)"
+.br
+.RI "Processes a request of type 102\&. "
+.ti -1c
+.RI "void \fBtraiterReq103\fP (\fBrequete_t\fP *req)"
+.br
+.RI "Processes a request of type 103\&. "
+.ti -1c
+.RI "void \fBtraiterRep\fP (\fBreponse_t\fP *rep)"
+.br
+.RI "Processes a generic response\&. "
+.ti -1c
+.RI "void \fBDialSrv\fP (\fBsocket_t\fP sockEcoute)"
+.br
+.RI "Server-side dialogue function\&. "
+.ti -1c
+.RI "void \fBDialC\fP (\fBsocket_t\fP sd)"
+.br
+.RI "Client-side dialogue function\&. "
+.ti -1c
+.RI "\fBrequete_t\fP \fBtraiterRegister\fP (\fBreponse_t\fP *rep, \fBsocket_t\fP *sDial)"
+.br
+.RI "Processes registration and game management requests\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Declarations of request/response management structures and functions\&. 
+
+This header file defines data structures for requests and responses in the communication protocol, as well as formatting macros for conversion between structures and strings\&. It also declares the complete enumeration of request, response and communication codes for the Belote card game\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Breviere Alexandre 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+04/02/2026 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define REP_STR_IN   '%i:%[^:]:%[^\\n]'"
+
+.PP
+Input format to parse a string into a response\&. Captures: idRep (integer), verbRep (up to ':'), optRep (up to newline) 
+.SS "#define REP_STR_OUT   '%i:%s:%s'"
+
+.PP
+Output format to convert a response to a string\&. Format: 'idRep:verbRep:optRep' 
+.SS "#define REQ_STR_IN   '%i:%[^:]:%[^\\n]'"
+
+.PP
+Input format to parse a string into a request\&. Captures: idReq (integer), verbReq (up to ':'), optReq (up to newline) 
+.SS "#define REQ_STR_OUT   '%i:%s:%s'"
+
+.PP
+Output format to convert a request to a string\&. Format: 'idReq:verbReq:optReq' 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBrequeteList\fP"
+
+.PP
+Enumeration of all request, response and communication codes\&. Organizes codes by categories:
+.IP "\(bu" 2
+Error codes (1-5)
+.IP "\(bu" 2
+Game requests (100-123)
+.IP "\(bu" 2
+Game responses (200-223)
+.IP "\(bu" 2
+Server communications (301-305)
+.IP "\(bu" 2
+Communication responses (401-403) 
+.PP
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIERR_MAUVAISE_CONNEXION \fP\fP
+Server connection error\&. 
+.TP
+\fB\fIERR_PARTIE_PLEINE \fP\fP
+Game is full (4 players) 
+.TP
+\fB\fIERR_SERVEUR_PLEIN \fP\fP
+Server cannot accept more players\&. 
+.TP
+\fB\fIERR_MAUVAIS_CODE \fP\fP
+Invalid request/response code\&. 
+.TP
+\fB\fIERR_SERVEUR_NON_DISPO \fP\fP
+Server unavailable\&. 
+.TP
+\fB\fIREQ_LANCER_PARTIE \fP\fP
+Request to start the game\&. 
+.TP
+\fB\fIREQ_ENVOYER_DECK \fP\fP
+Request to send the deck (player's hand) 
+.TP
+\fB\fIREQ_ENVOYER_PLI \fP\fP
+Request to send the current trick\&. 
+.TP
+\fB\fIREQ_ENVOYER_SCORE \fP\fP
+Request to send scores\&. 
+.TP
+\fB\fIREQ_JOUER \fP\fP
+Request player to play a card\&. 
+.TP
+\fB\fIREQ_CARTE_LEGALE \fP\fP
+Notification that played card is legal\&. 
+.TP
+\fB\fIREQ_CHOIX_ATOUT \fP\fP
+Request to take trump (round 1) 
+.TP
+\fB\fIREQ_CHOIX_ATOUT_COULEUR \fP\fP
+Request to choose trump suit (round 2) 
+.TP
+\fB\fIREP_ACK_LANCER_PARTIE \fP\fP
+Acknowledgment of game start\&. 
+.TP
+\fB\fIREP_ACK_ENVOYER_DECK \fP\fP
+Acknowledgment of deck received\&. 
+.TP
+\fB\fIREP_ACK_ENVOYER_PLI \fP\fP
+Acknowledgment of trick received\&. 
+.TP
+\fB\fIREP_ACK_ENVOYER_SCORE \fP\fP
+Acknowledgment of scores received\&. 
+.TP
+\fB\fIREP_ENVOI_CARTE \fP\fP
+Send card played by player\&. 
+.TP
+\fB\fIREP_ACK_CARTE_LEGALE \fP\fP
+Acknowledgment of legal card\&. 
+.TP
+\fB\fIREP_CHOIX_ATOUT \fP\fP
+Response to trump choice (1=yes, 0=no) 
+.TP
+\fB\fIREP_CHOIX_ATOUT_COULEUR \fP\fP
+Response with chosen suit (format: '1|H') 
+.TP
+\fB\fICOM_CONNECTER \fP\fP
+Request to connect to server\&. 
+.TP
+\fB\fICOM_DECONNECTER \fP\fP
+Request to disconnect from server\&. 
+.TP
+\fB\fICOM_CREER_PARTIE \fP\fP
+Request to create a new game\&. 
+.TP
+\fB\fICOM_REJOINDRE_PARTIE \fP\fP
+Request to join a specific game\&. 
+.TP
+\fB\fICOM_REJOINDRE_ALEA \fP\fP
+Request to join a random game\&. 
+.TP
+\fB\fIREP_ACK_CONNECTER \fP\fP
+Acknowledgment of successful connection\&. 
+.TP
+\fB\fIREP_LIST_USERS \fP\fP
+List of available users/games\&. 
+.SH "Function Documentation"
+.PP 
+.SS "void DialC (\fBsocket_t\fP sd)"
+
+.PP
+Client-side dialogue function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsd\fP Dialogue socket with the server 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBDialSrv()\fP 
+.RE
+.PP
+
+.SS "void DialSrv (\fBsocket_t\fP sockEcoute)"
+
+.PP
+Server-side dialogue function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEcoute\fP Listening socket to accept client connections 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBDialC()\fP 
+.RE
+.PP
+
+.SS "void rep2str (const \fBreponse_t\fP * rep, char * str)"
+
+.PP
+Converts a response structure to a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIrep\fP Pointer to the response structure to convert 
+.br
+\fIstr\fP String buffer to store the result 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBstr2rep()\fP 
+.RE
+.PP
+
+.SS "void req2str (const \fBrequete_t\fP * req, char * str)"
+
+.PP
+Converts a request structure to a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIreq\fP Pointer to the request structure to convert 
+.br
+\fIstr\fP String buffer to store the result 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBstr2req()\fP 
+.RE
+.PP
+
+.SS "void str2rep (const char * str, \fBreponse_t\fP * rep)"
+
+.PP
+Converts a string to a response structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP String to parse 
+.br
+\fIrep\fP Pointer to the response structure to fill 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBrep2str()\fP 
+.RE
+.PP
+
+.SS "void str2req (const char * str, \fBrequete_t\fP * req)"
+
+.PP
+Converts a string to a request structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP String to parse 
+.br
+\fIreq\fP Pointer to the request structure to fill 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBreq2str()\fP 
+.RE
+.PP
+
+.SS "\fBrequete_t\fP traiterRegister (\fBreponse_t\fP * rep, \fBsocket_t\fP * sDial)"
+
+.PP
+Processes registration and game management requests\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIrep\fP Pointer to the received response to process 
+.br
+\fIsDial\fP Pointer to the client's dialogue socket 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Generated request in response to processing 
+.RE
+.PP
+
+.SS "void traiterRep (\fBreponse_t\fP * rep)"
+
+.PP
+Processes a generic response\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIrep\fP Pointer to the response to process 
+.RE
+.PP
+
+.SS "void traiterReq101 (\fBrequete_t\fP * req)"
+
+.PP
+Processes a request of type 101\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIreq\fP Pointer to the request to process 
+.RE
+.PP
+
+.SS "void traiterReq102 (\fBrequete_t\fP * req)"
+
+.PP
+Processes a request of type 102\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIreq\fP Pointer to the request to process 
+.RE
+.PP
+
+.SS "void traiterReq103 (\fBrequete_t\fP * req)"
+
+.PP
+Processes a request of type 103\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIreq\fP Pointer to the request to process 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

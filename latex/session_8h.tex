@@ -2,7 +2,7 @@
 \hypertarget{session_8h}{}\label{session_8h}\index{include/session.h@{include/session.h}}
 
 
-Spécification de la couche Session.  
+Session layer specification for socket management.  
 
 
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
@@ -16,62 +16,62 @@ Spécification de la couche Session.
 {\ttfamily \#include $<$signal.\+h$>$}\newline
 {\ttfamily \#include $<$errno.\+h$>$}\newline
 Include dependency graph for session.\+h\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{session_8h__incl}
-\end{center}
-\end{figure}
+% FIG 0
 This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=288pt]{session_8h__dep__incl}
-\end{center}
-\end{figure}
+% FIG 1
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structsocket}{socket}}
-\begin{DoxyCompactList}\small\item\em Définition de la structure de données socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Socket data structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}\label{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416} 
-typedef struct \mbox{\hyperlink{structsocket}{socket}} {\bfseries socket\+\_\+t}
-\begin{DoxyCompactList}\small\item\em Définition du type de données socket\+\_\+t. \end{DoxyCompactList}\end{DoxyCompactItemize}
+typedef struct \mbox{\hyperlink{structsocket}{socket}} \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Socket data type definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{session_8h_a33abe921a88df75673f623e49227139e}{adr2struct}} (struct sockaddr\+\_\+in \texorpdfstring{$\ast$}{*}addr, char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
-\begin{DoxyCompactList}\small\item\em Transformer une adresse au format humain en structure Socket\+BSD. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Converts human-\/readable address format to BSD socket structure. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_afac73db40b85a0897ae36d9342188ab7}{creer\+Socket}} (int mode)
-\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a socket of type DGRAM or STREAM. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creer\+Socket\+Adr}} (int mode, char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
-\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_adf7b35a6e085a114fb06ec3208bf3c90}{creer\+Socket\+Ecoute}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
-\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket d\textquotesingle{}écoute avec l\textquotesingle{}adressage fourni en paramètre. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a socket of type DGRAM/\+STREAM with specified addressing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}{creer\+Socket\+Ecoute}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
+\begin{DoxyCompactList}\small\item\em Creates a listening socket with the provided addressing. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepter\+Clt}} (const \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sock\+Ecoute)
-\begin{DoxyCompactList}\small\item\em Acceptation d\textquotesingle{}une demande de connexion d\textquotesingle{}un client. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Accepts a client connection request. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} \mbox{\hyperlink{session_8h_a7f5e8ef98743c3001ba36b42a46f1561}{connecter\+Clt2\+Srv}} (char \texorpdfstring{$\ast$}{*}adr\+IP, short port)
-\begin{DoxyCompactList}\small\item\em Création d\textquotesingle{}une socket d\textquotesingle{}appel et connexion au seveur dont l\textquotesingle{}adressage est fourni en paramètre. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Creates a calling socket and connects to a server. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Spécification de la couche Session. 
+Session layer specification for socket management. 
 
-\begin{DoxyAuthor}{Author}
+This header file provides the specification for the session layer, defining data structures and function prototypes for socket operations. It supports both TCP (SOCK\+\_\+\+STREAM) and UDP (SOCK\+\_\+\+DGRAM) socket modes, providing a high-\/level interface for creating, binding, listening, accepting, and connecting sockets in client-\/server applications. \begin{DoxyAuthor}{Author}
 Samir El Khattabi 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-3 mars 2023 
+March 3, 2023 
 \end{DoxyDate}
 \begin{DoxyVersion}{Version}
 1.\+0 
 \end{DoxyVersion}
 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}\label{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416} 
+\index{session.h@{session.h}!socket\_t@{socket\_t}}
+\index{socket\_t@{socket\_t}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{socket\_t}{socket\_t}}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}
+
+
+
+Socket data type definition. 
+
+Convenient type alias for struct socket 
 
 \doxysubsection{Function Documentation}
 \Hypertarget{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}\label{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9} 
@@ -82,16 +82,26 @@ Samir El Khattabi
 
 
 
-Acceptation d\textquotesingle{}une demande de connexion d\textquotesingle{}un client. 
+Accepts a client connection request. 
+
+Blocks waiting for an incoming connection on the listening socket, then accepts it and returns a new socket for communication with the connected client. The client\textquotesingle{}s address information is stored in the returned socket structure.
 
 
-\begin{DoxyParams}{Parameters}
-{\em sock\+Ecoute} & \+: socket d\textquotesingle{}écoute pour réception de la demande \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sock\+Ecoute} & Listening socket to receive the connection request \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-socket (dialogue) connectée portpar le serveur avec un client 
+Dialogue socket connected by the server with a client
 \end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function blocks until a client connection request arrives 
+
+The returned socket is ready for bidirectional communication 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}{creer\+Socket\+Ecoute()} 
+\end{DoxySeeAlso}
 \Hypertarget{session_8h_a33abe921a88df75673f623e49227139e}\label{session_8h_a33abe921a88df75673f623e49227139e} 
 \index{session.h@{session.h}!adr2struct@{adr2struct}}
 \index{adr2struct@{adr2struct}!session.h@{session.h}}
@@ -100,23 +110,27 @@ socket (dialogue) connectée portpar le serveur avec un client
 
 
 
-Transformer une adresse au format humain en structure Socket\+BSD. 
+Converts human-\/readable address format to BSD socket structure. 
+
+Transforms an IP address string and port number into a sockaddr\+\_\+in structure suitable for use with Berkeley sockets API. Handles address family configuration, byte order conversion, and structure initialization.
 
 
-\begin{DoxyParams}{Parameters}
-{\em addr} & \+: structure d\textquotesingle{}adressage BSD d\textquotesingle{}une socket INET \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em addr} & BSD socket addressing structure to fill (INET domain) \\
 \hline
-{\em adr\+IP} & \+: adresse IP de la socket créée \\
+\mbox{\texttt{ in}}  & {\em adr\+IP} & IP address string of the socket (e.\+g., "{}192.\+168.\+1.\+1"{} or "{}0.\+0.\+0.\+0"{}) \\
 \hline
-{\em port} & \+: port de la socket créée \\
+\mbox{\texttt{ in}}  & {\em port} & Port number of the socket\\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-Le domaine dépend du mode choisi (TCP/\+UDP) 
+The domain depends on the chosen mode (TCP/\+UDP) 
+
+The addr parameter is modified by this function 
 \end{DoxyNote}
-\begin{DoxyReturn}{Returns}
-paramètre \texorpdfstring{$\ast$}{*}adr modifié 
-\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creer\+Socket\+Adr()} 
+\end{DoxySeeAlso}
 \Hypertarget{session_8h_a7f5e8ef98743c3001ba36b42a46f1561}\label{session_8h_a7f5e8ef98743c3001ba36b42a46f1561} 
 \index{session.h@{session.h}!connecterClt2Srv@{connecterClt2Srv}}
 \index{connecterClt2Srv@{connecterClt2Srv}!session.h@{session.h}}
@@ -125,18 +139,28 @@ paramètre \texorpdfstring{$\ast$}{*}adr modifié
 
 
 
-Création d\textquotesingle{}une socket d\textquotesingle{}appel et connexion au seveur dont l\textquotesingle{}adressage est fourni en paramètre. 
+Creates a calling socket and connects to a server. 
+
+Creates a TCP socket and initiates a connection to the server whose address is provided as parameter. This function is used by client applications to establish connections to servers.
 
 
-\begin{DoxyParams}{Parameters}
-{\em adr\+IP} & \+: adresse IP du serveur à connecter \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em adr\+IP} & IP address of the server to connect to \\
 \hline
-{\em port} & \+: port TCP du serveur à connecter \\
+\mbox{\texttt{ in}}  & {\em port} & TCP port of the server to connect to \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-socket connectée au serveur fourni en paramètre 
+Socket connected to the server provided as parameter
 \end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Always creates a SOCK\+\_\+\+STREAM (TCP) socket 
+
+This function blocks until connection is established or fails 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_afac73db40b85a0897ae36d9342188ab7}{creer\+Socket()} 
+\end{DoxySeeAlso}
 \Hypertarget{session_8h_afac73db40b85a0897ae36d9342188ab7}\label{session_8h_afac73db40b85a0897ae36d9342188ab7} 
 \index{session.h@{session.h}!creerSocket@{creerSocket}}
 \index{creerSocket@{creerSocket}!session.h@{session.h}}
@@ -145,16 +169,24 @@ socket connectée au serveur fourni en paramètre
 
 
 
-Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. 
+Creates a socket of type DGRAM or STREAM. 
+
+Creates a socket using the Berkeley sockets API with the specified mode. Supports both connection-\/oriented (SOCK\+\_\+\+STREAM/\+TCP) and connectionless (SOCK\+\_\+\+DGRAM/\+UDP) communication modes.
 
 
-\begin{DoxyParams}{Parameters}
-{\em mode} & \+: mode connecté (STREAM) ou non (DGRAM) \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mode} & Connection mode\+: SOCK\+\_\+\+STREAM (connected/\+TCP) or SOCK\+\_\+\+DGRAM (connectionless/\+UDP) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-socket créée selon le mode choisi 
+Socket created according to the chosen mode
 \end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If an invalid mode is provided, defaults to SOCK\+\_\+\+STREAM 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creer\+Socket\+Adr()} 
+\end{DoxySeeAlso}
 \Hypertarget{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}\label{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1} 
 \index{session.h@{session.h}!creerSocketAdr@{creerSocketAdr}}
 \index{creerSocketAdr@{creerSocketAdr}!session.h@{session.h}}
@@ -163,40 +195,52 @@ socket créée selon le mode choisi
 
 
 
-Création d\textquotesingle{}une socket de type DGRAM/\+STREAM. 
+Creates a socket of type DGRAM/\+STREAM with specified addressing. 
+
+Creates a socket with the specified mode and binds it to the provided IP address and port. This function combines socket creation and address binding in a single operation.
 
 
-\begin{DoxyParams}{Parameters}
-{\em mode} & \+: adresse IP de la socket créée \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mode} & Connection mode\+: SOCK\+\_\+\+STREAM (TCP) or SOCK\+\_\+\+DGRAM (UDP) \\
 \hline
-{\em adr\+IP} & \+: adresse IP de la socket créée \\
+\mbox{\texttt{ in}}  & {\em adr\+IP} & IP address to bind the socket to \\
 \hline
-{\em port} & \+: port de la socket créée \\
+\mbox{\texttt{ in}}  & {\em port} & Port number to bind the socket to \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-socket créée dans le domaine choisi avec l\textquotesingle{}adressage fourni 
+Socket created in the chosen domain with the provided addressing
 \end{DoxyReturn}
-\Hypertarget{session_8h_adf7b35a6e085a114fb06ec3208bf3c90}\label{session_8h_adf7b35a6e085a114fb06ec3208bf3c90} 
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_afac73db40b85a0897ae36d9342188ab7}{creer\+Socket()}, \doxylink{session_8h_a33abe921a88df75673f623e49227139e}{adr2struct()} 
+\end{DoxySeeAlso}
+\Hypertarget{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}\label{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976} 
 \index{session.h@{session.h}!creerSocketEcoute@{creerSocketEcoute}}
 \index{creerSocketEcoute@{creerSocketEcoute}!session.h@{session.h}}
 \doxysubsubsection{\texorpdfstring{creerSocketEcoute()}{creerSocketEcoute()}}
-{\footnotesize\ttfamily creer\+Socket\+Ecoute (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} creer\+Socket\+Ecoute (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{adr\+IP,  }\item[{short}]{port }\end{DoxyParamCaption})}
 
 
 
-Création d\textquotesingle{}une socket d\textquotesingle{}écoute avec l\textquotesingle{}adressage fourni en paramètre. 
+Creates a listening socket with the provided addressing. 
+
+Creates a TCP socket, binds it to the specified address and port, and puts it in listening mode to accept incoming client connections. This function is specifically designed for server applications.
 
 
-\begin{DoxyParams}{Parameters}
-{\em adr\+IP} & \+: adresse IP du serveur à mettre en écoute \\
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em adr\+IP} & IP address of the server to put in listening mode \\
 \hline
-{\em port} & \+: port TCP du serveur à mettre en écoute \\
+\mbox{\texttt{ in}}  & {\em port} & TCP port of the server to put in listening mode \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-socket créée avec l\textquotesingle{}adressage fourni en paramètre et dans un état d\textquotesingle{}écoute 
+Socket created with the provided addressing and in listening state
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-Le domaine est nécessairement STREAM 
+The mode is necessarily SOCK\+\_\+\+STREAM (TCP) 
+
+Listen backlog is configured for pending connections 
 \end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepter\+Clt()} 
+\end{DoxySeeAlso}

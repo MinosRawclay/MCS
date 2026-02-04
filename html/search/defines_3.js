@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['recv_5fflags_0',['RECV_FLAGS',['../data_8c.html#a656556d164a0deca1fedfe1a4e8d3643',1,'data.c']]]
+  ['nb_5fcard_5fdeck_0',['NB_CARD_DECK',['../moteur_8h.html#a0d406fd75be3f9520396646e265a1498',1,'moteur.h']]],
+  ['nb_5fcard_5fhand_1',['NB_CARD_HAND',['../moteur_8h.html#aacb7845af807f387aad9339fe8536f15',1,'moteur.h']]]
 ];

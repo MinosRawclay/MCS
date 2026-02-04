@@ -1,0 +1,34 @@
+.TH "player" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+player \- Structure representing a player\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <moteur\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBnum\fP"
+.br
+.RI "Player number (0-3) "
+.ti -1c
+.RI "int \fBcards\fP [\fBNB_CARD_HAND\fP]"
+.br
+.RI "Cards in player's hand\&. "
+.ti -1c
+.RI "\fBsocket_t\fP * \fBsock\fP"
+.br
+.RI "Socket for network communication (NULL for local player) "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structure representing a player\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

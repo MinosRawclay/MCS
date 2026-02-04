@@ -1,0 +1,106 @@
+.TH "include/libDial.h" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/libDial.h \- Declarations of client-server dialogue functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'libRepReq\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBDialSrv\fP (\fBsocket_t\fP sockEcoute)"
+.br
+.RI "Server-side dialogue function\&. "
+.ti -1c
+.RI "void \fBDialC\fP (\fBsocket_t\fP sd)"
+.br
+.RI "Client-side dialogue function\&. "
+.ti -1c
+.RI "void \fBDialRegister\fP (\fBsocket_t\fP sd)"
+.br
+.RI "Dialogue function for registration\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Declarations of client-server dialogue functions\&. 
+
+This header file declares dialogue functions to manage communications between clients and servers via sockets for the Belote card game\&. It provides function prototypes for dialogue operations for:
+.IP "\(bu" 2
+The server (accepting and processing connections)
+.IP "\(bu" 2
+The client (communication with the server)
+.IP "\(bu" 2
+Registration (registration procedure) 
+.PP
+\fBAuthor\fP
+.RS 4
+Breviere Alexandre 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+04/02/2026 
+.RE
+.PP
+
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "void DialC (\fBsocket_t\fP sd)"
+
+.PP
+Client-side dialogue function\&. Manages continuous dialogue with a server by receiving requests, processing them according to their identifier, then sending a response\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsd\fP Dialogue socket with the server 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBDialSrv()\fP, \fBDialRegister()\fP 
+.RE
+.PP
+
+.SS "void DialRegister (\fBsocket_t\fP sd)"
+
+.PP
+Dialogue function for registration\&. Manages the registration dialogue with a server by sending registration requests and processing received responses\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsd\fP Dialogue socket with the server 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBDialC()\fP, \fBDialSrv()\fP 
+.RE
+.PP
+
+.SS "void DialSrv (\fBsocket_t\fP sockEcoute)"
+
+.PP
+Server-side dialogue function\&. Manages dialogue with clients on the server side by accepting connections, sending requests and processing responses\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsockEcoute\fP Listening socket to accept client connections 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBDialC()\fP, \fBDialRegister()\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

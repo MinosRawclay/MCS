@@ -1,0 +1,43 @@
+.TH "user_s" 3 "Version 1" "Re'Belotte" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+user_s
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBname_t\fP \fBname\fP"
+.br
+.ti -1c
+.RI "\fBsocket_t\fP * \fBsDial\fP"
+.br
+.ti -1c
+.RI "int \fBindDest\fP"
+.br
+.ti -1c
+.RI "\fBparty_t\fP \fBparty\fP"
+.br
+.ti -1c
+.RI "int \fBgamePort\fP"
+.br
+.in -1c
+.SH "Member Data Documentation"
+.PP 
+.SS "int user_s::gamePort"
+Port du serveur de jeu (0 si pas de partie) 
+.SS "int user_s::indDest"
+Index de l'utilisateur destinataire (-1 si aucun) 
+.SS "\fBname_t\fP user_s::name"
+Nom de l'utilisateur 
+.SS "\fBparty_t\fP user_s::party"
+Partie associée à l'utilisateur 
+.SS "\fBsocket_t\fP* user_s::sDial"
+Socket de dialogue associée 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Re'Belotte from the source code\&.

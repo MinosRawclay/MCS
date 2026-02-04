@@ -3,58 +3,86 @@
 \mbox{\hyperlink{users_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ USERS\_H}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ USERS\_H}}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{session_8h}{session.h}}"{}}}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ MAX\_USERS\ \ \ 16}}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ MAX\_NAME\ \ \ \ 64}}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ S\ T\ R\ U\ C\ T\ U\ R\ E\ S\ \ \ DE\ \ \ D\ O\ N\ N\ E\ E\ S}}
-\DoxyCodeLine{00028\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00034\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}[\mbox{\hyperlink{users_8h_ac7c0207aa5a0e10d378be03b68041350}{MAX\_NAME}}];}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ \mbox{\hyperlink{structuser__t_a0ef2da1eb4b58111c0c2505a9e9185e9}{name}};\ \ \ \ \ \ }
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{structsocket}{socket\_t}}\ *\mbox{\hyperlink{structuser__t_abecd62c9ddcac09aad396edd2447e69c}{sDial}};\ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structuser__t_aac048deae4f13bfd937ceedb9e7e221a}{indDest}};\ \ \ \ \ }
-\DoxyCodeLine{00044\ \}\ \mbox{\hyperlink{structuser__t}{user\_t}};}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00050\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{structuser__t}{user\_t}}\ tab[\mbox{\hyperlink{users_8h_a2c2a303621f66761529e598758d7ef34}{MAX\_USERS}}];\ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structusers__t_aa172715dd4d5a2a92ad672b3ace3a051}{nbUsers}};\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00053\ \}\ \mbox{\hyperlink{structusers__t}{users\_t}};}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00056\ \textcolor{comment}{\ *\ P\ R\ O\ T\ O\ T\ Y\ P\ E\ S\ \ \ DES\ \ \ F\ O\ N\ C\ T\ I\ O\ N\ S}}
-\DoxyCodeLine{00057\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00065\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_ae34bfe8f2ae33fd6fb4295636b90ecd7}{afficherUsers}}(\textcolor{keywordtype}{char}\ *cde);\ }
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00073\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a4013c0def6984f01a5a43fb72212809f}{trouverUser}}(\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ nom);}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00082\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a6f074a8e06bf64e74b35872dae63741c}{creerUser}}(\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ nom,\ \mbox{\hyperlink{structsocket}{socket\_t}}\ *sDial);}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#ifndef\ USERS\_H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ USERS\_H}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{session_8h}{session.h}}"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrequete}{requete}}\ \mbox{\hyperlink{structrequete}{requete\_t}};}
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structreponse}{reponse}}\ \mbox{\hyperlink{structreponse}{reponse\_t}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{/*============================================================================*/}}
+\DoxyCodeLine{00029\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CONSTANTES\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00030\ \textcolor{comment}{/*============================================================================*/}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ MAX\_USERS\ 16}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ MAX\_NAME\ 64}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{/*============================================================================*/}}
+\DoxyCodeLine{00045\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TYPES\ ET\ STRUCTURES\ DE\ DONNÉES\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00046\ \textcolor{comment}{/*============================================================================*/}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}[\mbox{\hyperlink{users_8h_ac7c0207aa5a0e10d378be03b68041350}{MAX\_NAME}}];}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structuser__s}{user\_s}};}
+\DoxyCodeLine{00055\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structuser__s}{user\_s}}\ \mbox{\hyperlink{structuser__t}{user\_t}};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{structuser__s}{user\_t}}\ *list[4];\ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structparty__t_af90885fed502f8c2431cbbbdb788068b}{nbJoueurs}};\ \ \ \ \ }
+\DoxyCodeLine{00067\ \}\ \mbox{\hyperlink{structparty__t}{party\_t}};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structuser__s}{user\_s}}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ \mbox{\hyperlink{structuser__s_a707fd47c13746a4e5b0fa157f5dd03be}{name}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{structsocket}{socket\_t}}\ *\mbox{\hyperlink{structuser__s_acbb2b040a2e7907bc37ed89f56c9647a}{sDial}};\ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structuser__s_afcd99faef4dee581666dc2f76b017de1}{indDest}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{structparty__t}{party\_t}}\ \mbox{\hyperlink{structuser__s_ab2b0b38aaeac0747ca157601769fb851}{party}};\ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structuser__s_aca6f6c245c7e3b23c7cfb8bc5a8501e1}{gamePort}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \};}
 \DoxyCodeLine{00083\ }
-\DoxyCodeLine{00090\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_afb204a0b2021767e2673ed96dcf2e3a9}{identifierUser}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sDial);}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_aa6942959e670e167a7da2f8421264600}{deconnecterUser}}(\textcolor{keywordtype}{int}\ indUser);}
+\DoxyCodeLine{00090\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{structuser__s}{user\_t}}\ tab[\mbox{\hyperlink{users_8h_a2c2a303621f66761529e598758d7ef34}{MAX\_USERS}}];\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structusers__t_aa172715dd4d5a2a92ad672b3ace3a051}{nbUsers}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \}\ \mbox{\hyperlink{structusers__t}{users\_t}};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{/*============================================================================*/}}
+\DoxyCodeLine{00096\ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PROTOTYPES\ DES\ FONCTIONS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00097\ \textcolor{comment}{/*============================================================================*/}}
 \DoxyCodeLine{00098\ }
-\DoxyCodeLine{00105\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_a8f21e63ee6ec50bc38c9323fa6813cf9}{modifierDest}}(\textcolor{keywordtype}{int}\ indUser,\ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ destName);}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00113\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a4a3c34408cc52a3fce38f005b41c219d}{indiceDest}}(\textcolor{keywordtype}{int}\ indUser);}
-\DoxyCodeLine{00114\ }
-\DoxyCodeLine{00121\ \textcolor{keywordtype}{char}\ *\ \mbox{\hyperlink{users_8h_a25dad20d785f93a629f6fc554f483140}{nameUser}}(\textcolor{keywordtype}{int}\ indUser);}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00129\ \mbox{\hyperlink{structsocket}{socket\_t}}\ *\mbox{\hyperlink{users_8h_aca03269c785a082463a03c1368103193}{socketUser}}(\textcolor{keywordtype}{int}\ indUser);}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00135\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_af60ebf32fdc143e278cb6f77fea224f6}{lireUsers}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00141\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_a54fde5d5e12ec9435e08140e8bd9e074}{ecrireUsers}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ USERS\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00104\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_ae34bfe8f2ae33fd6fb4295636b90ecd7}{afficherUsers}}(\textcolor{keywordtype}{char}\ *cde);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a4013c0def6984f01a5a43fb72212809f}{trouverUser}}(\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ nom);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00119\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a6f074a8e06bf64e74b35872dae63741c}{creerUser}}(\mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ nom,\ \mbox{\hyperlink{structsocket}{socket\_t}}\ *sDial);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00129\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a747f7bf7fe6cc031a4062f12ff7a3971}{identifierUser}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sDial,\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
+\DoxyCodeLine{00136\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_aa6942959e670e167a7da2f8421264600}{deconnecterUser}}(\textcolor{keywordtype}{int}\ indUser);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_a8f21e63ee6ec50bc38c9323fa6813cf9}{modifierDest}}(\textcolor{keywordtype}{int}\ indUser,\ \mbox{\hyperlink{users_8h_a6f16b4fd25762446eca133c6cb29b0e7}{name\_t}}\ destName);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00150\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a4a3c34408cc52a3fce38f005b41c219d}{indiceDest}}(\textcolor{keywordtype}{int}\ indUser);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00157\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{users_8h_a25dad20d785f93a629f6fc554f483140}{nameUser}}(\textcolor{keywordtype}{int}\ indUser);}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00164\ \mbox{\hyperlink{structsocket}{socket\_t}}\ *\mbox{\hyperlink{users_8h_aca03269c785a082463a03c1368103193}{socketUser}}(\textcolor{keywordtype}{int}\ indUser);}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00170\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_af60ebf32fdc143e278cb6f77fea224f6}{lireUsers}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00176\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_a54fde5d5e12ec9435e08140e8bd9e074}{ecrireUsers}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00183\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{users_8h_a73db39cf8c8b05d9ad2365c7aa6b72db}{creerPartieBDD}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sDial,\ \textcolor{keywordtype}{int}\ gamePort);}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00190\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{users_8h_a51046ff70b7efc1aef9a79688e2d679c}{isFull}}(\textcolor{keywordtype}{int}\ idUser);}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{keywordtype}{int}\ userFromSocket(\mbox{\hyperlink{structsocket}{socket\_t}}\ *\ sDial);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{keywordtype}{void}\ ipPort(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req,\ \mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{keywordtype}{int}\ getNbUsers();}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ USERS\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

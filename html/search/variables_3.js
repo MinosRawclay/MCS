@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mode_0',['mode',['../structsocket.html#a91c13966eecc710ac792e7349172e975',1,'socket']]]
+  ['fd_0',['fd',['../structsocket.html#adce841ceca3a01158a71421e6b0dbd8a',1,'socket']]]
 ];

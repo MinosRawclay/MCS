@@ -1,46 +1,114 @@
 \doxysection{lib\+Rep\+Req.\+h}
 \hypertarget{libRepReq_8h_source}{}\label{libRepReq_8h_source}\index{include/libRepReq.h@{include/libRepReq.h}}
-
+\mbox{\hyperlink{libRepReq_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{data_8h}{data.h}}"{}}}
-\DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{comment}{//1\ req2str(req,str)}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ REQ\_STR\_OUT\ "{}\%i:\%s:\%s"{}\ }}
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{comment}{//2\ str2req(str,req)}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ REQ\_STR\_IN\ "{}\%i:\%[\string^:]:\%[\string^\(\backslash\)n]"{}\ }}
-\DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{comment}{//3\ rep2str(rep,\ str)}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ REP\_STR\_OUT\ "{}\%i:\%s:\%s"{}}}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{comment}{//4\ str2rep(str\ rep)}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ REP\_STR\_IN\ "{}\%i:\%[\string^:]:\%[\string^\(\backslash\)n]"{}}}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ LIB\_REP\_REQ\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ LIB\_REP\_REQ\_H}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrequete}{requete}}\{}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{short}\ idReq;}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{char}\ verbReq[20];}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{char}\ optReq[100];\ \textcolor{comment}{//\ a\ modifier\ selon\ le\ protocole\ applicatif}}
-\DoxyCodeLine{00019\ \}\ \mbox{\hyperlink{structrequete}{requete\_t}};}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structreponse}{reponse}}\{}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{short}\ idRep;}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{char}\ verbRep[20];}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{char}\ optRep[100];\ \textcolor{comment}{//\ a\ modifier\ selon\ le\ protocole\ applicatif}}
-\DoxyCodeLine{00025\ \}\ \mbox{\hyperlink{structreponse}{reponse\_t}};}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{data_8h}{data.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{users_8h}{users.h}}"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ ====================\ FORMATTING\ MACROS\ ====================}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ REQ\_STR\_OUT\ "{}\%i:\%s:\%s"{}\ }}
 \DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{comment}{//\ prototype\ des\ fonctions}}
-\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ req2str(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req,\ \textcolor{keywordtype}{char}\ *\ str);}
-\DoxyCodeLine{00030\ \textcolor{keywordtype}{void}\ str2req(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ str,\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
-\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ rep2str(\textcolor{keyword}{const}\ \mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep,\ \textcolor{keywordtype}{char}\ *\ str);}
-\DoxyCodeLine{00032\ \textcolor{keywordtype}{void}\ str2rep(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ str,\ \mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep);}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ REQ\_STR\_IN\ "{}\%i:\%[\string^:]:\%[\string^\(\backslash\)n]"{}\ }}
 \DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ traiterReq101(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
-\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ traiterReq102(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
-\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ traiterReq103(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
-\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ traiterRep(\mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep);}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \textcolor{keywordtype}{void}\ DialSrv(\mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
-\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ DialC(\mbox{\hyperlink{structsocket}{socket\_t}}\ sd);}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ REP\_STR\_OUT\ "{}\%i:\%s:\%s"{}}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ REP\_STR\_IN\ "{}\%i:\%[\string^:]:\%[\string^\(\backslash\)n]"{}}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ ====================\ STRUCTURES\ ====================}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrequete}{requete}}\{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{short}\ \mbox{\hyperlink{structrequete_a04f8cba80b63861fce50e0d69bae2985}{idReq}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structrequete_a8c3b2da8045d069671148456e51721ad}{verbReq}}[20];\ \ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structrequete_a42bbb3320bd185950c65714373121c06}{optReq}}[100];\ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \}\ \mbox{\hyperlink{structrequete}{requete\_t}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structreponse}{reponse}}\{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{short}\ \mbox{\hyperlink{structreponse_a1fccd8ff7016586dacde1b4b28264388}{idRep}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structreponse_a5ad7f6af3a0296d754b700d2e4feef1a}{verbRep}}[20];\ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structreponse_a23ab0836264e57d3df9bba854909008f}{optRep}}[100];\ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \}\ \mbox{\hyperlink{structreponse}{reponse\_t}};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ ====================\ CODE\ ENUMERATION\ ====================}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3}{requeteList}}\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ ==========\ ERROR\ CODES\ ==========}}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a40951184973c82a7bdcd507767d9b161}{ERR\_MAUVAISE\_CONNEXION}}\ =\ 1,\ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a6fbe598f045622d74987db0ef7f3efc3}{ERR\_PARTIE\_PLEINE}}\ =\ 2,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1b1905f287d7ad28c8825e9784571272}{ERR\_SERVEUR\_PLEIN}}\ =\ 3,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a579b0bd2f0dbe1f61c305a30ba74baaa}{ERR\_MAUVAIS\_CODE}}\ =\ 4,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aaa0644df0ac9feb9064fc7602ad48fd5}{ERR\_SERVEUR\_NON\_DISPO}}\ =\ 5,\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ ==========\ GAME\ REQUESTS\ ==========}}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3acaccb107f10a8e8d4b9fa42cd2307708}{REQ\_LANCER\_PARTIE}}\ =\ 100,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Display\ request\ functions}}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aac8251b47537f4ac2cf2863c15bc495e}{REQ\_ENVOYER\_DECK}}\ =\ 110,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a41c3f3e1233fca137ff85cdbda526b85}{REQ\_ENVOYER\_PLI}}\ =\ 111,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a62feda7cec04d602af9f306d18a7360e}{REQ\_ENVOYER\_SCORE}}\ =\ 112,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Game\ functions}}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a4f3b4ab59f8a3ba353404fb68df82eb9}{REQ\_JOUER}}\ =\ 120,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a2aed5b42d55c681500b41edbad1c9c07}{REQ\_CARTE\_LEGALE}}\ =\ 121,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac07424f944e61fd15777d3e4fea4da0f}{REQ\_CHOIX\_ATOUT}}\ =\ 122,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1f4d9888ab49618aa7a73c0622e3fab5}{REQ\_CHOIX\_ATOUT\_COULEUR}}\ =\ 123,\ }
+\DoxyCodeLine{00105\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ ==========\ GAME\ RESPONSES\ ==========}}
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a1a7f0eb86a883061e6a160e436b70a07}{REP\_ACK\_LANCER\_PARTIE}}\ =\ 200,\ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aba4a158243ee86335d74938cf9b72f9b}{REP\_ACK\_ENVOYER\_DECK}}\ =\ 210,\ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ad0ee80d234db56a3855aa738cf82f72d}{REP\_ACK\_ENVOYER\_PLI}}\ =\ 211,\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac5ed959bd97e0c9c06adc896c384f764}{REP\_ACK\_ENVOYER\_SCORE}}\ =\ 212,\ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a980f985df178aedbd67f3a05e4acf4d0}{REP\_ENVOI\_CARTE}}\ =\ 220,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a379b9ce0d76ea8b84e1526ce3ec4b7a2}{REP\_ACK\_CARTE\_LEGALE}}\ =\ 221,\ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a303dd7e8b3bf45e3771c00317ef0f05b}{REP\_CHOIX\_ATOUT}}\ =\ 222,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3aedbac5abeec4724a2308adec46b652f7}{REP\_CHOIX\_ATOUT\_COULEUR}}\ =\ 223,\ }
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ ==========\ SERVER\ COMMUNICATIONS\ ==========}}
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a9c1ce23d48089c9c0785fea2ddfeb23e}{COM\_CONNECTER}}\ =\ 301,\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a95887c49b6de899cdd0aa22ce2abf7a6}{COM\_DECONNECTER}}\ =\ 302,\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a263613f4c135e0ae8297b5ceab867de6}{COM\_CREER\_PARTIE}}\ =\ 303,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a60c13b0afc005d84dcfd550b2c7b800e}{COM\_REJOINDRE\_PARTIE}}\ =\ 304,\ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a3b96ed5a6926d33f8e8066b4d96d3931}{COM\_REJOINDRE\_ALEA}}\ =\ 305,\ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ ==========\ COMMUNICATION\ RESPONSES\ ==========}}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3a45a19436d16edf178a11b86dd2cf24be}{REP\_ACK\_CONNECTER}}\ =\ 401,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{libRepReq_8h_a8c98ce000bcb284472f7ddb05c141db3ac9f7c7f09e642f0841a8a2f71a4db76c}{REP\_LIST\_USERS}}\ =\ 403,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00126\ \}\ requeteList\_t;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{comment}{//\ ====================\ FUNCTION\ PROTOTYPES\ ====================}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{//\ Conversion\ functions}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a62a5306a1eea2c6098382dd57485dfb1}{req2str}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req,\ \textcolor{keywordtype}{char}\ *\ str);}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00146\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a7460cf3b8b42732d21e426e9800f8207}{str2req}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ str,\ \mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00154\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a64a6424749b143970424cb8cf09b3fc7}{rep2str}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep,\ \textcolor{keywordtype}{char}\ *\ str);}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00162\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a55e932aa54f9e4e57ee527918efbcf4e}{str2rep}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ str,\ \mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep);}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \textcolor{comment}{//\ Processing\ functions}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00170\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a3d736011e62098027294082d3c3a59e7}{traiterReq101}}(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00176\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a3f7edf2cc9494c6d5f4c09fc0f535f1f}{traiterReq102}}(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00182\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_ab102c09aea4457b3e2ddce641bcf5030}{traiterReq103}}(\mbox{\hyperlink{structrequete}{requete\_t}}\ *\ req);}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a9e278326ab5d1ae7178267cbbc3e2495}{traiterRep}}(\mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep);}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \textcolor{comment}{//\ Dialogue\ functions}}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00197\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_aa68d485193ec7f59c772376f3415b821}{DialSrv}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00204\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{libRepReq_8h_a43f4f5f673a2d337279666aaf4380411}{DialC}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ sd);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00212\ \mbox{\hyperlink{structrequete}{requete\_t}}\ \mbox{\hyperlink{libRepReq_8h_a8659c391ba60322c5d03c2400722390e}{traiterRegister}}(\mbox{\hyperlink{structreponse}{reponse\_t}}\ *\ rep,\ \mbox{\hyperlink{structsocket}{socket\_t}}\ *\ sDial);}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

@@ -1,19 +1,33 @@
 \doxysection{requete Struct Reference}
 \hypertarget{structrequete}{}\label{structrequete}\index{requete@{requete}}
+
+
+Structure representing a protocol request.  
+
+
+
+
+{\ttfamily \#include $<$lib\+Rep\+Req.\+h$>$}
+
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \Hypertarget{structrequete_a04f8cba80b63861fce50e0d69bae2985}\label{structrequete_a04f8cba80b63861fce50e0d69bae2985} 
 short {\bfseries id\+Req}
-\item 
+\begin{DoxyCompactList}\small\item\em Request identifier (see enum requete\+List) \end{DoxyCompactList}\item 
 \Hypertarget{structrequete_a8c3b2da8045d069671148456e51721ad}\label{structrequete_a8c3b2da8045d069671148456e51721ad} 
 char {\bfseries verb\+Req} \mbox{[}20\mbox{]}
-\item 
+\begin{DoxyCompactList}\small\item\em Request verb (textual command) \end{DoxyCompactList}\item 
 \Hypertarget{structrequete_a42bbb3320bd185950c65714373121c06}\label{structrequete_a42bbb3320bd185950c65714373121c06} 
 char {\bfseries opt\+Req} \mbox{[}100\mbox{]}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Request options/parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Structure representing a protocol request. 
+
+Contains a numeric identifier, a verb and options 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-include/lib\+Rep\+Req.\+h\end{DoxyCompactItemize}
+include/\mbox{\hyperlink{libRepReq_8h}{lib\+Rep\+Req.\+h}}\end{DoxyCompactItemize}

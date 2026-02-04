@@ -1,0 +1,35 @@
+\doxysection{serv\+App.\+h}
+\hypertarget{servApp_8h_source}{}\label{servApp_8h_source}\index{include/servApp.h@{include/servApp.h}}
+\mbox{\hyperlink{servApp_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{libRepReq_8h}{libRepReq.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{moteur_8h}{moteur.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}client.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ ====================\ FUNCTION\ PROTOTYPES\ ===================================}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servApp_8h_ab4ce73efb37dd498fc93d1b6f709fe00}{afficherMenu}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a22f45428f2086291b6dbb93516d2fe9c}{choisir}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a27abc55a30adc7b380c6d9df98695741}{connexionToSE}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE,\ \textcolor{keywordtype}{char}\ *\ nomUtilisateur);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a97c310ba6a15fe130e0866c2e637e3b3}{creerPartieSe}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE,\ \textcolor{keywordtype}{char}\ *\ nomUtilisateur);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a9b447a7c8ff46abb9c0fe797e7efd7fa}{demanderAffichagePartiesUtilisateur}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a3dedc99eb9acf58091565fd754bb702c}{choisirPartieUtilisateur}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE,\ \textcolor{keywordtype}{char}\ *\ IPUtilisateur,\ \textcolor{keywordtype}{int}\ *\ portUtilisateur);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servApp_8h_a6961386a1614ec6ffbaca2fc1db2ea99}{gestionPartie}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE,\ \textcolor{keywordtype}{char}\ *nomUtilisateur);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servApp_8h_a94180abdbf400997f544cb58414290b7}{rejoindrePartie}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{servApp_8h_a7684d7ad90bdd12a81cab1a4b69ca13e}{rejoindrePartieAleatoire}}(\mbox{\hyperlink{structsocket}{socket\_t}}\ *sdSE,\ \textcolor{keywordtype}{char}\ *nomUtilisateur);}
+
+\end{DoxyCode}

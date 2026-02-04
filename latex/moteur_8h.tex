@@ -1,0 +1,1265 @@
+\doxysection{include/moteur.h File Reference}
+\hypertarget{moteur_8h}{}\label{moteur_8h}\index{include/moteur.h@{include/moteur.h}}
+
+
+Header file for the Belote card game implementation.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}../include/data.\+h"{}}\newline
+{\ttfamily \#include "{}../include/lib\+Rep\+Req.\+h"{}}\newline
+Include dependency graph for moteur.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structplayer}{player}}
+\begin{DoxyCompactList}\small\item\em Structure representing a player. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpileCard}{pile\+Card}}
+\begin{DoxyCompactList}\small\item\em Structure representing a pile of cards (deck or team\textquotesingle{}s won cards) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{moteur_8h_a0e78ceae5c1082769a3dbb0087ea29fb}\label{moteur_8h_a0e78ceae5c1082769a3dbb0087ea29fb} 
+\#define {\bfseries PLAYERS\+\_\+\+MAX}~4
+\begin{DoxyCompactList}\small\item\em Maximum number of players (corresponds to Belote rules) \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_aacb7845af807f387aad9339fe8536f15}\label{moteur_8h_aacb7845af807f387aad9339fe8536f15} 
+\#define {\bfseries NB\+\_\+\+CARD\+\_\+\+HAND}~8
+\begin{DoxyCompactList}\small\item\em Number of cards per player\textquotesingle{}s hand. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a0d406fd75be3f9520396646e265a1498}\label{moteur_8h_a0d406fd75be3f9520396646e265a1498} 
+\#define {\bfseries NB\+\_\+\+CARD\+\_\+\+DECK}~32
+\begin{DoxyCompactList}\small\item\em Total number of cards in the deck. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a5d275b06efb849f4060e13f53968c537}\label{moteur_8h_a5d275b06efb849f4060e13f53968c537} 
+\#define {\bfseries POINT\+\_\+\+WIN}~1500
+\begin{DoxyCompactList}\small\item\em Points needed to win the game. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a842ed03f27719bc87666bfd1f75415b8}\label{moteur_8h_a842ed03f27719bc87666bfd1f75415b8} 
+\#define {\bfseries MAX\+\_\+\+LINE}~1024
+\begin{DoxyCompactList}\small\item\em Max char in a string. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a8460322d5e2c249cb600ce153bc7c8d6}\label{moteur_8h_a8460322d5e2c249cb600ce153bc7c8d6} 
+\#define {\bfseries STR\+\_\+\+ROUGE\+\_\+\+START}~printf("{}\textbackslash{}033\mbox{[}31m"{})
+\begin{DoxyCompactList}\small\item\em ANSI code to start red text. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a73efa0fc57acdbff37ab3ba0fb60cb69}\label{moteur_8h_a73efa0fc57acdbff37ab3ba0fb60cb69} 
+\#define {\bfseries STR\+\_\+\+MAGENTA\+\_\+\+START}~printf("{}\textbackslash{}033\mbox{[}35m"{})
+\begin{DoxyCompactList}\small\item\em ANSI code to start magenta text. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_afa6b4645d3832828bdc087db62c01485}\label{moteur_8h_afa6b4645d3832828bdc087db62c01485} 
+\#define {\bfseries STR\+\_\+\+VERT\+\_\+\+START}~printf("{}\textbackslash{}033\mbox{[}32m"{})
+\begin{DoxyCompactList}\small\item\em ANSI code to start green text. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_ae09aba95c4629095e11f0fa780e41ced}\label{moteur_8h_ae09aba95c4629095e11f0fa780e41ced} 
+\#define {\bfseries STR\+\_\+\+BLEU\+\_\+\+START}~printf("{}\textbackslash{}033\mbox{[}34m"{})
+\begin{DoxyCompactList}\small\item\em ANSI code to start blue text. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a847743c5e5f6d9ced50e6b11c3b83c58}\label{moteur_8h_a847743c5e5f6d9ced50e6b11c3b83c58} 
+\#define {\bfseries STR\+\_\+\+COLOR\+\_\+\+END}~printf("{}\textbackslash{}033\mbox{[}0m"{})
+\begin{DoxyCompactList}\small\item\em ANSI code to reset text color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{moteur_8h_a9df65ef34efcf40007091fa0e679ea0c}\label{moteur_8h_a9df65ef34efcf40007091fa0e679ea0c} 
+typedef struct \mbox{\hyperlink{structplayer}{player}} {\bfseries player\+\_\+t}
+\item 
+\Hypertarget{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}\label{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363} 
+typedef \mbox{\hyperlink{structplayer}{player\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries players\+\_\+t}\mbox{[}\mbox{\hyperlink{moteur_8h_a0e78ceae5c1082769a3dbb0087ea29fb}{PLAYERS\+\_\+\+MAX}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array of pointers to all players in the game. \end{DoxyCompactList}\item 
+\Hypertarget{moteur_8h_a26652557e4a75baa170d7bc91960b7e4}\label{moteur_8h_a26652557e4a75baa170d7bc91960b7e4} 
+typedef struct \mbox{\hyperlink{structpileCard}{pile\+Card}} {\bfseries pile\+Card\+\_\+t}
+\item 
+\Hypertarget{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}\label{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440} 
+typedef enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} {\bfseries pli\+\_\+t}\mbox{[}\mbox{\hyperlink{moteur_8h_a0e78ceae5c1082769a3dbb0087ea29fb}{PLAYERS\+\_\+\+MAX}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array representing the current trick (4 cards) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \{ \newline
+{\bfseries H\+\_\+\+AS}
+, {\bfseries H\+\_\+7}
+, {\bfseries H\+\_\+8}
+, {\bfseries H\+\_\+9}
+, \newline
+{\bfseries H\+\_\+10}
+, {\bfseries H\+\_\+V}
+, {\bfseries H\+\_\+D}
+, {\bfseries H\+\_\+R}
+, \newline
+{\bfseries C\+\_\+\+AS}
+, {\bfseries C\+\_\+7}
+, {\bfseries C\+\_\+8}
+, {\bfseries C\+\_\+9}
+, \newline
+{\bfseries C\+\_\+10}
+, {\bfseries C\+\_\+V}
+, {\bfseries C\+\_\+D}
+, {\bfseries C\+\_\+R}
+, \newline
+{\bfseries P\+\_\+\+AS}
+, {\bfseries P\+\_\+7}
+, {\bfseries P\+\_\+8}
+, {\bfseries P\+\_\+9}
+, \newline
+{\bfseries P\+\_\+10}
+, {\bfseries P\+\_\+V}
+, {\bfseries P\+\_\+D}
+, {\bfseries P\+\_\+R}
+, \newline
+{\bfseries T\+\_\+\+AS}
+, {\bfseries T\+\_\+7}
+, {\bfseries T\+\_\+8}
+, {\bfseries T\+\_\+9}
+, \newline
+{\bfseries T\+\_\+10}
+, {\bfseries T\+\_\+V}
+, {\bfseries T\+\_\+D}
+, {\bfseries T\+\_\+R}
+, \newline
+\mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252acfe24a7b308a82835c8a9a9a89bc4ca2}{NOTHING}} = -\/1
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration of all cards in the deck. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \{ \newline
+\mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa5008b1179f399a2273fd3f6a7fc3b292}{H}}
+, \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa739ce3f516592d245d16fd8a3893472c}{C}}
+, \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa82f05f38f6a17b117cdd2b83227912c6}{P}}
+, \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa21f40778b7db9343a6ca75ec2c41ccce}{T}}
+, \newline
+\mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aac157bdf0b85a40d2619cbc8bc1ae5fe2}{NONE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration of card suits. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aed}{equipe}} \{ \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aedafabe01422380af1f0b1c28f28eb12d58}{EQUIPE1}}
+, \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aeda42a0619f7aaca45eea0564bc55b668ab}{EQUIPE2}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration of teams. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{moteur_8h_a5799042572c7f85b37994597b849f3aa}{pli2str}} (char \texorpdfstring{$\ast$}{*}pli\+Str, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli)
+\begin{DoxyCompactList}\small\item\em Converts the current trick to a string format for sending. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a560139b2a386f8e4b2bff3284dc4b3db}{player\+Cards2str}} (char \texorpdfstring{$\ast$}{*}cards\+Str, \mbox{\hyperlink{structplayer}{player\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structplayer}{player}})
+\begin{DoxyCompactList}\small\item\em Converts a player\textquotesingle{}s cards to a string format for sending. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_ac0d7a325df0cc479b3d0d8264f37c866}{str2\+Cards}} (const char \texorpdfstring{$\ast$}{*}str, enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}cards, int max\+Cards)
+\begin{DoxyCompactList}\small\item\em Converts a string format back to an array of cards. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_ac91075a7369ec7521231166749813a9f}{add\+Player}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}nb\+Player)
+\begin{DoxyCompactList}\small\item\em Adds a new player to the game. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a1900242a5b2fc5c9b2c347c1b8ada2e7}{give\+Card}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \mbox{\hyperlink{structplayer}{player}})
+\begin{DoxyCompactList}\small\item\em Sends all cards in hand to the player. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a4ad0f00d515b0952de0d7b7a942f5fbf}{ok\+Card}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \mbox{\hyperlink{structplayer}{player}})
+\begin{DoxyCompactList}\small\item\em Confirms to the player that their card is valid. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_af0a9a06218db1ad8c9d19e7667e8ef68}{give\+Pli}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli)
+\begin{DoxyCompactList}\small\item\em Sends the current trick to all players for display. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a26d76b8be114f6d4423434901f59e6af}{ask\+Take\+Atout}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, int \mbox{\hyperlink{structplayer}{player}})
+\begin{DoxyCompactList}\small\item\em Asks a player if they want to take the revealed trump card (first round) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_abaeeed988b0a01171899a1f224a20d31}{ask\+Take\+Atout\+Turn2}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, int \mbox{\hyperlink{structplayer}{player}}, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em Asks a player if they want to choose trump (second round) and which suit. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a15cfc073a37246b1bc89068d722d7196}{ask\+Card}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \mbox{\hyperlink{structplayer}{player}})
+\begin{DoxyCompactList}\small\item\em Asks a player which card they want to play. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a8197da61a1fc3cb3d06e2a211194465d}{give\+Score}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int score\+Eq1, int score\+Eq2)
+\begin{DoxyCompactList}\small\item\em Sends the final scores to all players at the end of the game. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_a06bd465d1a311eab4da54f3ecc726c56}{get\+Value\+Card}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Gets the point value of a non-\/trump card. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_a6f19218347ba4353293f3ba7f10f4fc9}{get\+Value\+Atout\+Card}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Gets the point value of a trump card. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{moteur_8h_a65f08cda6ddf14467ba7b76ad0274bb3}{get\+Name\+Card}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Gets the name of a card as a string. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{moteur_8h_ae7e1f7cda5b63634a2911c52b9ef6c2b}{get\+Value\+Card\+String}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Gets the string representation of a card\textquotesingle{}s value. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{moteur_8h_aa76aa95a28e3529fbff62d1caf986977}{get\+Couleur\+Card\+String}} (enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color)
+\begin{DoxyCompactList}\small\item\em Gets the string representation of a card\textquotesingle{}s suit. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{moteur_8h_aba93711c3bbb544f644c617465cbbac1}{get\+Ascii\+Color}} (enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color)
+\begin{DoxyCompactList}\small\item\em Gets the ASCII color code for a card suit. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a0c2284aa90e848e9a6e30e70abeebe6f}{deal\+Card}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Deck)
+\begin{DoxyCompactList}\small\item\em Deals one card from the deck. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a4b6e0e4c5c425a364efb4671931863a6}{reset\+Cards}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Deck, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players)
+\begin{DoxyCompactList}\small\item\em Resets all cards to initial state for a new round. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_a6dd0549f89cae2b3e97e9081553ed028}{string\+\_\+to\+\_\+card}} (const char \texorpdfstring{$\ast$}{*}s, enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}out)
+\begin{DoxyCompactList}\small\item\em Converts a card name string to its enum value. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_ad5d5b5d5b739f41d96d32e2d620d0c29}{point\+\_\+of\+\_\+gain}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2, enum \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aed}{equipe}} eq, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} c)
+\begin{DoxyCompactList}\small\item\em Calculates points earned by a team from their won cards. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_ab41bb266cba351e276252a18b64391e6}{card\+Shuffle}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Deck)
+\begin{DoxyCompactList}\small\item\em Shuffles the deck randomly. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a2c73264ee1aea0a1115b60d542356f11}{verif\+Color}} (char color)
+\begin{DoxyCompactList}\small\item\em Verifies if a character represents a valid card suit. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_a786a73ce048970152b7cf822d2c5f0ed}{better\+In\+Pli}} (\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} c)
+\begin{DoxyCompactList}\small\item\em Determines which player wins the trick. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \mbox{\hyperlink{moteur_8h_a0952cea1af18f7ee66d7eaa0cd6cac53}{card2\+Color}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Converts a card to its suit. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a92c48b7f6e45ce35bd8575a4a3213c01}{search\+Max\+Card\+In\+Hand}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \mbox{\hyperlink{structplayer}{player}}, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color\+Atout)
+\begin{DoxyCompactList}\small\item\em Finds the highest value card of a specific suit in a player\textquotesingle{}s hand. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a67002549917e73147f8301351c91b592}{verif\+Card}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, int \mbox{\hyperlink{structplayer}{player}}, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color\+Atout, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}color\+Pli, enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Validates if a card can be legally played according to Belote rules. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a29af759c15a674cbcf2064060488c332}{search\+Max\+Card\+In\+Pli}} (\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color\+Atout)
+\begin{DoxyCompactList}\small\item\em Finds the highest value card of a specific suit in the current trick. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a3c4c748de071a753433a2038fb2c246d}{is\+Overcut}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} max\+Player\+Card, enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} max\+Pli\+Card, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color\+Atout, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} color\+Pli)
+\begin{DoxyCompactList}\small\item\em Determines if a player\textquotesingle{}s card beats the current best card in the trick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_aa360aa5da608ef60f0772fa3dce9e7cb}{remove\+Card\+From\+Hand}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \mbox{\hyperlink{structplayer}{player}}, enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Removes a card from a player\textquotesingle{}s hand and shifts remaining cards. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a1bcdb80703e8d7dbe98de14988bbfa5c}{init\+Pile}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}pile)
+\begin{DoxyCompactList}\small\item\em Initializes a card pile by allocating memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a7cae924bace0c1d0318523a27f878862}{first\+Deal}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli)
+\begin{DoxyCompactList}\small\item\em Performs the first deal (3 cards to each player) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_ae6db2b944730275f4c0b5e05039c3423}{player\+Turn\+Atout}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, int turn, int \texorpdfstring{$\ast$}{*}start\+Player, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em Conducts the trump selection phase. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a0c3279e232d1350b9953bd55ae16b5ae}{second\+Deal}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli)
+\begin{DoxyCompactList}\small\item\em Performs the second deal (2 cards to each player + reveal trump card) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a35029e3c4edb705320e4d261c8c01eeb}{third\+Deal}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, int player\+Take\+Atout)
+\begin{DoxyCompactList}\small\item\em Performs the third deal (3 cards to each player, trump taker gets revealed card) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_aa30970fc3963381e0f8274d977e86c6c}{turn\+Deal}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em Manages the complete dealing phase including trump selection. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{moteur_8h_a316c4dafcc11a4d78042553af4a13876}{next\+Playing\+Player}} (int \texorpdfstring{$\ast$}{*}start\+Player, int nb\+Next\+Player)
+\begin{DoxyCompactList}\small\item\em Calculates the next player in turn order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_adb632f140866d2954f66b6d0afd121b3}{turn\+Normal}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em Manages one complete trick of play. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{moteur_8h_a443aa2f868915d5e26de92abd1f9e169}{manche}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}deck, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2, \mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players, int \texorpdfstring{$\ast$}{*}start\+Player, \mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli, enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}c, int \texorpdfstring{$\ast$}{*}score\+Eq1, int \texorpdfstring{$\ast$}{*}score\+Eq2)
+\begin{DoxyCompactList}\small\item\em Manages one complete round (manche) of Belote. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a174e32201934bc925483590e0a08cd15}{game}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players)
+\begin{DoxyCompactList}\small\item\em Main game loop managing complete Belote game until a team wins. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_afa25619b5065a0ed61d45731a0819f9a}{str\+\_\+color}} (enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Sets console text color based on card suit. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_ad8feba64da84f3b448ca8e13b7dff953}{afficher\+\_\+carte}} (const enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}})
+\begin{DoxyCompactList}\small\item\em Displays a single card in a formatted manner. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_ad1e3b24ed325465d4e0b6920045bd537}{afficher\+Cards}} (const enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}cards, const int size)
+\begin{DoxyCompactList}\small\item\em Displays multiple cards side by side in a formatted manner. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a820846b9fb6fafb2d903b81110afbcda}{afficher\+Gain\+Eq}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Deck, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq1, \mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq2)
+\begin{DoxyCompactList}\small\item\em Displays all cards\+: deck and both teams\textquotesingle{} won piles. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a3ca2ce2e8ff00d3ce7528c7ddef8d2dc}{afficher\+Eq}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Eq)
+\begin{DoxyCompactList}\small\item\em Displays all cards in a team\textquotesingle{}s won pile. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_a1c7f88a3195bd81e4351bdaa58deee3e}{afficher\+Deck}} (\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}pile\+Deck)
+\begin{DoxyCompactList}\small\item\em Displays remaining cards in the deck. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_aa514082e7d329a344f09fb8057002105}{afficher\+Players}} (\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}} players)
+\begin{DoxyCompactList}\small\item\em Displays all players and their hands. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{moteur_8h_ac5e968fb52ad91cdf76b720b90c07045}{afficher\+Pli}} (\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}} pli)
+\begin{DoxyCompactList}\small\item\em Displays the current trick. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for the Belote card game implementation. 
+
+This header defines the data structures, enumerations, and function prototypes for implementing the French card game Belote for 4 players in 2 teams. \begin{DoxyAuthor}{Author}
+Raphael ALLO 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+02/02/2026 
+\end{DoxyDate}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}\label{moteur_8h_a3bc13ef433c58c7e808ef40088f32252} 
+\index{moteur.h@{moteur.h}!card@{card}}
+\index{card@{card}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{card}{card}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}
+
+
+
+Enumeration of all cards in the deck. 
+
+Cards are organized by suit\+: Hearts (H), Clubs (C), Spades (P), Diamonds (T) Each suit contains\+: AS, 7, 8, 9, 10, V (Jack), D (Queen), R (King) \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOTHING@{NOTHING}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!NOTHING@{NOTHING}}}\Hypertarget{moteur_8h_a3bc13ef433c58c7e808ef40088f32252acfe24a7b308a82835c8a9a9a89bc4ca2}\label{moteur_8h_a3bc13ef433c58c7e808ef40088f32252acfe24a7b308a82835c8a9a9a89bc4ca2} 
+NOTHING&Represents no card or empty slot. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a} 
+\index{moteur.h@{moteur.h}!colorCard@{colorCard}}
+\index{colorCard@{colorCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{colorCard}{colorCard}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}
+
+
+
+Enumeration of card suits. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{H@{H}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!H@{H}}}\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa5008b1179f399a2273fd3f6a7fc3b292}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa5008b1179f399a2273fd3f6a7fc3b292} 
+H&Hearts (Coeur) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C@{C}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!C@{C}}}\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa739ce3f516592d245d16fd8a3893472c}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa739ce3f516592d245d16fd8a3893472c} 
+C&Diamonds (Carreau) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P@{P}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!P@{P}}}\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa82f05f38f6a17b117cdd2b83227912c6}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa82f05f38f6a17b117cdd2b83227912c6} 
+P&Spades (Pique) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T@{T}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!T@{T}}}\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa21f40778b7db9343a6ca75ec2c41ccce}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aa21f40778b7db9343a6ca75ec2c41ccce} 
+T&Clubs (Trèfle) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!NONE@{NONE}}}\Hypertarget{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aac157bdf0b85a40d2619cbc8bc1ae5fe2}\label{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695aac157bdf0b85a40d2619cbc8bc1ae5fe2} 
+NONE&No suit. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{moteur_8h_ae618108d05416c31f838a2efeb386aed}\label{moteur_8h_ae618108d05416c31f838a2efeb386aed} 
+\index{moteur.h@{moteur.h}!equipe@{equipe}}
+\index{equipe@{equipe}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{equipe}{equipe}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aed}{equipe}}}
+
+
+
+Enumeration of teams. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EQUIPE1@{EQUIPE1}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!EQUIPE1@{EQUIPE1}}}\Hypertarget{moteur_8h_ae618108d05416c31f838a2efeb386aedafabe01422380af1f0b1c28f28eb12d58}\label{moteur_8h_ae618108d05416c31f838a2efeb386aedafabe01422380af1f0b1c28f28eb12d58} 
+EQUIPE1&Team 1 (players 0 and 2) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EQUIPE2@{EQUIPE2}!moteur.h@{moteur.h}}\index{moteur.h@{moteur.h}!EQUIPE2@{EQUIPE2}}}\Hypertarget{moteur_8h_ae618108d05416c31f838a2efeb386aeda42a0619f7aaca45eea0564bc55b668ab}\label{moteur_8h_ae618108d05416c31f838a2efeb386aeda42a0619f7aaca45eea0564bc55b668ab} 
+EQUIPE2&Team 2 (players 1 and 3) \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{moteur_8h_ac91075a7369ec7521231166749813a9f}\label{moteur_8h_ac91075a7369ec7521231166749813a9f} 
+\index{moteur.h@{moteur.h}!addPlayer@{addPlayer}}
+\index{addPlayer@{addPlayer}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{addPlayer()}{addPlayer()}}
+{\footnotesize\ttfamily bool add\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{nb\+Player }\end{DoxyParamCaption})}
+
+
+
+Adds a new player to the game. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em nb\+Player} & Current number of players, incremented if successful \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if player was added successfully, false if game is full or allocation failed 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_ad8feba64da84f3b448ca8e13b7dff953}\label{moteur_8h_ad8feba64da84f3b448ca8e13b7dff953} 
+\index{moteur.h@{moteur.h}!afficher\_carte@{afficher\_carte}}
+\index{afficher\_carte@{afficher\_carte}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficher\_carte()}{afficher\_carte()}}
+{\footnotesize\ttfamily void afficher\+\_\+carte (\begin{DoxyParamCaption}\item[{const enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Displays a single card in a formatted manner. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_ad1e3b24ed325465d4e0b6920045bd537}\label{moteur_8h_ad1e3b24ed325465d4e0b6920045bd537} 
+\index{moteur.h@{moteur.h}!afficherCards@{afficherCards}}
+\index{afficherCards@{afficherCards}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherCards()}{afficherCards()}}
+{\footnotesize\ttfamily void afficher\+Cards (\begin{DoxyParamCaption}\item[{const enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}}]{cards,  }\item[{const int}]{size }\end{DoxyParamCaption})}
+
+
+
+Displays multiple cards side by side in a formatted manner. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cards} & Array of cards to display \\
+\hline
+\mbox{\texttt{ in}}  & {\em size} & Number of cards in the array \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a1c7f88a3195bd81e4351bdaa58deee3e}\label{moteur_8h_a1c7f88a3195bd81e4351bdaa58deee3e} 
+\index{moteur.h@{moteur.h}!afficherDeck@{afficherDeck}}
+\index{afficherDeck@{afficherDeck}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherDeck()}{afficherDeck()}}
+{\footnotesize\ttfamily void afficher\+Deck (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Deck }\end{DoxyParamCaption})}
+
+
+
+Displays remaining cards in the deck. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pile\+Deck} & Deck to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a3ca2ce2e8ff00d3ce7528c7ddef8d2dc}\label{moteur_8h_a3ca2ce2e8ff00d3ce7528c7ddef8d2dc} 
+\index{moteur.h@{moteur.h}!afficherEq@{afficherEq}}
+\index{afficherEq@{afficherEq}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherEq()}{afficherEq()}}
+{\footnotesize\ttfamily void afficher\+Eq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq }\end{DoxyParamCaption})}
+
+
+
+Displays all cards in a team\textquotesingle{}s won pile. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pile\+Eq} & Team\textquotesingle{}s card pile to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a820846b9fb6fafb2d903b81110afbcda}\label{moteur_8h_a820846b9fb6fafb2d903b81110afbcda} 
+\index{moteur.h@{moteur.h}!afficherGainEq@{afficherGainEq}}
+\index{afficherGainEq@{afficherGainEq}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherGainEq()}{afficherGainEq()}}
+{\footnotesize\ttfamily void afficher\+Gain\+Eq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Deck,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2 }\end{DoxyParamCaption})}
+
+
+
+Displays all cards\+: deck and both teams\textquotesingle{} won piles. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pile\+Deck} & Remaining cards in deck \\
+\hline
+\mbox{\texttt{ in}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_aa514082e7d329a344f09fb8057002105}\label{moteur_8h_aa514082e7d329a344f09fb8057002105} 
+\index{moteur.h@{moteur.h}!afficherPlayers@{afficherPlayers}}
+\index{afficherPlayers@{afficherPlayers}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherPlayers()}{afficherPlayers()}}
+{\footnotesize\ttfamily void afficher\+Players (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players }\end{DoxyParamCaption})}
+
+
+
+Displays all players and their hands. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of players to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_ac5e968fb52ad91cdf76b720b90c07045}\label{moteur_8h_ac5e968fb52ad91cdf76b720b90c07045} 
+\index{moteur.h@{moteur.h}!afficherPli@{afficherPli}}
+\index{afficherPli@{afficherPli}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{afficherPli()}{afficherPli()}}
+{\footnotesize\ttfamily void afficher\+Pli (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli }\end{DoxyParamCaption})}
+
+
+
+Displays the current trick. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pli} & Trick to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a15cfc073a37246b1bc89068d722d7196}\label{moteur_8h_a15cfc073a37246b1bc89068d722d7196} 
+\index{moteur.h@{moteur.h}!askCard@{askCard}}
+\index{askCard@{askCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{askCard()}{askCard()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} ask\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{player }\end{DoxyParamCaption})}
+
+
+
+Asks a player which card they want to play. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player being asked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The card chosen by the player 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a26d76b8be114f6d4423434901f59e6af}\label{moteur_8h_a26d76b8be114f6d4423434901f59e6af} 
+\index{moteur.h@{moteur.h}!askTakeAtout@{askTakeAtout}}
+\index{askTakeAtout@{askTakeAtout}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{askTakeAtout()}{askTakeAtout()}}
+{\footnotesize\ttfamily bool ask\+Take\+Atout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{int}]{player }\end{DoxyParamCaption})}
+
+
+
+Asks a player if they want to take the revealed trump card (first round) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (contains revealed trump card) \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player being asked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if player accepts, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_abaeeed988b0a01171899a1f224a20d31}\label{moteur_8h_abaeeed988b0a01171899a1f224a20d31} 
+\index{moteur.h@{moteur.h}!askTakeAtoutTurn2@{askTakeAtoutTurn2}}
+\index{askTakeAtoutTurn2@{askTakeAtoutTurn2}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{askTakeAtoutTurn2()}{askTakeAtoutTurn2()}}
+{\footnotesize\ttfamily bool ask\+Take\+Atout\+Turn2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{int}]{player,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+Asks a player if they want to choose trump (second round) and which suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (contains revealed trump card) \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player being asked \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Chosen trump suit (if player accepts) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if player accepts and chooses a suit, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a786a73ce048970152b7cf822d2c5f0ed}\label{moteur_8h_a786a73ce048970152b7cf822d2c5f0ed} 
+\index{moteur.h@{moteur.h}!betterInPli@{betterInPli}}
+\index{betterInPli@{betterInPli}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{betterInPli()}{betterInPli()}}
+{\footnotesize\ttfamily int better\+In\+Pli (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{c }\end{DoxyParamCaption})}
+
+
+
+Determines which player wins the trick. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pli} & The trick (4 cards) \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Trump suit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of the winning player 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a0952cea1af18f7ee66d7eaa0cd6cac53}\label{moteur_8h_a0952cea1af18f7ee66d7eaa0cd6cac53} 
+\index{moteur.h@{moteur.h}!card2Color@{card2Color}}
+\index{card2Color@{card2Color}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{card2Color()}{card2Color()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} card2\+Color (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Converts a card to its suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The suit of the card, or NONE if card is NOTHING 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_ab41bb266cba351e276252a18b64391e6}\label{moteur_8h_ab41bb266cba351e276252a18b64391e6} 
+\index{moteur.h@{moteur.h}!cardShuffle@{cardShuffle}}
+\index{cardShuffle@{cardShuffle}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{cardShuffle()}{cardShuffle()}}
+{\footnotesize\ttfamily void card\+Shuffle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Deck }\end{DoxyParamCaption})}
+
+
+
+Shuffles the deck randomly. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em pile\+Deck} & Deck to shuffle \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a0c2284aa90e848e9a6e30e70abeebe6f}\label{moteur_8h_a0c2284aa90e848e9a6e30e70abeebe6f} 
+\index{moteur.h@{moteur.h}!dealCard@{dealCard}}
+\index{dealCard@{dealCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{dealCard()}{dealCard()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} deal\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Deck }\end{DoxyParamCaption})}
+
+
+
+Deals one card from the deck. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em pile\+Deck} & Pointer to the deck \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dealt card 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a7cae924bace0c1d0318523a27f878862}\label{moteur_8h_a7cae924bace0c1d0318523a27f878862} 
+\index{moteur.h@{moteur.h}!firstDeal@{firstDeal}}
+\index{firstDeal@{firstDeal}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{firstDeal()}{firstDeal()}}
+{\footnotesize\ttfamily void first\+Deal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli }\end{DoxyParamCaption})}
+
+
+
+Performs the first deal (3 cards to each player) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Deck to deal from \\
+\hline
+\mbox{\texttt{ out}}  & {\em players} & Players receiving cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (for display) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a174e32201934bc925483590e0a08cd15}\label{moteur_8h_a174e32201934bc925483590e0a08cd15} 
+\index{moteur.h@{moteur.h}!game@{game}}
+\index{game@{game}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{game()}{game()}}
+{\footnotesize\ttfamily void game (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players }\end{DoxyParamCaption})}
+
+
+
+Main game loop managing complete Belote game until a team wins. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of 4 players \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_aba93711c3bbb544f644c617465cbbac1}\label{moteur_8h_aba93711c3bbb544f644c617465cbbac1} 
+\index{moteur.h@{moteur.h}!getAsciiColor@{getAsciiColor}}
+\index{getAsciiColor@{getAsciiColor}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getAsciiColor()}{getAsciiColor()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+Ascii\+Color (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Gets the ASCII color code for a card suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em color} & Suit to get the ASCII color for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ASCII color code string 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_aa76aa95a28e3529fbff62d1caf986977}\label{moteur_8h_aa76aa95a28e3529fbff62d1caf986977} 
+\index{moteur.h@{moteur.h}!getCouleurCardString@{getCouleurCardString}}
+\index{getCouleurCardString@{getCouleurCardString}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getCouleurCardString()}{getCouleurCardString()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+Couleur\+Card\+String (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Gets the string representation of a card\textquotesingle{}s suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em color} & Suit to get the string of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String representation of the suit 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a65f08cda6ddf14467ba7b76ad0274bb3}\label{moteur_8h_a65f08cda6ddf14467ba7b76ad0274bb3} 
+\index{moteur.h@{moteur.h}!getNameCard@{getNameCard}}
+\index{getNameCard@{getNameCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getNameCard()}{getNameCard()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+Name\+Card (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Gets the name of a card as a string. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to get the name of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String representation of the card 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a6f19218347ba4353293f3ba7f10f4fc9}\label{moteur_8h_a6f19218347ba4353293f3ba7f10f4fc9} 
+\index{moteur.h@{moteur.h}!getValueAtoutCard@{getValueAtoutCard}}
+\index{getValueAtoutCard@{getValueAtoutCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getValueAtoutCard()}{getValueAtoutCard()}}
+{\footnotesize\ttfamily int get\+Value\+Atout\+Card (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Gets the point value of a trump card. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to evaluate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Point value of the card 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a06bd465d1a311eab4da54f3ecc726c56}\label{moteur_8h_a06bd465d1a311eab4da54f3ecc726c56} 
+\index{moteur.h@{moteur.h}!getValueCard@{getValueCard}}
+\index{getValueCard@{getValueCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getValueCard()}{getValueCard()}}
+{\footnotesize\ttfamily int get\+Value\+Card (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Gets the point value of a non-\/trump card. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to evaluate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Point value of the card 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_ae7e1f7cda5b63634a2911c52b9ef6c2b}\label{moteur_8h_ae7e1f7cda5b63634a2911c52b9ef6c2b} 
+\index{moteur.h@{moteur.h}!getValueCardString@{getValueCardString}}
+\index{getValueCardString@{getValueCardString}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{getValueCardString()}{getValueCardString()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+Value\+Card\+String (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Gets the string representation of a card\textquotesingle{}s value. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card to get the value string of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String representation of the card\textquotesingle{}s value 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a1900242a5b2fc5c9b2c347c1b8ada2e7}\label{moteur_8h_a1900242a5b2fc5c9b2c347c1b8ada2e7} 
+\index{moteur.h@{moteur.h}!giveCard@{giveCard}}
+\index{giveCard@{giveCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{giveCard()}{giveCard()}}
+{\footnotesize\ttfamily void give\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{player }\end{DoxyParamCaption})}
+
+
+
+Sends all cards in hand to the player. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player to send cards to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_af0a9a06218db1ad8c9d19e7667e8ef68}\label{moteur_8h_af0a9a06218db1ad8c9d19e7667e8ef68} 
+\index{moteur.h@{moteur.h}!givePli@{givePli}}
+\index{givePli@{givePli}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{givePli()}{givePli()}}
+{\footnotesize\ttfamily void give\+Pli (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli }\end{DoxyParamCaption})}
+
+
+
+Sends the current trick to all players for display. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (4 cards) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a8197da61a1fc3cb3d06e2a211194465d}\label{moteur_8h_a8197da61a1fc3cb3d06e2a211194465d} 
+\index{moteur.h@{moteur.h}!giveScore@{giveScore}}
+\index{giveScore@{giveScore}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{giveScore()}{giveScore()}}
+{\footnotesize\ttfamily bool give\+Score (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{score\+Eq1,  }\item[{int}]{score\+Eq2 }\end{DoxyParamCaption})}
+
+
+
+Sends the final scores to all players at the end of the game. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em score\+Eq1} & Final score of team 1 \\
+\hline
+\mbox{\texttt{ in}}  & {\em score\+Eq2} & Final score of team 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if scores were sent successfully, false if any error occurred 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a1bcdb80703e8d7dbe98de14988bbfa5c}\label{moteur_8h_a1bcdb80703e8d7dbe98de14988bbfa5c} 
+\index{moteur.h@{moteur.h}!initPile@{initPile}}
+\index{initPile@{initPile}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{initPile()}{initPile()}}
+{\footnotesize\ttfamily void init\+Pile (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{pile }\end{DoxyParamCaption})}
+
+
+
+Initializes a card pile by allocating memory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em pile} & Pointer to pile pointer to initialize \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a3c4c748de071a753433a2038fb2c246d}\label{moteur_8h_a3c4c748de071a753433a2038fb2c246d} 
+\index{moteur.h@{moteur.h}!isOvercut@{isOvercut}}
+\index{isOvercut@{isOvercut}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{isOvercut()}{isOvercut()}}
+{\footnotesize\ttfamily bool is\+Overcut (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{max\+Player\+Card,  }\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{max\+Pli\+Card,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color\+Atout,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color\+Pli }\end{DoxyParamCaption})}
+
+
+
+Determines if a player\textquotesingle{}s card beats the current best card in the trick. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em max\+Player\+Card} & Player\textquotesingle{}s card to check \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+Pli\+Card} & Current best card in the trick \\
+\hline
+\mbox{\texttt{ in}}  & {\em color\+Atout} & Trump suit \\
+\hline
+\mbox{\texttt{ in}}  & {\em color\+Pli} & Suit led in the trick \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if player\textquotesingle{}s card beats the trick card, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a443aa2f868915d5e26de92abd1f9e169}\label{moteur_8h_a443aa2f868915d5e26de92abd1f9e169} 
+\index{moteur.h@{moteur.h}!manche@{manche}}
+\index{manche@{manche}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{manche()}{manche()}}
+{\footnotesize\ttfamily bool manche (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{int \texorpdfstring{$\ast$}{*}}]{score\+Eq1,  }\item[{int \texorpdfstring{$\ast$}{*}}]{score\+Eq2 }\end{DoxyParamCaption})}
+
+
+
+Manages one complete round (manche) of Belote. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Game deck \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em players} & Array of players \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em start\+Player} & Pointer to starting player \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pli} & Current trick \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Trump suit \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em score\+Eq1} & Team 1\textquotesingle{}s score (updated) \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em score\+Eq2} & Team 2\textquotesingle{}s score (updated) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if round completed successfully, false if all players passed on trump 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a316c4dafcc11a4d78042553af4a13876}\label{moteur_8h_a316c4dafcc11a4d78042553af4a13876} 
+\index{moteur.h@{moteur.h}!nextPlayingPlayer@{nextPlayingPlayer}}
+\index{nextPlayingPlayer@{nextPlayingPlayer}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{nextPlayingPlayer()}{nextPlayingPlayer()}}
+{\footnotesize\ttfamily int next\+Playing\+Player (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{int}]{nb\+Next\+Player }\end{DoxyParamCaption})}
+
+
+
+Calculates the next player in turn order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ in}}  & {\em nb\+Next\+Player} & Number of positions to advance \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of the next player (0-\/3) 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a4ad0f00d515b0952de0d7b7a942f5fbf}\label{moteur_8h_a4ad0f00d515b0952de0d7b7a942f5fbf} 
+\index{moteur.h@{moteur.h}!okCard@{okCard}}
+\index{okCard@{okCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{okCard()}{okCard()}}
+{\footnotesize\ttfamily void ok\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{player }\end{DoxyParamCaption})}
+
+
+
+Confirms to the player that their card is valid. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player to notify \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a560139b2a386f8e4b2bff3284dc4b3db}\label{moteur_8h_a560139b2a386f8e4b2bff3284dc4b3db} 
+\index{moteur.h@{moteur.h}!playerCards2str@{playerCards2str}}
+\index{playerCards2str@{playerCards2str}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{playerCards2str()}{playerCards2str()}}
+{\footnotesize\ttfamily void player\+Cards2str (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{cards\+Str,  }\item[{\mbox{\hyperlink{structplayer}{player\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{player }\end{DoxyParamCaption})}
+
+
+
+Converts a player\textquotesingle{}s cards to a string format for sending. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em cards\+Str} & String buffer to store the result \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Pointer to the player \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_ae6db2b944730275f4c0b5e05039c3423}\label{moteur_8h_ae6db2b944730275f4c0b5e05039c3423} 
+\index{moteur.h@{moteur.h}!playerTurnAtout@{playerTurnAtout}}
+\index{playerTurnAtout@{playerTurnAtout}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{playerTurnAtout()}{playerTurnAtout()}}
+{\footnotesize\ttfamily int player\+Turn\+Atout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{int}]{turn,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+Conducts the trump selection phase. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (contains revealed trump card) \\
+\hline
+\mbox{\texttt{ in}}  & {\em turn} & Round of bidding (1 or 2) \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Chosen trump suit (only set in round 2) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of player who accepted trump, or -\/1 if all passed 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a5799042572c7f85b37994597b849f3aa}\label{moteur_8h_a5799042572c7f85b37994597b849f3aa} 
+\index{moteur.h@{moteur.h}!pli2str@{pli2str}}
+\index{pli2str@{pli2str}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{pli2str()}{pli2str()}}
+{\footnotesize\ttfamily void pli2str (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{pli\+Str,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli }\end{DoxyParamCaption})}
+
+
+
+Converts the current trick to a string format for sending. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em pli\+Str} & String buffer to store the result \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick (4 cards) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_ad5d5b5d5b739f41d96d32e2d620d0c29}\label{moteur_8h_ad5d5b5d5b739f41d96d32e2d620d0c29} 
+\index{moteur.h@{moteur.h}!point\_of\_gain@{point\_of\_gain}}
+\index{point\_of\_gain@{point\_of\_gain}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{point\_of\_gain()}{point\_of\_gain()}}
+{\footnotesize\ttfamily int point\+\_\+of\+\_\+gain (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2,  }\item[{enum \mbox{\hyperlink{moteur_8h_ae618108d05416c31f838a2efeb386aed}{equipe}}}]{eq,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{c }\end{DoxyParamCaption})}
+
+
+
+Calculates points earned by a team from their won cards. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in}}  & {\em eq} & Team to calculate points for \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Trump suit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total points earned by the specified team 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_aa360aa5da608ef60f0772fa3dce9e7cb}\label{moteur_8h_aa360aa5da608ef60f0772fa3dce9e7cb} 
+\index{moteur.h@{moteur.h}!removeCardFromHand@{removeCardFromHand}}
+\index{removeCardFromHand@{removeCardFromHand}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{removeCardFromHand()}{removeCardFromHand()}}
+{\footnotesize\ttfamily void remove\+Card\+From\+Hand (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{player,  }\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Removes a card from a player\textquotesingle{}s hand and shifts remaining cards. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player \\
+\hline
+\mbox{\texttt{ in}}  & {\em card} & Card to remove \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a4b6e0e4c5c425a364efb4671931863a6}\label{moteur_8h_a4b6e0e4c5c425a364efb4671931863a6} 
+\index{moteur.h@{moteur.h}!resetCards@{resetCards}}
+\index{resetCards@{resetCards}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{resetCards()}{resetCards()}}
+{\footnotesize\ttfamily void reset\+Cards (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Deck,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players }\end{DoxyParamCaption})}
+
+
+
+Resets all cards to initial state for a new round. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em pile\+Deck} & Deck to reset \\
+\hline
+\mbox{\texttt{ out}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards pile to reset \\
+\hline
+\mbox{\texttt{ out}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards pile to reset \\
+\hline
+\mbox{\texttt{ out}}  & {\em players} & Array of players whose hands will be cleared \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a92c48b7f6e45ce35bd8575a4a3213c01}\label{moteur_8h_a92c48b7f6e45ce35bd8575a4a3213c01} 
+\index{moteur.h@{moteur.h}!searchMaxCardInHand@{searchMaxCardInHand}}
+\index{searchMaxCardInHand@{searchMaxCardInHand}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{searchMaxCardInHand()}{searchMaxCardInHand()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} search\+Max\+Card\+In\+Hand (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int}]{player,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color\+Atout }\end{DoxyParamCaption})}
+
+
+
+Finds the highest value card of a specific suit in a player\textquotesingle{}s hand. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of the player \\
+\hline
+\mbox{\texttt{ in}}  & {\em color} & Suit to search for \\
+\hline
+\mbox{\texttt{ in}}  & {\em color\+Atout} & Trump suit (affects value calculation) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The highest card of the specified suit, or NOTHING if none found 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a29af759c15a674cbcf2064060488c332}\label{moteur_8h_a29af759c15a674cbcf2064060488c332} 
+\index{moteur.h@{moteur.h}!searchMaxCardInPli@{searchMaxCardInPli}}
+\index{searchMaxCardInPli@{searchMaxCardInPli}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{searchMaxCardInPli()}{searchMaxCardInPli()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} search\+Max\+Card\+In\+Pli (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color\+Atout }\end{DoxyParamCaption})}
+
+
+
+Finds the highest value card of a specific suit in the current trick. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pli} & Current trick \\
+\hline
+\mbox{\texttt{ in}}  & {\em color} & Suit to search for \\
+\hline
+\mbox{\texttt{ in}}  & {\em color\+Atout} & Trump suit (affects value calculation) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The highest card of the specified suit, or NOTHING if none found 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a0c3279e232d1350b9953bd55ae16b5ae}\label{moteur_8h_a0c3279e232d1350b9953bd55ae16b5ae} 
+\index{moteur.h@{moteur.h}!secondDeal@{secondDeal}}
+\index{secondDeal@{secondDeal}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{secondDeal()}{secondDeal()}}
+{\footnotesize\ttfamily void second\+Deal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli }\end{DoxyParamCaption})}
+
+
+
+Performs the second deal (2 cards to each player + reveal trump card) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Deck to deal from \\
+\hline
+\mbox{\texttt{ out}}  & {\em players} & Players receiving cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ out}}  & {\em pli} & Current trick (stores revealed trump card) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_ac0d7a325df0cc479b3d0d8264f37c866}\label{moteur_8h_ac0d7a325df0cc479b3d0d8264f37c866} 
+\index{moteur.h@{moteur.h}!str2Cards@{str2Cards}}
+\index{str2Cards@{str2Cards}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{str2Cards()}{str2Cards()}}
+{\footnotesize\ttfamily void str2\+Cards (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str,  }\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}}]{cards,  }\item[{int}]{max\+Cards }\end{DoxyParamCaption})}
+
+
+
+Converts a string format back to an array of cards. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em str} & String representation of cards (e.\+g., "{}\+H\+\_\+\+AS\texorpdfstring{$\vert$}{|}\+C\+\_\+10\texorpdfstring{$\vert$}{|}\+P\+\_\+\+V"{}) \\
+\hline
+\mbox{\texttt{ out}}  & {\em cards} & Array to store the resulting cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+Cards} & Maximum number of cards to parse \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_afa25619b5065a0ed61d45731a0819f9a}\label{moteur_8h_afa25619b5065a0ed61d45731a0819f9a} 
+\index{moteur.h@{moteur.h}!str\_color@{str\_color}}
+\index{str\_color@{str\_color}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{str\_color()}{str\_color()}}
+{\footnotesize\ttfamily void str\+\_\+color (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Sets console text color based on card suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em card} & Card whose suit determines the color \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a6dd0549f89cae2b3e97e9081553ed028}\label{moteur_8h_a6dd0549f89cae2b3e97e9081553ed028} 
+\index{moteur.h@{moteur.h}!string\_to\_card@{string\_to\_card}}
+\index{string\_to\_card@{string\_to\_card}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{string\_to\_card()}{string\_to\_card()}}
+{\footnotesize\ttfamily int string\+\_\+to\+\_\+card (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}} \texorpdfstring{$\ast$}{*}}]{out }\end{DoxyParamCaption})}
+
+
+
+Converts a card name string to its enum value. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & String representation of the card (e.\+g., "{}\+H\+\_\+\+AS"{}) \\
+\hline
+\mbox{\texttt{ out}}  & {\em out} & Pointer to store the resulting card enum \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if conversion successful, 0 if card name not found 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a35029e3c4edb705320e4d261c8c01eeb}\label{moteur_8h_a35029e3c4edb705320e4d261c8c01eeb} 
+\index{moteur.h@{moteur.h}!thirdDeal@{thirdDeal}}
+\index{thirdDeal@{thirdDeal}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{thirdDeal()}{thirdDeal()}}
+{\footnotesize\ttfamily void third\+Deal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{int}]{player\+Take\+Atout }\end{DoxyParamCaption})}
+
+
+
+Performs the third deal (3 cards to each player, trump taker gets revealed card) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Deck to deal from \\
+\hline
+\mbox{\texttt{ out}}  & {\em players} & Players receiving cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pli} & Current trick (trump card will be taken) \\
+\hline
+\mbox{\texttt{ in}}  & {\em player\+Take\+Atout} & Index of player who accepted trump \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_aa30970fc3963381e0f8274d977e86c6c}\label{moteur_8h_aa30970fc3963381e0f8274d977e86c6c} 
+\index{moteur.h@{moteur.h}!turnDeal@{turnDeal}}
+\index{turnDeal@{turnDeal}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{turnDeal()}{turnDeal()}}
+{\footnotesize\ttfamily bool turn\+Deal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+Manages the complete dealing phase including trump selection. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Deck to deal from \\
+\hline
+\mbox{\texttt{ out}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards pile (cleared) \\
+\hline
+\mbox{\texttt{ out}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards pile (cleared) \\
+\hline
+\mbox{\texttt{ out}}  & {\em players} & Players receiving cards \\
+\hline
+\mbox{\texttt{ in}}  & {\em start\+Player} & Pointer to the starting player index \\
+\hline
+\mbox{\texttt{ out}}  & {\em pli} & Current trick \\
+\hline
+\mbox{\texttt{ out}}  & {\em c} & Trump suit determined \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if trump was selected, false if all players passed 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_adb632f140866d2954f66b6d0afd121b3}\label{moteur_8h_adb632f140866d2954f66b6d0afd121b3} 
+\index{moteur.h@{moteur.h}!turnNormal@{turnNormal}}
+\index{turnNormal@{turnNormal}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{turnNormal()}{turnNormal()}}
+{\footnotesize\ttfamily void turn\+Normal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{deck,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq1,  }\item[{\mbox{\hyperlink{structpileCard}{pile\+Card\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pile\+Eq2,  }\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{int \texorpdfstring{$\ast$}{*}}]{start\+Player,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+Manages one complete trick of play. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em deck} & Game deck (unused in this function) \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pile\+Eq1} & Team 1\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pile\+Eq2} & Team 2\textquotesingle{}s won cards pile \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em players} & Array of players \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em start\+Player} & Pointer to starting player (updated to winner) \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em pli} & Current trick \\
+\hline
+\mbox{\texttt{ in}}  & {\em c} & Trump suit \\
+\hline
+\end{DoxyParams}
+\Hypertarget{moteur_8h_a67002549917e73147f8301351c91b592}\label{moteur_8h_a67002549917e73147f8301351c91b592} 
+\index{moteur.h@{moteur.h}!verifCard@{verifCard}}
+\index{verifCard@{verifCard}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{verifCard()}{verifCard()}}
+{\footnotesize\ttfamily bool verif\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{moteur_8h_a47ab0170de1f185f9cd4bb39c5ae3363}{players\+\_\+t}}}]{players,  }\item[{\mbox{\hyperlink{moteur_8h_a6a3f77606fc731b7f4977d69a89cf440}{pli\+\_\+t}}}]{pli,  }\item[{int}]{player,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}}}]{color\+Atout,  }\item[{enum \mbox{\hyperlink{moteur_8h_a8ef4e2109b1ef55076f453ef7a0e695a}{color\+Card}} \texorpdfstring{$\ast$}{*}}]{color\+Pli,  }\item[{enum \mbox{\hyperlink{moteur_8h_a3bc13ef433c58c7e808ef40088f32252}{card}}}]{card }\end{DoxyParamCaption})}
+
+
+
+Validates if a card can be legally played according to Belote rules. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em players} & Array of player pointers \\
+\hline
+\mbox{\texttt{ in}}  & {\em pli} & Current trick \\
+\hline
+\mbox{\texttt{ in}}  & {\em player} & Index of player attempting to play \\
+\hline
+\mbox{\texttt{ in}}  & {\em color\+Atout} & Trump suit \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em color\+Pli} & Suit led in the trick (updated if first card) \\
+\hline
+\mbox{\texttt{ in}}  & {\em card} & Card the player wants to play \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if card is legal, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{moteur_8h_a2c73264ee1aea0a1115b60d542356f11}\label{moteur_8h_a2c73264ee1aea0a1115b60d542356f11} 
+\index{moteur.h@{moteur.h}!verifColor@{verifColor}}
+\index{verifColor@{verifColor}!moteur.h@{moteur.h}}
+\doxysubsubsection{\texorpdfstring{verifColor()}{verifColor()}}
+{\footnotesize\ttfamily bool verif\+Color (\begin{DoxyParamCaption}\item[{char}]{color }\end{DoxyParamCaption})}
+
+
+
+Verifies if a character represents a valid card suit. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em color} & Character to verify (H, C, P, or T) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if valid suit, false otherwise 
+\end{DoxyReturn}

@@ -77,91 +77,35 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Définition de la structure de données socket.  
+<p>Socket data structure definition.  
  <a href="structsocket.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="session_8h_source.html">session.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:adce841ceca3a01158a71421e6b0dbd8a" id="r_adce841ceca3a01158a71421e6b0dbd8a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsocket.html#adce841ceca3a01158a71421e6b0dbd8a">fd</a></td></tr>
+<tr class="memitem:adce841ceca3a01158a71421e6b0dbd8a" id="r_adce841ceca3a01158a71421e6b0dbd8a"><td class="memItemLeft" align="right" valign="top"><a id="adce841ceca3a01158a71421e6b0dbd8a" name="adce841ceca3a01158a71421e6b0dbd8a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fd</b></td></tr>
+<tr class="memdesc:adce841ceca3a01158a71421e6b0dbd8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">File descriptor of the created socket. <br /></td></tr>
 <tr class="separator:adce841ceca3a01158a71421e6b0dbd8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91c13966eecc710ac792e7349172e975" id="r_a91c13966eecc710ac792e7349172e975"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsocket.html#a91c13966eecc710ac792e7349172e975">mode</a></td></tr>
+<tr class="memitem:a91c13966eecc710ac792e7349172e975" id="r_a91c13966eecc710ac792e7349172e975"><td class="memItemLeft" align="right" valign="top"><a id="a91c13966eecc710ac792e7349172e975" name="a91c13966eecc710ac792e7349172e975"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:a91c13966eecc710ac792e7349172e975"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connection mode: SOCK_STREAM (TCP) or SOCK_DGRAM (UDP) <br /></td></tr>
 <tr class="separator:a91c13966eecc710ac792e7349172e975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf34762a764605679cf1221553d4083a" id="r_adf34762a764605679cf1221553d4083a"><td class="memItemLeft" align="right" valign="top">struct sockaddr_in&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsocket.html#adf34762a764605679cf1221553d4083a">addrLoc</a></td></tr>
+<tr class="memitem:adf34762a764605679cf1221553d4083a" id="r_adf34762a764605679cf1221553d4083a"><td class="memItemLeft" align="right" valign="top"><a id="adf34762a764605679cf1221553d4083a" name="adf34762a764605679cf1221553d4083a"></a>
+struct sockaddr_in&#160;</td><td class="memItemRight" valign="bottom"><b>addrLoc</b></td></tr>
+<tr class="memdesc:adf34762a764605679cf1221553d4083a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Local address of the socket. <br /></td></tr>
 <tr class="separator:adf34762a764605679cf1221553d4083a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1296e2dc21d5cb36deef2045f6431edf" id="r_a1296e2dc21d5cb36deef2045f6431edf"><td class="memItemLeft" align="right" valign="top">struct sockaddr_in&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsocket.html#a1296e2dc21d5cb36deef2045f6431edf">addrDst</a></td></tr>
+<tr class="memitem:a1296e2dc21d5cb36deef2045f6431edf" id="r_a1296e2dc21d5cb36deef2045f6431edf"><td class="memItemLeft" align="right" valign="top"><a id="a1296e2dc21d5cb36deef2045f6431edf" name="a1296e2dc21d5cb36deef2045f6431edf"></a>
+struct sockaddr_in&#160;</td><td class="memItemRight" valign="bottom"><b>addrDst</b></td></tr>
+<tr class="memdesc:a1296e2dc21d5cb36deef2045f6431edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remote/destination address of the socket. <br /></td></tr>
 <tr class="separator:a1296e2dc21d5cb36deef2045f6431edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Définition de la structure de données socket. </p>
-<dl class="section note"><dt>Note</dt><dd>Ce type est composé du fd de la socket, du mode (connecté/non) et des adresses applicatives (locale/distante) </dd></dl>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a1296e2dc21d5cb36deef2045f6431edf" name="a1296e2dc21d5cb36deef2045f6431edf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1296e2dc21d5cb36deef2045f6431edf">&#9670;&#160;</a></span>addrDst</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct sockaddr_in socket::addrDst</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>adresse distante de la socket <br  />
- </p>
-
-</div>
-</div>
-<a id="adf34762a764605679cf1221553d4083a" name="adf34762a764605679cf1221553d4083a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf34762a764605679cf1221553d4083a">&#9670;&#160;</a></span>addrLoc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct sockaddr_in socket::addrLoc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>adresse locale de la socket <br  />
- </p>
-
-</div>
-</div>
-<a id="adce841ceca3a01158a71421e6b0dbd8a" name="adce841ceca3a01158a71421e6b0dbd8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adce841ceca3a01158a71421e6b0dbd8a">&#9670;&#160;</a></span>fd</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int socket::fd</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>numéro de la socket créée <br  />
- </p>
-
-</div>
-</div>
-<a id="a91c13966eecc710ac792e7349172e975" name="a91c13966eecc710ac792e7349172e975"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91c13966eecc710ac792e7349172e975">&#9670;&#160;</a></span>mode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int socket::mode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>mode connecté/non : STREAM/DGRAM <br  />
- </p>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<div class="textblock"><p>Socket data structure definition. </p>
+<p>This structure encapsulates all information related to a socket, including its file descriptor, connection mode, and both local and remote address information. It provides a complete representation of a socket for both client and server applications.</p>
+<dl class="section note"><dt>Note</dt><dd>This type is composed of the socket file descriptor, mode (connected/non-connected), and application addresses (local/remote) </dd></dl>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="session_8h_source.html">session.h</a></li>
 </ul>
 </div><!-- contents -->

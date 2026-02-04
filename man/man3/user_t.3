@@ -2,37 +2,18 @@
 .ad l
 .nh
 .SH NAME
-user_t \- Représente un utilisateur connecté ou enregistré  
+user_t \- Représente un utilisateur du système\&.  
 
 .SH SYNOPSIS
 .br
 .PP
 .PP
 \fC#include <users\&.h>\fP
-.SS "Public Attributes"
-
-.in +1c
-.ti -1c
-.RI "\fBname_t\fP \fBname\fP"
-.br
-.ti -1c
-.RI "\fBsocket_t\fP * \fBsDial\fP"
-.br
-.ti -1c
-.RI "int \fBindDest\fP"
-.br
-.in -1c
 .SH "Detailed Description"
 .PP 
-Représente un utilisateur connecté ou enregistré 
-.SH "Member Data Documentation"
-.PP 
-.SS "int user_t::indDest"
-Index de l'interlocuteur (ligne destinataire) 
-.SS "\fBname_t\fP user_t::name"
-Nom de l'utilisateur 
-.SS "\fBsocket_t\fP* user_t::sDial"
-Pointeur vers la socket de dialogue active 
+Représente un utilisateur du système\&. 
+
+Un utilisateur est identifié par un nom, une socket de dialogue, un éventuel destinataire pour la communication, et une partie associée\&. 
 
 .SH "Author"
 .PP 

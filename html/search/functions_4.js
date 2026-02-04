@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['identifieruser_0',['identifierUser',['../users_8h.html#afb204a0b2021767e2673ed96dcf2e3a9',1,'users.h']]],
-  ['indicedest_1',['indiceDest',['../users_8h.html#a4a3c34408cc52a3fce38f005b41c219d',1,'users.h']]]
+  ['ecrireusers_0',['ecrireUsers',['../users_8h.html#a54fde5d5e12ec9435e08140e8bd9e074',1,'users.h']]],
+  ['envoyer_1',['envoyer',['../data_8h.html#aa56b8d84de67f5ea7ea393a8884d3bbf',1,'data.h']]]
 ];

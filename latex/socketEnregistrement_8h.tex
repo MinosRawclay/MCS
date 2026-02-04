@@ -1,0 +1,199 @@
+\doxysection{include/socket\+Enregistrement.h File Reference}
+\hypertarget{socketEnregistrement_8h}{}\label{socketEnregistrement_8h}\index{include/socketEnregistrement.h@{include/socketEnregistrement.h}}
+
+
+Declarations for the registration socket server with multi-\/threading.  
+
+
+{\ttfamily \#include "{}lib\+Rep\+Req.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/wait.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+Include dependency graph for socket\+Enregistrement.\+h\+:
+% FIG 0
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{socketEnregistrement_8h_afbe765b48fdd147579445b475744b4c1}{CHECK\+\_\+\+ZERO}}(status,  msg)
+\begin{DoxyCompactList}\small\item\em Macro to check pthread function return values. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{socketEnregistrement_8h_a721e6788f7a4a55e6dd9c2bacffbf4bb}{IP\+\_\+\+HOST}}~"{}127.\+0.\+0.\+1"{}
+\begin{DoxyCompactList}\small\item\em Server listening IP address. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{socketEnregistrement_8h_a614217d263be1fb1a5f76e2ff7be19a2}{PORT}}~50000
+\begin{DoxyCompactList}\small\item\em Server listening port number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{socketEnregistrement_8h_abf45d33e7548cac6cab52775312d78a1}{p\+Fct\+Thread}}) (void \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Function pointer type for thread functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{socketEnregistrement_8h_a4e1cd4baf65fd0f7908b77f6f0a3b240}{thread\+Logic}} (void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em Thread logic function to handle individual client connections. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{socketEnregistrement_8h_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Main entry point of the registration server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declarations for the registration socket server with multi-\/threading. 
+
+This header file provides the necessary declarations, macros, and includes for implementing a multi-\/threaded registration server for the Belote game. It defines thread function pointer types, error checking macros, and server configuration constants (IP address and port). The server uses POSIX threads to handle multiple simultaneous client connections independently. \begin{DoxyAuthor}{Author}
+Breviere Alexandre 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+04/02/2026 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{socketEnregistrement_8h_afbe765b48fdd147579445b475744b4c1}\label{socketEnregistrement_8h_afbe765b48fdd147579445b475744b4c1} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!CHECK\_ZERO@{CHECK\_ZERO}}
+\index{CHECK\_ZERO@{CHECK\_ZERO}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{CHECK\_ZERO}{CHECK\_ZERO}}
+{\footnotesize\ttfamily \#define CHECK\+\_\+\+ZERO(\begin{DoxyParamCaption}\item[{}]{status,  }\item[{}]{msg }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (0\ !=\ (status))\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}pthread\ erreur\ :\ \%s\(\backslash\)n"{}},\ msg);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ exit(EXIT\_FAILURE);\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Macro to check pthread function return values. 
+
+Verifies that a pthread function returned 0 (success). If the status is non-\/zero (error), prints an error message to stderr and terminates the program with EXIT\+\_\+\+FAILURE.
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & Return value from a pthread function to check \\
+\hline
+{\em msg} & Error message to display if check fails\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This macro is specifically designed for pthread functions that return 0 on success 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Terminates the program on error -\/ use only for critical failures
+\end{DoxyWarning}
+Example usage\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{socketEnregistrement_8h_afbe765b48fdd147579445b475744b4c1}{CHECK\_ZERO}}(pthread\_create(\&thread,\ NULL,\ thread\_func,\ arg),\ \textcolor{stringliteral}{"{}Failed\ to\ create\ thread"{}});}
+
+\end{DoxyCode}
+ \Hypertarget{socketEnregistrement_8h_a721e6788f7a4a55e6dd9c2bacffbf4bb}\label{socketEnregistrement_8h_a721e6788f7a4a55e6dd9c2bacffbf4bb} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!IP\_HOST@{IP\_HOST}}
+\index{IP\_HOST@{IP\_HOST}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{IP\_HOST}{IP\_HOST}}
+{\footnotesize\ttfamily \#define IP\+\_\+\+HOST~"{}127.\+0.\+0.\+1"{}}
+
+
+
+Server listening IP address. 
+
+Defines the IP address on which the server will listen for connections. "{}0.\+0.\+0.\+0"{} means the server listens on all available network interfaces. \Hypertarget{socketEnregistrement_8h_a614217d263be1fb1a5f76e2ff7be19a2}\label{socketEnregistrement_8h_a614217d263be1fb1a5f76e2ff7be19a2} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!PORT@{PORT}}
+\index{PORT@{PORT}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{PORT}{PORT}}
+{\footnotesize\ttfamily \#define PORT~50000}
+
+
+
+Server listening port number. 
+
+Defines the port number on which the server will listen for client connections. Port 50000 is used for the registration and game management server. 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{socketEnregistrement_8h_abf45d33e7548cac6cab52775312d78a1}\label{socketEnregistrement_8h_abf45d33e7548cac6cab52775312d78a1} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!pFctThread@{pFctThread}}
+\index{pFctThread@{pFctThread}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{pFctThread}{pFctThread}}
+{\footnotesize\ttfamily p\+Fct\+Thread}
+
+
+
+Function pointer type for thread functions. 
+
+Defines the signature for functions that can be passed to pthread\+\_\+create(). Thread functions must take a void\texorpdfstring{$\ast$}{*} argument and return a void\texorpdfstring{$\ast$}{*} result. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{socketEnregistrement_8h_a840291bc02cba5474a4cb46a9b9566fe}\label{socketEnregistrement_8h_a840291bc02cba5474a4cb46a9b9566fe} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!main@{main}}
+\index{main@{main}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Main entry point of the registration server. 
+
+Initializes and runs a multi-\/threaded server that handles client registrations. The server creates a listening socket on IP\+\_\+\+HOST\+:PORT and enters an infinite loop that\+:
+\begin{DoxyItemize}
+\item Accepts incoming client connections via \doxylink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepter\+Clt()}
+\item Initializes thread attributes for detached threads
+\item Creates a new detached thread for each client using \doxylink{socketEnregistrement_8h_a4e1cd4baf65fd0f7908b77f6f0a3b240}{thread\+Logic()}
+\end{DoxyItemize}
+
+Each client connection is handled independently in its own thread, allowing multiple simultaneous client registrations and game management.
+
+\begin{DoxyReturn}{Returns}
+Exit status code (never reached due to infinite loop)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The server listens on IP\+\_\+\+HOST (0.\+0.\+0.\+0) and PORT (50000) 
+
+All threads are created in detached state (PTHREAD\+\_\+\+CREATE\+\_\+\+DETACHED) 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+The infinite loop means the server runs continuously until terminated 
+
+Each thread must properly handle its own socket cleanup 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\doxylink{socketEnregistrement_8h_a4e1cd4baf65fd0f7908b77f6f0a3b240}{thread\+Logic()} 
+\end{DoxySeeAlso}
+\Hypertarget{socketEnregistrement_8h_a4e1cd4baf65fd0f7908b77f6f0a3b240}\label{socketEnregistrement_8h_a4e1cd4baf65fd0f7908b77f6f0a3b240} 
+\index{socketEnregistrement.h@{socketEnregistrement.h}!threadLogic@{threadLogic}}
+\index{threadLogic@{threadLogic}!socketEnregistrement.h@{socketEnregistrement.h}}
+\doxysubsubsection{\texorpdfstring{threadLogic()}{threadLogic()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} thread\+Logic (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+
+
+Thread logic function to handle individual client connections. 
+
+This function runs in a separate thread for each connected client. It continuously reads messages from the client, processes registration requests via \doxylink{libRepReq_8h_a8659c391ba60322c5d03c2400722390e}{traiter\+Register()}, and sends appropriate responses. The thread performs the following operations in a loop\+:
+\begin{DoxyItemize}
+\item Reads incoming data from the client socket
+\item Receives and parses the client\textquotesingle{}s response
+\item Processes the registration request
+\item Sends back the generated request to the client
+\item Logs all requests and responses to stderr
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em arg} & Pointer to the socket\+\_\+t structure for client communication \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL when the thread terminates
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The socket is automatically closed when the client disconnects 
+
+This function terminates when read() returns 0 or negative value 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+This function is designed to be called by pthread\+\_\+create() 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\doxylink{socketEnregistrement_8h_a840291bc02cba5474a4cb46a9b9566fe}{main()} 
+\end{DoxySeeAlso}

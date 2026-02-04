@@ -2,23 +2,34 @@
 .ad l
 .nh
 .SH NAME
-requete
+requete \- Structure representing a protocol request\&.  
+
 .SH SYNOPSIS
 .br
 .PP
+.PP
+\fC#include <libRepReq\&.h>\fP
 .SS "Public Attributes"
 
 .in +1c
 .ti -1c
 .RI "short \fBidReq\fP"
 .br
+.RI "Request identifier (see enum requeteList) "
 .ti -1c
 .RI "char \fBverbReq\fP [20]"
 .br
+.RI "Request verb (textual command) "
 .ti -1c
 .RI "char \fBoptReq\fP [100]"
 .br
+.RI "Request options/parameters\&. "
 .in -1c
+.SH "Detailed Description"
+.PP 
+Structure representing a protocol request\&. 
+
+Contains a numeric identifier, a verb and options 
 
 .SH "Author"
 .PP 

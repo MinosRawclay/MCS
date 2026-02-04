@@ -2,7 +2,7 @@
 .ad l
 .nh
 .SH NAME
-include/session.h \- Spécification de la couche Session\&.  
+include/session.h \- Session layer specification for socket management\&.  
 
 .SH SYNOPSIS
 .br
@@ -34,7 +34,7 @@ include/session.h \- Spécification de la couche Session\&.
 .ti -1c
 .RI "struct \fBsocket\fP"
 .br
-.RI "Définition de la structure de données socket\&. "
+.RI "Socket data structure definition\&. "
 .in -1c
 .SS "Typedefs"
 
@@ -42,7 +42,7 @@ include/session.h \- Spécification de la couche Session\&.
 .ti -1c
 .RI "typedef struct \fBsocket\fP \fBsocket_t\fP"
 .br
-.RI "Définition du type de données socket_t\&. "
+.RI "Socket data type definition\&. "
 .in -1c
 .SS "Functions"
 
@@ -50,33 +50,33 @@ include/session.h \- Spécification de la couche Session\&.
 .ti -1c
 .RI "void \fBadr2struct\fP (struct sockaddr_in *addr, char *adrIP, short port)"
 .br
-.RI "Transformer une adresse au format humain en structure SocketBSD\&. "
+.RI "Converts human-readable address format to BSD socket structure\&. "
 .ti -1c
 .RI "\fBsocket_t\fP \fBcreerSocket\fP (int mode)"
 .br
-.RI "Création d'une socket de type DGRAM/STREAM\&. "
+.RI "Creates a socket of type DGRAM or STREAM\&. "
 .ti -1c
 .RI "\fBsocket_t\fP \fBcreerSocketAdr\fP (int mode, char *adrIP, short port)"
 .br
-.RI "Création d'une socket de type DGRAM/STREAM\&. "
+.RI "Creates a socket of type DGRAM/STREAM with specified addressing\&. "
 .ti -1c
 .RI "\fBsocket_t\fP \fBcreerSocketEcoute\fP (char *adrIP, short port)"
 .br
-.RI "Création d'une socket d'écoute avec l'adressage fourni en paramètre\&. "
+.RI "Creates a listening socket with the provided addressing\&. "
 .ti -1c
 .RI "\fBsocket_t\fP \fBaccepterClt\fP (const \fBsocket_t\fP sockEcoute)"
 .br
-.RI "Acceptation d'une demande de connexion d'un client\&. "
+.RI "Accepts a client connection request\&. "
 .ti -1c
 .RI "\fBsocket_t\fP \fBconnecterClt2Srv\fP (char *adrIP, short port)"
 .br
-.RI "Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre\&. "
+.RI "Creates a calling socket and connects to a server\&. "
 .in -1c
 .SH "Detailed Description"
 .PP 
-Spécification de la couche Session\&. 
+Session layer specification for socket management\&. 
 
-
+This header file provides the specification for the session layer, defining data structures and function prototypes for socket operations\&. It supports both TCP (SOCK_STREAM) and UDP (SOCK_DGRAM) socket modes, providing a high-level interface for creating, binding, listening, accepting, and connecting sockets in client-server applications\&. 
 .PP
 \fBAuthor\fP
 .RS 4
@@ -85,7 +85,7 @@ Samir El Khattabi
 .PP
 \fBDate\fP
 .RS 4
-3 mars 2023 
+March 3, 2023 
 .RE
 .PP
 \fBVersion\fP
@@ -94,123 +94,177 @@ Samir El Khattabi
 .RE
 .PP
 
+.SH "Typedef Documentation"
+.PP 
+.SS "\fBsocket_t\fP"
+
+.PP
+Socket data type definition\&. Convenient type alias for struct socket 
 .SH "Function Documentation"
 .PP 
 .SS "\fBsocket_t\fP accepterClt (const \fBsocket_t\fP sockEcoute)"
 
 .PP
-Acceptation d'une demande de connexion d'un client\&. 
+Accepts a client connection request\&. Blocks waiting for an incoming connection on the listening socket, then accepts it and returns a new socket for communication with the connected client\&. The client's address information is stored in the returned socket structure\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIsockEcoute\fP : socket d'écoute pour réception de la demande 
+\fIsockEcoute\fP Listening socket to receive the connection request 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-socket (dialogue) connectée portpar le serveur avec un client 
+Dialogue socket connected by the server with a client
+.RE
+.PP
+\fBNote\fP
+.RS 4
+This function blocks until a client connection request arrives 
+.PP
+The returned socket is ready for bidirectional communication 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBcreerSocketEcoute()\fP 
 .RE
 .PP
 
 .SS "void adr2struct (struct sockaddr_in * addr, char * adrIP, short port)"
 
 .PP
-Transformer une adresse au format humain en structure SocketBSD\&. 
+Converts human-readable address format to BSD socket structure\&. Transforms an IP address string and port number into a sockaddr_in structure suitable for use with Berkeley sockets API\&. Handles address family configuration, byte order conversion, and structure initialization\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIaddr\fP : structure d'adressage BSD d'une socket INET 
+\fIaddr\fP BSD socket addressing structure to fill (INET domain) 
 .br
-\fIadrIP\fP : adresse IP de la socket créée 
+\fIadrIP\fP IP address string of the socket (e\&.g\&., '192\&.168\&.1\&.1' or '0\&.0\&.0\&.0') 
 .br
-\fIport\fP : port de la socket créée 
+\fIport\fP Port number of the socket
 .RE
 .PP
 \fBNote\fP
 .RS 4
-Le domaine dépend du mode choisi (TCP/UDP) 
+The domain depends on the chosen mode (TCP/UDP) 
+.PP
+The addr parameter is modified by this function 
 .RE
 .PP
-\fBReturns\fP
+\fBSee also\fP
 .RS 4
-paramètre *adr modifié 
+\fBcreerSocketAdr()\fP 
 .RE
 .PP
 
 .SS "\fBsocket_t\fP connecterClt2Srv (char * adrIP, short port)"
 
 .PP
-Création d'une socket d'appel et connexion au seveur dont l'adressage est fourni en paramètre\&. 
+Creates a calling socket and connects to a server\&. Creates a TCP socket and initiates a connection to the server whose address is provided as parameter\&. This function is used by client applications to establish connections to servers\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIadrIP\fP : adresse IP du serveur à connecter 
+\fIadrIP\fP IP address of the server to connect to 
 .br
-\fIport\fP : port TCP du serveur à connecter 
+\fIport\fP TCP port of the server to connect to 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-socket connectée au serveur fourni en paramètre 
+Socket connected to the server provided as parameter
+.RE
+.PP
+\fBNote\fP
+.RS 4
+Always creates a SOCK_STREAM (TCP) socket 
+.PP
+This function blocks until connection is established or fails 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBcreerSocket()\fP 
 .RE
 .PP
 
 .SS "\fBsocket_t\fP creerSocket (int mode)"
 
 .PP
-Création d'une socket de type DGRAM/STREAM\&. 
+Creates a socket of type DGRAM or STREAM\&. Creates a socket using the Berkeley sockets API with the specified mode\&. Supports both connection-oriented (SOCK_STREAM/TCP) and connectionless (SOCK_DGRAM/UDP) communication modes\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fImode\fP : mode connecté (STREAM) ou non (DGRAM) 
+\fImode\fP Connection mode: SOCK_STREAM (connected/TCP) or SOCK_DGRAM (connectionless/UDP) 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-socket créée selon le mode choisi 
+Socket created according to the chosen mode
+.RE
+.PP
+\fBNote\fP
+.RS 4
+If an invalid mode is provided, defaults to SOCK_STREAM 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBcreerSocketAdr()\fP 
 .RE
 .PP
 
 .SS "\fBsocket_t\fP creerSocketAdr (int mode, char * adrIP, short port)"
 
 .PP
-Création d'une socket de type DGRAM/STREAM\&. 
+Creates a socket of type DGRAM/STREAM with specified addressing\&. Creates a socket with the specified mode and binds it to the provided IP address and port\&. This function combines socket creation and address binding in a single operation\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fImode\fP : adresse IP de la socket créée 
+\fImode\fP Connection mode: SOCK_STREAM (TCP) or SOCK_DGRAM (UDP) 
 .br
-\fIadrIP\fP : adresse IP de la socket créée 
+\fIadrIP\fP IP address to bind the socket to 
 .br
-\fIport\fP : port de la socket créée 
+\fIport\fP Port number to bind the socket to 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-socket créée dans le domaine choisi avec l'adressage fourni 
+Socket created in the chosen domain with the provided addressing
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBcreerSocket()\fP, \fBadr2struct()\fP 
 .RE
 .PP
 
-.SS "creerSocketEcoute (char * adrIP, short port)"
+.SS "\fBsocket_t\fP creerSocketEcoute (char * adrIP, short port)"
 
 .PP
-Création d'une socket d'écoute avec l'adressage fourni en paramètre\&. 
+Creates a listening socket with the provided addressing\&. Creates a TCP socket, binds it to the specified address and port, and puts it in listening mode to accept incoming client connections\&. This function is specifically designed for server applications\&.
 .PP
 \fBParameters\fP
 .RS 4
-\fIadrIP\fP : adresse IP du serveur à mettre en écoute 
+\fIadrIP\fP IP address of the server to put in listening mode 
 .br
-\fIport\fP : port TCP du serveur à mettre en écoute 
+\fIport\fP TCP port of the server to put in listening mode 
 .RE
 .PP
 \fBReturns\fP
 .RS 4
-socket créée avec l'adressage fourni en paramètre et dans un état d'écoute 
+Socket created with the provided addressing and in listening state
 .RE
 .PP
 \fBNote\fP
 .RS 4
-Le domaine est nécessairement STREAM 
+The mode is necessarily SOCK_STREAM (TCP) 
+.PP
+Listen backlog is configured for pending connections 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+\fBaccepterClt()\fP 
 .RE
 .PP
 

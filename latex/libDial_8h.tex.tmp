@@ -1,0 +1,92 @@
+\doxysection{include/lib\+Dial.h File Reference}
+\hypertarget{libDial_8h}{}\label{libDial_8h}\index{include/libDial.h@{include/libDial.h}}
+
+
+Declarations of client-\/server dialogue functions.  
+
+
+{\ttfamily \#include "{}lib\+Rep\+Req.\+h"{}}\newline
+Include dependency graph for lib\+Dial.\+h\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{libDial_8h_aa68d485193ec7f59c772376f3415b821}{Dial\+Srv}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sock\+Ecoute)
+\begin{DoxyCompactList}\small\item\em Server-\/side dialogue function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libDial_8h_a43f4f5f673a2d337279666aaf4380411}{DialC}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sd)
+\begin{DoxyCompactList}\small\item\em Client-\/side dialogue function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{libDial_8h_a0f6432a126aaaee27722968b114ded6f}{Dial\+Register}} (\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}} sd)
+\begin{DoxyCompactList}\small\item\em Dialogue function for registration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declarations of client-\/server dialogue functions. 
+
+This header file declares dialogue functions to manage communications between clients and servers via sockets for the Belote card game. It provides function prototypes for dialogue operations for\+:
+\begin{DoxyItemize}
+\item The server (accepting and processing connections)
+\item The client (communication with the server)
+\item Registration (registration procedure) \begin{DoxyAuthor}{Author}
+Breviere Alexandre 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+04/02/2026 
+\end{DoxyDate}
+
+\end{DoxyItemize}
+
+\doxysubsection{Function Documentation}
+\Hypertarget{libDial_8h_a43f4f5f673a2d337279666aaf4380411}\label{libDial_8h_a43f4f5f673a2d337279666aaf4380411} 
+\index{libDial.h@{libDial.h}!DialC@{DialC}}
+\index{DialC@{DialC}!libDial.h@{libDial.h}}
+\doxysubsubsection{\texorpdfstring{DialC()}{DialC()}}
+{\footnotesize\ttfamily void DialC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sd }\end{DoxyParamCaption})}
+
+
+
+Client-\/side dialogue function. 
+
+Manages continuous dialogue with a server by receiving requests, processing them according to their identifier, then sending a response. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sd} & Dialogue socket with the server \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libDial_8h_aa68d485193ec7f59c772376f3415b821}{Dial\+Srv()}, \doxylink{libDial_8h_a0f6432a126aaaee27722968b114ded6f}{Dial\+Register()} 
+\end{DoxySeeAlso}
+\Hypertarget{libDial_8h_a0f6432a126aaaee27722968b114ded6f}\label{libDial_8h_a0f6432a126aaaee27722968b114ded6f} 
+\index{libDial.h@{libDial.h}!DialRegister@{DialRegister}}
+\index{DialRegister@{DialRegister}!libDial.h@{libDial.h}}
+\doxysubsubsection{\texorpdfstring{DialRegister()}{DialRegister()}}
+{\footnotesize\ttfamily void Dial\+Register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sd }\end{DoxyParamCaption})}
+
+
+
+Dialogue function for registration. 
+
+Manages the registration dialogue with a server by sending registration requests and processing received responses. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sd} & Dialogue socket with the server \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libDial_8h_a43f4f5f673a2d337279666aaf4380411}{Dial\+C()}, \doxylink{libDial_8h_aa68d485193ec7f59c772376f3415b821}{Dial\+Srv()} 
+\end{DoxySeeAlso}
+\Hypertarget{libDial_8h_aa68d485193ec7f59c772376f3415b821}\label{libDial_8h_aa68d485193ec7f59c772376f3415b821} 
+\index{libDial.h@{libDial.h}!DialSrv@{DialSrv}}
+\index{DialSrv@{DialSrv}!libDial.h@{libDial.h}}
+\doxysubsubsection{\texorpdfstring{DialSrv()}{DialSrv()}}
+{\footnotesize\ttfamily void Dial\+Srv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{session_8h_a5ef0f2ca252f36a0c8d046d2eb67b416}{socket\+\_\+t}}}]{sock\+Ecoute }\end{DoxyParamCaption})}
+
+
+
+Server-\/side dialogue function. 
+
+Manages dialogue with clients on the server side by accepting connections, sending requests and processing responses. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em sock\+Ecoute} & Listening socket to accept client connections \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxylink{libDial_8h_a43f4f5f673a2d337279666aaf4380411}{Dial\+C()}, \doxylink{libDial_8h_a0f6432a126aaaee27722968b114ded6f}{Dial\+Register()} 
+\end{DoxySeeAlso}

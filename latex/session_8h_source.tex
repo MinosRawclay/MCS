@@ -3,54 +3,48 @@
 \mbox{\hyperlink{session_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ SESSION\_H}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ SESSION\_H}}
-\DoxyCodeLine{00010\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00011\ \textcolor{comment}{*****************************************************************************************}}
-\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ I\ N\ C\ L\ U\ D\ E\ S\ \ \ S\ P\ E\ C\ I\ F\ I\ Q\ U\ E\ S}}
-\DoxyCodeLine{00013\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <string.h>}}
-\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
-\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
-\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <signal.h>}}
-\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <errno.h>}}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00030\ \textcolor{comment}{*****************************************************************************************}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ S\ T\ R\ C\ T\ U\ R\ E\ S\ \ \ DE\ \ \ D\ O\ N\ N\ E\ E\ S}}
-\DoxyCodeLine{00032\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{00039\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsocket}{socket}}\ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_adce841ceca3a01158a71421e6b0dbd8a}{fd}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ \mbox{\hyperlink{structsocket_adf34762a764605679cf1221553d4083a}{addrLoc}};\ \ \ \ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ \mbox{\hyperlink{structsocket_a1296e2dc21d5cb36deef2045f6431edf}{addrDst}};\ \ \ \ \ \ }
-\DoxyCodeLine{00044\ \};}
-\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsocket}{socket}}\ \mbox{\hyperlink{structsocket}{socket\_t}};\ }
-\DoxyCodeLine{00050\ \textcolor{comment}{/*}}
-\DoxyCodeLine{00051\ \textcolor{comment}{*****************************************************************************************}}
-\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ \ \(\backslash\)noop\ \ \ \ \ \ \ P\ R\ O\ T\ O\ T\ Y\ P\ E\ S\ \ \ DES\ \ \ F\ O\ N\ C\ T\ I\ O\ N\ S}}
-\DoxyCodeLine{00053\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a33abe921a88df75673f623e49227139e}{adr2struct}}\ (\textcolor{keyword}{struct}\ sockaddr\_in\ *addr,\ \textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
-\DoxyCodeLine{00070\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_afac73db40b85a0897ae36d9342188ab7}{creerSocket}}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}});}
-\DoxyCodeLine{00079\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creerSocketAdr}}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}},\ \textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
-\DoxyCodeLine{00088\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_adf7b35a6e085a114fb06ec3208bf3c90}{creerSocketEcoute}}\ (\textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
-\DoxyCodeLine{00095\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepterClt}}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
-\DoxyCodeLine{00104\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a7f5e8ef98743c3001ba36b42a46f1561}{connecterClt2Srv}}\ (\textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SESSION\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#ifndef\ SESSION\_H}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ SESSION\_H}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ ====================\ SPECIFIC\ INCLUDES\ ====================}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <signal.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <errno.h>}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ ====================\ DATA\ STRUCTURES\ ====================}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsocket}{socket}}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_adce841ceca3a01158a71421e6b0dbd8a}{fd}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ \mbox{\hyperlink{structsocket_adf34762a764605679cf1221553d4083a}{addrLoc}};\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ \mbox{\hyperlink{structsocket_a1296e2dc21d5cb36deef2045f6431edf}{addrDst}};\ \ \ \ \ }
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsocket}{socket}}\ \mbox{\hyperlink{structsocket}{socket\_t}};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ ====================\ FUNCTION\ PROTOTYPES\ ====================}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00074\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{session_8h_a33abe921a88df75673f623e49227139e}{adr2struct}}(\textcolor{keyword}{struct}\ sockaddr\_in\ *addr,\ \textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00088\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_afac73db40b85a0897ae36d9342188ab7}{creerSocket}}(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}});}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00103\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a5d9908d2192f6364a4f8812cdaa1f7d1}{creerSocketAdr}}(\textcolor{keywordtype}{int}\ \mbox{\hyperlink{structsocket_a91c13966eecc710ac792e7349172e975}{mode}},\ \textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00119\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a03d4dd64d2b50bfe1e93055e6ee10976}{creerSocketEcoute}}(\textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00135\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a1bf8e2cd5daab300c5354e8efaf065c9}{accepterClt}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structsocket}{socket\_t}}\ sockEcoute);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00151\ \mbox{\hyperlink{structsocket}{socket\_t}}\ \mbox{\hyperlink{session_8h_a7f5e8ef98743c3001ba36b42a46f1561}{connecterClt2Srv}}(\textcolor{keywordtype}{char}\ *adrIP,\ \textcolor{keywordtype}{short}\ port);}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SESSION\_H\ */}\textcolor{preprocessor}{}}
 
 \end{DoxyCode}

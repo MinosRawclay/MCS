@@ -82,14 +82,27 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">libDial.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// fichier : libDial.h</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;libRepReq.h&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">// include des fichier</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// prototypes des fonctions</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keywordtype">void</span> DialSrv(<a class="code hl_struct" href="structsocket.html">socket_t</a> sockEcoute);</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keywordtype">void</span> DialC(<a class="code hl_struct" href="structsocket.html">socket_t</a> sd);</div>
-<div class="ttc" id="astructsocket_html"><div class="ttname"><a href="structsocket.html">socket</a></div><div class="ttdoc">Définition de la structure de données socket.</div><div class="ttdef"><b>Definition</b> session.h:39</div></div>
+<a href="libDial_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifndef LIBDIAL_H</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#define LIBDIAL_H</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// fichier : libDial.h</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="libRepReq_8h.html">libRepReq.h</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">// ==================== FUNCTION PROTOTYPES ====================</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="libDial_8h.html#aa68d485193ec7f59c772376f3415b821">   29</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="libDial_8h.html#aa68d485193ec7f59c772376f3415b821">DialSrv</a>(<a class="code hl_struct" href="structsocket.html">socket_t</a> sockEcoute);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="libDial_8h.html#a43f4f5f673a2d337279666aaf4380411">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="libDial_8h.html#a43f4f5f673a2d337279666aaf4380411">DialC</a>(<a class="code hl_struct" href="structsocket.html">socket_t</a> sd);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="libDial_8h.html#a0f6432a126aaaee27722968b114ded6f">   47</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="libDial_8h.html#a0f6432a126aaaee27722968b114ded6f">DialRegister</a>(<a class="code hl_struct" href="structsocket.html">socket_t</a> sd);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#endif </span><span class="comment">/* LIBDIAL_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="alibDial_8h_html_a0f6432a126aaaee27722968b114ded6f"><div class="ttname"><a href="libDial_8h.html#a0f6432a126aaaee27722968b114ded6f">DialRegister</a></div><div class="ttdeci">void DialRegister(socket_t sd)</div><div class="ttdoc">Dialogue function for registration.</div></div>
+<div class="ttc" id="alibDial_8h_html_a43f4f5f673a2d337279666aaf4380411"><div class="ttname"><a href="libDial_8h.html#a43f4f5f673a2d337279666aaf4380411">DialC</a></div><div class="ttdeci">void DialC(socket_t sd)</div><div class="ttdoc">Client-side dialogue function.</div></div>
+<div class="ttc" id="alibDial_8h_html_aa68d485193ec7f59c772376f3415b821"><div class="ttname"><a href="libDial_8h.html#aa68d485193ec7f59c772376f3415b821">DialSrv</a></div><div class="ttdeci">void DialSrv(socket_t sockEcoute)</div><div class="ttdoc">Server-side dialogue function.</div></div>
+<div class="ttc" id="alibRepReq_8h_html"><div class="ttname"><a href="libRepReq_8h.html">libRepReq.h</a></div><div class="ttdoc">Declarations of request/response management structures and functions.</div></div>
+<div class="ttc" id="astructsocket_html"><div class="ttname"><a href="structsocket.html">socket</a></div><div class="ttdoc">Socket data structure definition.</div><div class="ttdef"><b>Definition</b> session.h:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -121,7 +121,7 @@ void creerPartie(socket_t * sDial){
 }
 
 int isFull(int idUser){
-	return users.tab[idUser].party.nbJoueurs >=4;
+	return users.tab[idUser].party.nbJoueurs >=4 || users.tab[ideUser].party.nbJoueurs <= 0;
 }
 
 

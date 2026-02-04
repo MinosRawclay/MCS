@@ -67,12 +67,12 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			break;
 
 		case 303:
-			creerPartie(sDial); //TODO => Faire la fonction créer partie
+			creerPartie(sDial);
 			req.idReq=401;
 			break;
 
 		case 304:
-			if(isFull(rep->optRep)){ //TODO => Faire la fonction isFull
+			if(isFull(rep->optRep)){ 
 				req.idReq=2;
 			}
 			else{

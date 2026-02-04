@@ -4,7 +4,7 @@ INC_DIR = include
 OBJ_DIR = obj
 LIB_DIR = lib
 BIN_DIR = bin
-LDFLAGS = -L$(LIB_DIR) -lDial -lRepReq -lInet -lUsers -lMoteur -lClient -lServApp
+LDFLAGS = -L$(LIB_DIR) -lServApp -lClient -lMoteur -lRepReq -lDial -lUsers -lInet
 
 all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a $(LIB_DIR)/libMoteur.a $(LIB_DIR)/libClient.a $(LIB_DIR)/libServApp.a gameApp socketEnregistrement #game
 

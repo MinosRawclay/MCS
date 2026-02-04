@@ -36,17 +36,17 @@
  *	\note		Ce type est composé du fd de la socket, du mode (connecté/non)
  *				et des adresses applicatives (locale/distante)
  */
-struct socket {
-	int fd;							/**< numéro de la socket créée			*/
-	int mode;						/**< mode connecté/non : STREAM/DGRAM	*/
-	struct sockaddr_in addrLoc;		/**< adresse locale de la socket 		*/
-	struct sockaddr_in addrDst;		/**< adresse distante de la socket 		*/
-};
-/**
- *	\typedef	socket_t
- *	\brief		Définition du type de données socket_t
- */
-typedef struct socket socket_t; 
+	struct socket {
+		int fd;							/**< numéro de la socket créée			*/
+		int mode;						/**< mode connecté/non : STREAM/DGRAM	*/
+		struct sockaddr_in addrLoc;		/**< adresse locale de la socket 		*/
+		struct sockaddr_in addrDst;		/**< adresse distante de la socket 		*/
+	};
+	/**
+	*	\typedef	socket_t
+	*	\brief		Définition du type de données socket_t
+	*/
+	typedef struct socket socket_t; 
 /*
 *****************************************************************************************
  *	\noop		P R O T O T Y P E S   DES   F O N C T I O N S

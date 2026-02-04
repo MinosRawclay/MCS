@@ -63,7 +63,7 @@ int identifierUser(socket_t *sDial) {
 	recevoir(sDial, &req, (pFct)str2req);
 	if (req.idReq==300)
 		if ((index=trouverUser(req.optReq))==-1) index=creerUser(req.optReq, sDial);
-		else { users.tab[index].sDial=sDial; users.tab[index].indDest==-1; }
+		else { users.tab[index].sDial=sDial; users.tab[index].indDest=-1; }
 	if (index==-1) CHECK(close(sDial->fd),"--close()--");
 	//
 	afficherUsers("identifier");
@@ -121,7 +121,7 @@ void creerPartie(socket_t * sDial){
 }
 
 int isFull(int idUser){
-	return users.tab[idUser].party.nbJoueurs >=4;
+	return users.tab[idUser].party.nbJoueurs >=4 || users.tab[idUser].party.nbJoueurs <= 0;
 }
 
 

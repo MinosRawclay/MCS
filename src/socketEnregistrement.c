@@ -57,6 +57,7 @@ void * threadLogic(void * arg){
     }
     
     CHECK(close(sd->fd), "-- PB close() --");
+    free(sd);
     return NULL;
 }
 
@@ -94,7 +95,10 @@ int main(){
     while(1){
         // Accept incoming client connection
         sa = accepterClt(sockEcoute);
-        
+    
+        // On alloue un espace mémoire unique pour ce client
+        socket_t *sa_thread = malloc(sizeof(socket_t)); 
+        *sa_thread = sa; // On copie les données
         // Initialize thread attributes
         CHECK_ZERO(pthread_attr_init(&attr), "T ERROR main 1");
         
@@ -106,8 +110,11 @@ int main(){
         // Create new thread to handle client
         CHECK_ZERO(pthread_create(&th, &attr, 
                 (pFctThread) threadLogic,
-                (void*) &sa), 
+                (void*) &sa_thread), 
                 "T ERROR main 3");
+    
+
+
         
         printf("Réussi main");
     }

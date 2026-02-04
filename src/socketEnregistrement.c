@@ -51,7 +51,8 @@ void * threadLogic(void * arg){
         fprintf(stderr, REQ_STR_OUT"\n", rep.idRep, rep.verbRep, rep.optRep);
         
         req = traiterRegister(&rep, sd);
-        
+        printf("traitement termine, envoie en cours...\n");
+
         envoyer(sd, (generic)&req, (pFct)req2str);
         fprintf(stderr, REQ_STR_OUT"\n", req.idReq, req.verbReq, req.optReq);
     }
@@ -110,7 +111,7 @@ int main(){
         // Create new thread to handle client
         CHECK_ZERO(pthread_create(&th, &attr, 
                 (pFctThread) threadLogic,
-                (void*) &sa_thread), 
+                (void*) sa_thread), 
                 "T ERROR main 3");
     
 

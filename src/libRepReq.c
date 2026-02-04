@@ -164,17 +164,11 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
     switch(rep->idRep){
         case 301:
 			strcpy(req.verbReq, "connexion");
-            // Check user existence
-            index = trouverUser(rep->optRep);
-            if(index == -1) {
-               if (creerUser(rep->optRep, sDial) == -1)
-                    req.idReq = 3;
-                else
-                    req.idReq = 401;
-            }  
-            else 
-                req.idReq = 401;
-
+            if (identifierUser(sDial) == -1) {
+                req.idReq = 3; // User not found
+            } else {
+                req.idReq = 401; // Success
+            }
             break;
             
         case 302:
@@ -187,7 +181,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
         case 303:
 			strcpy(req.verbReq, "new game");
             // Create a new game
-            creerPartie(sDial);
+            creerPartieBDD(sDial);
             req.idReq = 401;
             break;
             

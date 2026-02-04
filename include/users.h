@@ -174,7 +174,7 @@ void ecrireUsers(void);
  * @brief Crée une nouvelle partie et désigne l'utilisateur comme hôte
  * @param sDial Socket de l'utilisateur créateur
  */
-void creerPartie(socket_t *sDial);
+void creerPartieBDD(socket_t *sDial);
 
 /**
  * @brief Vérifie si une partie est pleine ou invalide

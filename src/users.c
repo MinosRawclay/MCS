@@ -124,7 +124,7 @@ int identifierUser(socket_t *sDial) {
 
     recevoir(sDial, &req, (pFct)str2req);
 
-    if (req.idReq == 300) {
+    if (req.idReq == 301) {
         if ((index = trouverUser(req.optReq)) == -1)
             index = creerUser(req.optReq, sDial);
         else {
@@ -227,10 +227,18 @@ void ecrireUsers(void) {
  * @brief Crée une nouvelle partie et définit l'utilisateur comme hôte
  * @param sDial Socket de l'utilisateur hôte
  */
-void creerPartie(socket_t *sDial) {
-    user_t host = users.tab[identifierUser(sDial)];
-    host.party.list[0] = &host;
-    host.party.nbJoueurs = 1;
+void creerPartieBDD(socket_t *sDial) {
+    int index = identifierUser(sDial);
+    if (index == -1) return; // Sécurité
+
+    // On récupère l'ADRESSE de l'utilisateur dans le tableau global
+    user_t *hostPtr = &users.tab[index];
+
+    // On modifie directement la structure globale
+    hostPtr->party.list[0] = hostPtr; 
+    hostPtr->party.nbJoueurs = 1;
+    
+    printf("DEBUG: Partie créée pour %s (Index: %d)\n", hostPtr->pseudo, index);
 }
 
 /**

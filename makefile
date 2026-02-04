@@ -4,9 +4,9 @@ INC_DIR = include
 OBJ_DIR = obj
 LIB_DIR = lib
 BIN_DIR = bin
-LDFLAGS = -L$(LIB_DIR) -lDial -lRepReq -lInet -lUsers
+LDFLAGS = -L$(LIB_DIR) -lDial -lRepReq -lInet -lUsers -lMoteur -lClient -lServApp
 
-all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a  gameClient gameServer socketEnregistrement #game
+all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a $(LIB_DIR)/libMoteur.a $(LIB_DIR)/libClient.a $(LIB_DIR)/libServApp.a gameApp socketEnregistrement #game
 
 # ----- Librairie statique -----
 $(LIB_DIR)/libInet.a: $(OBJ_DIR)/data.o $(OBJ_DIR)/session.o
@@ -21,6 +21,15 @@ $(LIB_DIR)/libDial.a: $(OBJ_DIR)/libDial.o
 $(LIB_DIR)/libUsers.a: $(OBJ_DIR)/users.o 
 	ar qvs $@ $^
 
+$(LIB_DIR)/libServApp.a: $(OBJ_DIR)/servApp.o 
+	ar qvs $@ $^
+
+$(LIB_DIR)/libClient.a: $(OBJ_DIR)/client.o 
+	ar qvs $@ $^
+
+$(LIB_DIR)/libMoteur.a: $(OBJ_DIR)/moteur.o 
+	ar qvs $@ $^
+
 # ----- Fichiers objets -----
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -30,11 +39,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 #game: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
 #	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
 
-gameClient: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
-	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS) -DCLIENT
-
-gameServer: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
-	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS) -DSERVER
+gameApp : $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a $(LIB_DIR)/libMoteur.a $(LIB_DIR)/libClient.a $(LIB_DIR)/libServApp.a
+	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
 
 socketEnregistrement: $(SRC_DIR)/socketEnregistrement.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
 	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)

@@ -25,6 +25,7 @@
 #define NB_CARD_DECK 32      ///< Total number of cards in the deck
 
 #define POINT_WIN 1500       ///< Points needed to win the game
+#define MAX_LINE 1024        ///< Max char in a string
 
 #define STR_ROUGE_START printf("\033[31m")     ///< ANSI code to start red text
 #define STR_MAGENTA_START printf("\033[35m")   ///< ANSI code to start magenta text
@@ -175,6 +176,15 @@ bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard 
  * @return The card chosen by the player
  */
 enum card askCard(players_t players, int player);
+
+/**
+ * @brief Sends the final scores to all players at the end of the game
+ * @param[in] players Array of player pointers
+ * @param[in] scoreEq1 Final score of team 1
+ * @param[in] scoreEq2 Final score of team 2
+ * @return true if scores were sent successfully, false if any error occurred
+ */
+bool giveScore(players_t players, int scoreEq1, int scoreEq2);
 
 // -------------------- Variable/Value Functions ------------------------------
 

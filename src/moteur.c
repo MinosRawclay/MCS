@@ -8,8 +8,6 @@
  */
 #include "../include/moteur.h"
 
-#define MAX_LINE 1024
-
 // ==================== COMMUNICATION =====================================================
 
 /**
@@ -57,11 +55,11 @@ void playerCards2str(char* cardsStr, player_t* player){
 void str2Cards(const char* str, enum card* cards, int maxCards){
     char buffer[MAX_LINE];
     int nbCards = 0;
-    strncpy(buffer, str, MAX_LINE);
-    buffer[MAX_LINE - 1] = '\0';  // Ensure null-termination
-
     char* token = strtok(buffer, "|");
     int index = 0;
+
+    strncpy(buffer, str, MAX_LINE);
+    buffer[MAX_LINE - 1] = '\0';  // Ensure null-termination
     while (token != NULL && index < maxCards) {
         enum card c;
         if (string_to_card(token, &c)) {
@@ -77,10 +75,6 @@ void str2Cards(const char* str, enum card* cards, int maxCards){
     }
     return;
 }
-
-
-
-
 
 /**
  * @brief Adds a new player to the game
@@ -111,21 +105,19 @@ bool addPlayer(players_t players, int *nbPlayer){
  * @param[in] player Index of the player to notify
  */
 void okCard(players_t players, int player){
+    requete_t req;
+    reponse_t rep;
+
     if (players[player]->sock == NULL) {
         // Joueur local : pas besoin d'envoyer de confirmation
         return;
     }
-    
     // Joueur distant : envoyer confirmation
-    requete_t req;
-    req.idReq = 121;  // REQ_OK_CARD
+    req.idReq = REQ_CARTE_LEGALE;  // REQ_OK_CARD
     strcpy(req.verbReq, "OkCard");
     strcpy(req.optReq, "OK");
-
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
     // Attendre l'accusé de réception
-    reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
 }
 
@@ -135,24 +127,22 @@ void okCard(players_t players, int player){
  * @param[in] player Index of the player to send cards to
  */
 void giveCard(players_t players, int player){
+    requete_t req;
+    reponse_t rep;
+
     if (players[player]->sock == NULL) {
         // Joueur local : pas besoin d'envoyer
         printf("Player %d cards:\n", player);
         afficherCards(players[player]->cards,NB_CARD_HAND);    
         return;
     }
-    
     // Joueur distant : envoyer toutes les cartes
     // Format: carte1|carte2|carte3|...|carte8
-    requete_t req;
-    req.idReq = 110;  // REQ_GIVE_CARDS
+    req.idReq = REQ_ENVOYER_DECK;  // REQ_GIVE_CARDS
     strcpy(req.verbReq, "GiveCards");
     playerCards2str(req.optReq, players[player]);
-    
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
     // Attendre l'accusé de réception
-    reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
     printf("Player %d cards:\n", player);
     afficherCards(players[player]->cards,NB_CARD_HAND);
@@ -165,17 +155,16 @@ void giveCard(players_t players, int player){
  */
 void startPartie(players_t players){
     requete_t req;
-    req.idReq = 100;  // REQ_START_GAME
+    reponse_t rep;
+
+    req.idReq = REQ_LANCER_PARTIE;  // REQ_START_GAME
     strcpy(req.verbReq, "startPartie");
     strcpy(req.optReq, "");
-    
     // Notifier tous les joueurs distants
     for (int i = 0; i < PLAYERS_MAX; i++) {
         if (players[i]->sock != NULL) {
             envoyer(players[i]->sock, (generic)&req, (pFct)req2str);
-            
             // Attendre l'accusé de réception
-            reponse_t rep;
             recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
             if (rep.idRep != 200) {
                 printf("Erreur : le joueur %d n'a pas confirmé le début de la partie\n", i);
@@ -195,24 +184,21 @@ void startPartie(players_t players){
  * @param[in] pli Current trick (4 cards)
  */
 void givePli(players_t players, pli_t pli){
+    requete_t req;
+    reponse_t rep;
+
     // Afficher pour le joueur local
     afficherPli(pli);
-    
     // Envoyer aux joueurs distants
-    // Format: carte1|carte2|carte3|carte4
-    
-    requete_t req;
-    req.idReq = 110;  // REQ_GIVE_PLI
+    // Format: carte1|carte2|carte3|carte4    
+    req.idReq = REQ_ENVOYER_PLI;  // REQ_GIVE_PLI
     strcpy(req.verbReq, "GivePli");
     pli2str(req.optReq, pli);
-    
     // Envoyer à tous les joueurs distants
     for (int i = 0; i < PLAYERS_MAX; i++) {
         if (players[i]->sock != NULL) {
             envoyer(players[i]->sock, (generic)&req, (pFct)req2str);
-            
             // Attendre l'accusé de réception
-            reponse_t rep;
             recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
         }
     }
@@ -228,36 +214,24 @@ void givePli(players_t players, pli_t pli){
  * @return true if player accepts, false otherwise
  */
 bool askTakeAtout(players_t players, pli_t pli, int player){
+    requete_t req;
+    reponse_t rep;
+    char choice;
+
     if (players[player]->sock == NULL) {
         // Joueur local
         printf("Tu prends l'atout ? (1=oui, 0=non) : ");
-        char choice;
         scanf(" %c", &choice);
         return (choice == '1');
     }
-    
     // Joueur distant
-    requete_t req;
-    req.idReq = 311;  // REQ_ASK_ATOUT_T1
+    req.idReq = REQ_CHOIX_ATOUT;  // REQ_ASK_ATOUT_T1
     strcpy(req.verbReq, "AskAtoutT1");
-    
     //send a pli
     pli2str(req.optReq, pli);
-
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
-    reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    
     return (strcmp(rep.optRep, "1") == 0);
-    // if(player == 0){CLient INTERNE}
-    
-    printf("Player %d Tu prend l'atout T1 ? \n", player);
-    printf("yes=1,no=0 :");
-    char choice;
-    scanf(" %c",&choice);
-    if(choice == '1') return true; 
-    return false;
 }
 
 /**
@@ -269,10 +243,14 @@ bool askTakeAtout(players_t players, pli_t pli, int player){
  * @return true if player accepts and chooses a suit, false otherwise
  */
 bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard *c){
+    requete_t req;
+    reponse_t rep;
+    char color = 0;
+    char choice = 0;
+    char separator[MAX_LINE];
+    
     if (players[player]->sock == NULL) {
         // Joueur local
-        char color = 0;
-        char choice = 0;
         printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
         scanf(" %c", &choice);
         if (choice == '0') return false;
@@ -284,32 +262,53 @@ bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard 
         printf("Couleur choisie : %c\n", color);
         return true;
     }
-    
     // Joueur distant
-    requete_t req;
-    req.idReq = 312;  // REQ_ASK_ATOUT_T2
+    req.idReq = REQ_CHOIX_ATOUT_COULEUR;  // REQ_ASK_ATOUT_T2
     strcpy(req.verbReq, "AskAtoutT2");
     //send a pli
     pli2str(req.optReq, pli);
-    
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
-    reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    
     // Format réponse: "0" (refus) ou "1|H" (accepte + couleur)
     if (strcmp(rep.optRep, "0") == 0) {
         return false;
     }
-    
     // Parser "1|H" pour extraire la couleur
-    char* separator = strchr(rep.optRep, '|');
+    strcpy(separator, strchr(rep.optRep, '|'));
     if (separator != NULL) {
         *c = *(separator + 1);  // Caractère après le |
         return true;
     }
-    
     return false;
+}
+
+/**
+ * @brief Sends the final scores to all players at the end of the game
+ * @param[in] players Array of player pointers
+ * @param[in] scoreEq1 Final score of team 1
+ * @param[in] scoreEq2 Final score of team 2
+ * @return true if scores were sent successfully, false if any error occurred
+ */
+bool giveScore(players_t players, int scoreEq1, int scoreEq2){
+    requete_t req;
+    reponse_t rep;
+
+    for (int player = 0; player < PLAYERS_MAX; player++){
+        if (players[player]->sock == NULL) {
+            // Joueur local : pas besoin d'envoyer
+            printf("Score - Equipe 1: %d, Equipe 2: %d\n", scoreEq1, scoreEq2);
+            return true;
+        }
+        // Joueur distant : envoyer score
+        req.idReq = REQ_ENVOYER_SCORE;  // REQ_GIVE_SCORE
+        strcpy(req.verbReq, "GiveScore");
+        sprintf(req.optReq, "%d|%d", scoreEq1, scoreEq2);
+        strcat(req.optReq, "\0");
+        envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
+        // Attendre l'accusé de réception
+        recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    }
+    return true;
 }
 
 /**
@@ -319,6 +318,10 @@ bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard 
  * @return The card chosen by the player
  */
 enum card askCard(players_t players, int player){
+    requete_t req;
+    reponse_t rep;
+    enum card c;
+
     if (players[player]->sock == NULL) {
         // Joueur local - logique simple
         printf("Tu mets quelle carte ? \n");
@@ -329,24 +332,16 @@ enum card askCard(players_t players, int player){
         }
         return NOTHING;
     }
-    
     // Joueur distant
-    requete_t req;
-    req.idReq = 120;  // REQ_ASK_CARD
+    req.idReq = REQ_JOUER;  // REQ_ASK_CARD
     strcpy(req.verbReq, "AskCard");
     strcpy(req.optReq, "");
-    
     envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    
-    reponse_t rep;
     recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    
     // Parser la carte reçue (ex: "H_AS")
-    enum card c;
     if (string_to_card(rep.optRep, &c)) {
         return c;
     }
-    
     return NOTHING;
 }
 
@@ -358,7 +353,7 @@ enum card askCard(players_t players, int player){
  * @return Point value of the card
  */
 int getValueCard(enum card card){
-    const int value[9] = {11, 0, 0, 0, 10, 2, 3, 4, 0};         ///< Point values for non-trump cards
+    int value[9] = {11, 0, 0, 0, 10, 2, 3, 4, 0};         ///< Point values for non-trump cards
     int numero = card % 8;
     return value[numero];
 }
@@ -369,7 +364,7 @@ int getValueCard(enum card card){
  * @return Point value of the card
  */
 int getValueAtoutCard(enum card card){
-    const int valueAtout[9] = {11, 0, 0, 14, 10, 20, 3, 4, 0};  ///< Point values for trump cards
+    int valueAtout[9] = {11, 0, 0, 14, 10, 20, 3, 4, 0};  ///< Point values for trump cards
     int numero = card % 8;
     return valueAtout[numero];
 }
@@ -382,7 +377,7 @@ int getValueAtoutCard(enum card card){
 char* getNameCard(enum card card){
     if (card == NOTHING) return "NOTHING";
     
-    const char *CARD_NAMES[NB_CARD_DECK] = {
+    char *CARD_NAMES[NB_CARD_DECK] = {
     "H_AS","H_7","H_8","H_9","H_10","H_V","H_D","H_R",
     "C_AS","C_7","C_8","C_9","C_10","C_V","C_D","C_R",
     "P_AS","P_7","P_8","P_9","P_10","P_V","P_D","P_R",
@@ -397,7 +392,7 @@ char* getNameCard(enum card card){
  * @return String representation of the card's value
  */
 char* getValueCardString(enum card card){
-    const char *VALUE_CARD_NAMES[9] = {
+    char *VALUE_CARD_NAMES[9] = {
     "AS","7","8","9","10","V","D","R",""
     };
     int numero = card % 8;
@@ -410,7 +405,7 @@ char* getValueCardString(enum card card){
  * @return String representation of the suit
  */
 char* getCouleurCardString(enum colorCard color){
-    const char *COULEUR_CARD_NAMES[4] = {
+    char *COULEUR_CARD_NAMES[4] = {
     "♥","♦","♠","♣"
     };
     return COULEUR_CARD_NAMES[color];
@@ -422,7 +417,7 @@ char* getCouleurCardString(enum colorCard color){
  * @return ASCII color code string
  */
 char* getAsciiColor(enum colorCard color){
-    const char *ASCII_COLOR[5] = {
+    char *ASCII_COLOR[5] = {
     "\x1b[31m", // Hearts - Red
     "\x1b[35m", // Diamonds - Magenta
     "\x1b[33m", // Spades - Bleu
@@ -559,7 +554,6 @@ bool verifColor(char color){
  * @note Considers trump hierarchy and card values
  */
 int betterInPli(pli_t pli, enum colorCard c){
-
     int color, numero, bestVal, val, bestP, bestColor;
     enum card card, bestCard;
     
@@ -1172,9 +1166,9 @@ void game(players_t players){
     {
         manche(deck,gain_Eq1,gain_Eq2,players,&startPlayer,pli,&colorAtout,&scoreEq1,&scoreEq2);
         afficherGainEq(deck,gain_Eq1,gain_Eq2);
-        printf("Score Equipe 1 : %d\n",scoreEq1);
-        printf("Score Equipe 2 : %d\n",scoreEq2);
+        giveScore(players, scoreEq1, scoreEq2);
     }
+    
 }
 
 // ==================== AFFICHAGE =========================================

@@ -40,12 +40,14 @@ int afficherUsers(char *cde) {
 			printf("\tUser [%d:%s], Socket [-1], IP [0.0.0.0], Dest [%i]\n",
 				i,users.tab[i].name,users.tab[i].indDest);
 }
+
 int trouverUser(name_t nom) {
 	int i=0;
 	for (i=0; i < MAX_USERS; i++)
 		if (strcmp(nom, users.tab[i].name)==0) return i;
 	return -1;
 }
+
 int creerUser(name_t nom, socket_t *sDial) {
 	if (users.nbUsers == MAX_USERS) return -1;
 	strncpy(users.tab[users.nbUsers].name, nom, MAX_NAME-1);
@@ -57,6 +59,7 @@ int creerUser(name_t nom, socket_t *sDial) {
 	afficherUsers("créer");
 	return users.nbUsers-1;
 }
+
 int identifierUser(socket_t *sDial) {
 	requete_t req;
 	int index = -1;

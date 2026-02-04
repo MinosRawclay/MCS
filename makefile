@@ -6,7 +6,7 @@ LIB_DIR = lib
 BIN_DIR = bin
 LDFLAGS = -L$(LIB_DIR) -lDial -lRepReq -lInet -lUsers
 
-all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a game gameClient gameServer socketEnregistrement
+all: setup clean $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a  gameClient gameServer socketEnregistrement #game
 
 # ----- Librairie statique -----
 $(LIB_DIR)/libInet.a: $(OBJ_DIR)/data.o $(OBJ_DIR)/session.o
@@ -21,15 +21,14 @@ $(LIB_DIR)/libDial.a: $(OBJ_DIR)/libDial.o
 $(LIB_DIR)/libUsers.a: $(OBJ_DIR)/users.o 
 	ar qvs $@ $^
 
-
 # ----- Fichiers objets -----
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	gcc -c $< -o $@ $(FLAGS)
 
 # ----- Exécutables -----
-game: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
-	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
+#game: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
+#	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
 
 gameClient: $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
 	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS) -DCLIENT

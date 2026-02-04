@@ -3,7 +3,6 @@
 void DialC(socket_t sd) {
     requete_t req; 
     reponse_t rep;
-    int nbOctets;
 
     while(1) {
         recevoir(&sd, (generic)&req, (pFct)str2req);
@@ -57,7 +56,6 @@ void DialSrv(socket_t sockEcoute){
 void DialRegister(socket_t sd) {
     requete_t req; 
     reponse_t rep;
-    int nbOctets;
 
     while(1) {
 

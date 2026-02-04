@@ -17,11 +17,9 @@ void * threadLogic(void * arg){
 		req = traiterRegister(&rep, sd);
 		envoyer(sd, (generic)&req, (pFct)req2str);
 		fprintf(stderr,REQ_STR_OUT"\n",req.idReq,req.verbReq,req.optReq);
-
-
 	}
-		CHECK(close(sd->fd),"-- PB close() --");
-
+	CHECK(close(sd->fd),"-- PB close() --");
+	return NULL;
 }
 
 int main(){

@@ -54,7 +54,6 @@ void playerCards2str(char* cardsStr, player_t* player){
  */
 void str2Cards(const char* str, enum card* cards, int maxCards){
     char buffer[MAX_LINE];
-    int nbCards = 0;
     char* token = strtok(buffer, "|");
     int index = 0;
 
@@ -1362,74 +1361,3 @@ void afficherPli(pli_t pli){
     printf("\n");
 }
 
-/**
- * @brief Main entry point of the program
- * @param[in] argc Number of command line arguments
- * @param[in] argv Array of command line argument strings
- * @return Exit status code
- */
-int main(int argc, char const *argv[])
-{
-    pileCard_t* deck;//les cartes existante dans le deck
-    int lastDeal = 0;
-    pileCard_t* gain_Eq1;
-    pileCard_t* gain_Eq2;
-    enum card pli[PLAYERS_MAX] = {NOTHING,NOTHING,NOTHING,NOTHING};
-    player_t *players[PLAYERS_MAX];
-    int startPlayer=0;
-    //enum colorCard colorAtout;
-    //enum colorCard colorPli=NONE;
-
-    int nbPlayer=0;
-    STR_ROUGE_START;
-    printf("TEST\n");
-    STR_COLOR_END;
-    
-    // =============================================================
-    //création des 4 joueur - connection des clients
-    while (nbPlayer < 4)
-    {
-        addPlayer(players,&nbPlayer);
-    }
-    afficherPlayers(players);
-    
-    // =============================================================
-    
-    initPile(&gain_Eq1);
-    initPile(&gain_Eq2);
-    initPile(&deck);
-    //turnDeal(deck,gain_Eq1,gain_Eq2,players,&startPlayer,pli,&colorAtout);
-    
-    enum card* cards;
-    cards = malloc(sizeof(enum card)*15);
-    char str[200];
-
-    printf("Appuyez sur une touche pour continuer...\n");
-    fgetc(stdin);
-    //game(players);
-
-    pli[0] = H_9; // 5 de coeur
-    pli[1] = C_9; // 5 de carreau
-    pli[2] = P_9; // 5 de pique
-    pli[3] = T_9; // 5 de trefle
-
-    players[0]->cards[0] = H_7; // 7 de coeur
-    players[0]->cards[1] = H_8; // 6 de coeur
-    players[0]->cards[2] = NOTHING;
-
-    
-
-    pli2str(str, pli);
-    printf("Pli en string : %s\n", str);
-    str2Cards(str, cards, 4);
-    printf("Pli après conversion string->cards :\n");
-    afficherCards(cards, 4);
-
-    playerCards2str(str, players[0]);
-    printf("Main du joueur 0 en string : %s\n", str);
-    str2Cards(str, cards, NB_CARD_HAND);
-    printf("Main du joueur 0 après conversion string->cards :\n");
-    afficherCards(cards, NB_CARD_HAND);
-    
-    return 0;
-}

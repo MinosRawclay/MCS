@@ -41,7 +41,8 @@ void * threadLogic(void * arg){
     requete_t req;
     
     // sockEcoute is an external variable
-    while(read(sd->fd, msg, 1) > 0){
+    
+    while(recv(sd->fd, msg, 1, MSG_PEEK) > 0){
         //aquisition req clt
         //mise en forme
         //si fin dialogue alors break

@@ -66,7 +66,7 @@ typedef void* (*pFctThread) (void*);
  * @details Defines the IP address on which the server will listen for connections.
  *          "0.0.0.0" means the server listens on all available network interfaces.
  */
-#define IP_HOST  "0.0.0.0"
+#define IP_HOST  "127.0.0.1"
 
 /**
  * @def PORT

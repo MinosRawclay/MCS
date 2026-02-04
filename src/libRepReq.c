@@ -160,9 +160,10 @@ void traiterRep(reponse_t * rep){
 requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
     int index;
     requete_t req;
-    
+    strcpy(req.optReq, "");
     switch(rep->idRep){
         case 301:
+			strcpy(req.verbReq, "connexion");
             // Check user existence
             index = trouverUser(rep->optRep);
             if(index == -1)
@@ -173,17 +174,21 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             break;
             
         case 302:
+			strcpy(req.verbReq, "deconnexion");
+
             // Disconnect a user
             deconnecterUser(identifierUser(sDial));
             break;
             
         case 303:
+			strcpy(req.verbReq, "new game");
             // Create a new game
             creerPartie(sDial);
             req.idReq = 401;
             break;
             
         case 304:
+			strcpy(req.verbReq, "join spe game");
             // Join a specific game
             if(isFull(trouverUser(rep->optRep))){ 
                 req.idReq = 2;
@@ -195,8 +200,9 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             break;
             
         case 305:
+			strcpy(req.verbReq, "random game");
             // Join a random available game
-			                    req.idReq = 402;
+			req.idReq = 402;
 
             for(int i = 0; i < MAX_USERS; i++){
                 if(!isFull(i)){
@@ -210,6 +216,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             break;
             
         case 306:
+			strcpy(req.verbReq, "list games");
             // List all available games
             req.idReq = 404;
             req.optReq[0] = '\0';
@@ -227,6 +234,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             break;
             
         case 307:
+			strcpy(req.verbReq, "get game IP PORT");
             // Get game connection information (IP and port)
             socket_t * sa = socketUser(trouverUser(rep->optRep));
             char buffer[64]; 
@@ -243,7 +251,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
         default:
             // Unrecognized request
             req.idReq = 402;
-            strcpy(req.optReq, "Demande inconnue");
+            strcpy(req.verbReq, "Demande inconnue");
             break;
     }
     

@@ -8,14 +8,18 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <session.h>
+#include <libRepReq.h>
+#include <moteur.h>
+
 
 /**
- *	\fn			void clientHandler(void)
+ *	\fn			void clientHandler(const char *serverAddr, int serverPort)
  *	\brief		Traitement du client
  *	\note		
  *	\result		
  */
-void clientHandler(const char *serverAddr, int serverPort);
+void clientHandler(char *serverAddr, int serverPort);
 
 
 /**
@@ -59,13 +63,13 @@ void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli);
 
 
 /**
- *	\fn			void keepTrump(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli)
+ *	\fn			void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout)
  *	\brief		Permet à l'utilisateur de décider s'il souhaite prendre l'atout ou non
  *	\param 		sockEch : socket d'échange utilisée
  *	\param 		currentPlayer : joueur actuel
  *	\param 		pli : Pli reçu par le serveur
  */
-void keepTrump(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli);
+void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout);
 
 
 /**
@@ -78,12 +82,12 @@ void playMove(socket_t *sockEch, player_t *currentPlayer);
 
 
 /**
- *	\fn			char getCardsAmount(player_t *player)
+ *	\fn			int getCardsAmount(const player_t *player)
  *	\brief		Renvoie le nombre de carte que possède un joueur
  *	\param 		player : joueur dont on souhaite connaître son nombre de cartes
  *  \result     Nombre de cartes que possède player
  */
-char getCardsAmount(player_t *player);
+int getCardsAmount(const player_t *player);
 
 
 /**
@@ -99,9 +103,17 @@ void req2player(const requete_t *request, player_t *player);
  *	\fn			void req2pli(const requete_t *request, pli_t *pli)
  *	\brief		Transforme les données d'une requête en pli_t
  *	\param 		request : requête qui contient les informations sur la structure pli_t
- *	\param 		pli : Joueur que l'on souhaite récupérer à partir de la requête
+ *	\param 		pli : Pli que l'on souhaite récupérer à partir de la requête
  */
 void req2pli(const requete_t *request, pli_t *pli);
 
+
+/**
+ *	\fn			
+ *	\brief		Transforme les données d'une requête en carte
+ *	\param 		request : requête qui contient les informations sur la structure pli_t
+ *	\param 		carte : Carte que l'on souhaite récupérer à partir de la requête
+ */
+void req2card(const requete_t *request, enum card *c);
 
 #endif

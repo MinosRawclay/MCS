@@ -169,6 +169,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
                 req.idReq = 3;
             else 
                 req.idReq = 401;
+
             break;
             
         case 302:
@@ -195,14 +196,16 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             
         case 305:
             // Join a random available game
+			                    req.idReq = 402;
+
             for(int i = 0; i < MAX_USERS; i++){
                 if(!isFull(i)){
                     modifierDest(identifierUser(sDial), nameUser(i));
                     req.idReq = 401;
-                    break;
-                    req.idReq = 402;
                     strcpy(req.optReq, "join aléatoire");
+					break;
                 }
+				
             }
             break;
             

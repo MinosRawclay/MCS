@@ -175,7 +175,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			strcpy(req.verbReq, "deconnexion");
 
             // Disconnect a user
-            deconnecterUser(identifierUser(sDial));
+            deconnecterUser(userFromSocket(sDial));
             break;
             
         case 303:
@@ -192,7 +192,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
                 req.idReq = 2;
             }
             else{
-                modifierDest(identifierUser(sDial), rep->optRep);
+                modifierDest(userFromSocket(sDial), rep->optRep);
                 req.idReq = 401;
             }
             break;
@@ -204,7 +204,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 
             for(int i = 0; i < MAX_USERS; i++){
                 if(!isFull(i)){
-                    modifierDest(identifierUser(sDial), nameUser(i));
+                    modifierDest(userFromSocket(sDial), nameUser(i));
                     req.idReq = 401;
                     strcpy(req.optReq, "join aléatoire");
 					break;

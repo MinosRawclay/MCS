@@ -183,4 +183,7 @@ void creerPartieBDD(socket_t *sDial);
  */
 int isFull(int idUser);
 
+
+int userFromSocket(socket_t * sDial);
+
 #endif /* USERS_H */

@@ -223,12 +223,20 @@ void ecrireUsers(void) {
 /*                         GESTION DES PARTIES                                */
 /*============================================================================*/
 
+
+int userFromSocket(socket_t * sDial){
+    for(int i = 0; i < users.nbUsers; i++){
+        if(users[i].sDial == sDial)
+            return i;
+    }
+    return -1;
+}
 /**
  * @brief Crée une nouvelle partie et définit l'utilisateur comme hôte
  * @param sDial Socket de l'utilisateur hôte
  */
 void creerPartieBDD(socket_t *sDial) {
-    int index = identifierUser(sDial);
+    int index = userFromSocket(sDial);
     if (index == -1) return; // Sécurité
 
     // On récupère l'ADRESSE de l'utilisateur dans le tableau global
@@ -238,7 +246,7 @@ void creerPartieBDD(socket_t *sDial) {
     hostPtr->party.list[0] = hostPtr; 
     hostPtr->party.nbJoueurs = 1;
     
-    printf("DEBUG: Partie créée pour %s (Index: %d)\n", hostPtr->pseudo, index);
+    printf("DEBUG: Partie créée pour %s (Index: %d)\n", hostPtr->name, index);
 }
 
 /**

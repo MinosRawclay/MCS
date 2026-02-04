@@ -6,7 +6,7 @@
  *          as well as processing functions for different message types.
  *          It also handles specific processing of registration requests
  *          and multiplayer game management.
- * @author [Your name]
+ * @author Breviere Alexandre
  * @date 04/02/2026
  */
 #include "../include/libRepReq.h"
@@ -181,14 +181,25 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
         case 303:
 			strcpy(req.verbReq, "new game");
             // Create a new game
-            creerPartieBDD(sDial);
-            req.idReq = 401;
+            // Format attendu dans rep->optRep: "NomUtilisateur|Port"
+            char nomJoueur[MAX_NAME];
+            int gamePort = 0;
+            
+            if(sscanf(rep->optRep, "%[^|]|%d", nomJoueur, &gamePort) == 2 && gamePort > 0) {
+                creerPartieBDD(sDial, gamePort);
+                req.idReq = 401;
+            } else {
+                // Si pas de port fourni, utiliser le port par défaut ou erreur
+                printf("ERREUR: Format invalide pour création de partie (attendu: 'nom|port')\n");
+                req.idReq = 402;
+                strcpy(req.optReq, "Format invalide");
+            }
             break;
             
         case 304:
 			strcpy(req.verbReq, "join spe game");
             // Join a specific game
-            if(index = trouverUser(rep->optRep) == -1){
+            if((index = trouverUser(rep->optRep)) == -1){
                 req.idReq=402;
                 break;
             }
@@ -204,11 +215,23 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			strcpy(req.verbReq, "random game");
             // Join a random available game
 			req.idReq = 402;
+			
+			int currentUser = userFromSocket(sDial);
+			if(currentUser == -1) {
+				strcpy(req.optReq, "Utilisateur non identifie");
+				break;
+			}
 
             for(int i = 0; i < getNbUsers(); i++){
-                if(!isFull(i)){
-                    modifierDest(userFromSocket(sDial), nameUser(i));
-                    ipPort(&req , rep);
+                if(i != currentUser && !isFull(i)){
+                    char *nomPartie = nameUser(i);
+                    if(nomPartie != NULL) {
+                        // Copier le nom de la partie dans rep->optRep pour ipPort()
+                        strcpy(rep->optRep, nomPartie);
+                        modifierDest(currentUser, nomPartie);
+                        ipPort(&req, rep);
+                        req.idReq = 405;  // Succès
+                    }
 					break;
                 }
 				

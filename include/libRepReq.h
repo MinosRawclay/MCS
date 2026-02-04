@@ -5,7 +5,7 @@
  *          in the communication protocol, as well as formatting macros for conversion
  *          between structures and strings. It also declares the complete enumeration
  *          of request, response and communication codes for the Belote card game.
- * @author [Your name]
+ * @author Breviere Alexandre
  * @date 04/02/2026
  */
 

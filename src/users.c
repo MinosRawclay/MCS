@@ -107,6 +107,15 @@ int creerUser(name_t nom, socket_t *sDial) {
 
     users.tab[users.nbUsers].sDial = sDial;
     users.tab[users.nbUsers].indDest = -1;
+    
+    // Initialiser la structure party pour éviter les valeurs aléatoires
+    users.tab[users.nbUsers].party.nbJoueurs = 0;
+    users.tab[users.nbUsers].party.list[0] = NULL;
+    users.tab[users.nbUsers].party.list[1] = NULL;
+    users.tab[users.nbUsers].party.list[2] = NULL;
+    users.tab[users.nbUsers].party.list[3] = NULL;
+    users.tab[users.nbUsers].gamePort = 0;  // Pas de serveur de jeu initialement
+    
     users.nbUsers++;
 
     afficherUsers("créer");
@@ -119,18 +128,22 @@ int creerUser(name_t nom, socket_t *sDial) {
  * @return Indice de l'utilisateur identifié ou -1 en cas d'échec
  */
 int identifierUser(socket_t *sDial, requete_t * req) {
-    int index = -1;
+    int index = trouverUser(req->optReq);
 
-
-        if ((index = trouverUser(req->optReq)) == -1)
-            index = creerUser(req->optReq, sDial);
-        else {
-            users.tab[index].sDial = sDial;
-            users.tab[index].indDest = -1;
+    if (index == -1) {
+        // Nouvel utilisateur
+        index = creerUser(req->optReq, sDial);
+    } else {
+        // Utilisateur existant : fermer l'ancienne socket si différente
+        if(users.tab[index].sDial != NULL && 
+           users.tab[index].sDial->fd != sDial->fd) {
+            close(users.tab[index].sDial->fd);
         }
-    
+        users.tab[index].sDial = sDial;
+        users.tab[index].indDest = -1;
+    }
 
-        return index;
+    return index;
 }
 
 /**
@@ -218,28 +231,39 @@ void ecrireUsers(void) {
 
 
 int userFromSocket(socket_t * sDial){
+    if(sDial == NULL) return -1;  
+    
     for(int i = 0; i < users.nbUsers; i++){
-        if(users.tab[i].sDial->fd == sDial->fd)
+        if(users.tab[i].sDial != NULL && users.tab[i].sDial->fd == sDial->fd)
             return i;
     }
     return -1;
 }
+
 /**
  * @brief Crée une nouvelle partie et définit l'utilisateur comme hôte
  * @param sDial Socket de l'utilisateur hôte
+ * @param gamePort Port du serveur de jeu
  */
-void creerPartieBDD(socket_t *sDial) {
+void creerPartieBDD(socket_t *sDial, int gamePort) {
     int index = userFromSocket(sDial);
-    if (index == -1) return; // Sécurité
+    if (index == -1) {
+        printf("ERREUR: creerPartieBDD() - utilisateur introuvable\n");
+        return;
+    }
 
     // On récupère l'ADRESSE de l'utilisateur dans le tableau global
     user_t *hostPtr = &users.tab[index];
 
-    // On modifie directement la structure globale
+    // Initialiser toute la liste pour éviter les pointeurs non initialisés
     hostPtr->party.list[0] = hostPtr; 
+    hostPtr->party.list[1] = NULL;
+    hostPtr->party.list[2] = NULL;
+    hostPtr->party.list[3] = NULL;
     hostPtr->party.nbJoueurs = 1;
+    hostPtr->gamePort = gamePort;  // Stocker le port du serveur de jeu
     
-    printf("DEBUG: Partie créée pour %s (Index: %d)\n", hostPtr->name, index);
+    printf("DEBUG: Partie créée pour %s (Index: %d, Port: %d)\n", hostPtr->name, index, gamePort);
 }
 
 /**
@@ -248,24 +272,66 @@ void creerPartieBDD(socket_t *sDial) {
  * @return 1 si la partie est pleine ou invalide, 0 sinon
  */
 int isFull(int idUser) {
-    return users.tab[idUser].party.nbJoueurs >= 4 ||
-           users.tab[idUser].party.nbJoueurs <= 0;
+    // Vérifier les limites du tableau
+    if(idUser < 0 || idUser >= users.nbUsers) {
+        printf("ERREUR: isFull() appelé avec idUser invalide: %d\n", idUser);
+        return 1;  // Considéré comme "plein" si invalide
+    }
+    
+    // Vérifier qu'une partie existe
+    if(users.tab[idUser].party.nbJoueurs <= 0) {
+        return 1;  // Pas de partie active
+    }
+    
+    return users.tab[idUser].party.nbJoueurs >= 4;
 }
 
 void ipPort(requete_t * req, reponse_t * rep){
-    int index;
-    // Get game connection information (IP and port)
-            if(index = trouverUser(rep->optRep) == -1 ) return;
-            socket_t * sa = socketUser(index);
-            char buffer[64]; 
+    // Clarifier la priorité des opérateurs
+    int index = trouverUser(rep->optRep);
     
-            char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
+    // Vérifier que l'utilisateur existe
+    if(index == -1) {
+        req->idReq = 402;
+        strcpy(req->optReq, "Partie introuvable");
+        printf("ERREUR: Utilisateur '%s' introuvable\n", rep->optRep);
+        return;
+    }
     
-            int port = ntohs(sa->addrDst.sin_port);
-            
-            snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
-            req->idReq = 405;
-            strcpy(req->optReq, buffer);
+    // Vérifier qu'une partie existe
+    if(users.tab[index].party.nbJoueurs <= 0) {
+        req->idReq = 402;
+        strcpy(req->optReq, "Aucune partie active");
+        printf("ERREUR: Aucune partie active pour '%s'\n", rep->optRep);
+        return;
+    }
+    
+    // Vérifier que le port du serveur de jeu est défini
+    if(users.tab[index].gamePort == 0) {
+        req->idReq = 402;
+        strcpy(req->optReq, "Port de jeu non defini");
+        printf("ERREUR: Port de jeu non défini pour '%s'\n", rep->optRep);
+        return;
+    }
+    
+    // Vérifier que la socket existe pour récupérer l'IP
+    socket_t * sa = socketUser(index);
+    if(sa == NULL) {
+        req->idReq = 402;
+        strcpy(req->optReq, "Socket invalide");
+        printf("ERREUR: Socket NULL pour l'utilisateur '%s'\n", rep->optRep);
+        return;
+    }
+    
+    char buffer[64]; 
+    char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
+    int port = users.tab[index].gamePort;  // Utiliser le port du serveur de jeu
+    
+    snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
+    req->idReq = 405;
+    strcpy(req->optReq, buffer);
+    
+    printf("DEBUG: IP/Port envoyé pour '%s': %s\n", rep->optRep, buffer);
 }
 
 int getNbUsers(){

@@ -7,7 +7,7 @@
  *          - The server (accepting and processing connections)
  *          - The client (communication with the server)
  *          - Registration (registration procedure)
- * @author [Your name]
+ * @author Breviere Alexandre
  * @date 04/02/2026
  */
 

@@ -6,7 +6,7 @@
  *          It defines thread function pointer types, error checking macros, and server
  *          configuration constants (IP address and port). The server uses POSIX threads
  *          to handle multiple simultaneous client connections independently.
- * @author [Your name]
+ * @author Breviere Alexandre
  * @date 04/02/2026
  */
 

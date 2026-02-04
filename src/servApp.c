@@ -198,10 +198,32 @@ void gestionPartie (socket_t *sdSE, char *nomUtilisateur) {
     socket_t playerSocks[3];
     socket_t se;
     
-    // Créer la socket d'écoute pour accepter les clients
-    se = creerSocketEcoute("0.0.0.0", 6000);
+    // Créer la socket d'écoute avec un port dynamique (0 = automatique)
+    se = creerSocketEcoute("0.0.0.0", 0);
     
-    if(creerPartieSe(sdSE, nomUtilisateur) == 0) {
+    // Récupérer le port attribué automatiquement
+    struct sockaddr_in addr;
+    socklen_t len = sizeof(addr);
+    getsockname(se.fd, (struct sockaddr*)&addr, &len);
+    int gamePort = ntohs(addr.sin_port);
+    
+    printf("Serveur de jeu créé sur le port %d\n", gamePort);
+    
+    // Envoyer le port au serveur d'enregistrement
+    char buffer[128];
+    snprintf(buffer, sizeof(buffer), "%s|%d", nomUtilisateur, gamePort);
+    
+    // Créer la partie sur le serveur d'enregistrement
+    requete_t req;
+    reponse_t rep;
+    req.idReq = 303;
+    strcpy(req.verbReq, "CreerPartie");
+    strcpy(req.optReq, buffer);  // Format: "nom|port"
+    
+    envoyer(sdSE, (generic)&req, (pFct) req2str);
+    recevoir(sdSE, (generic)&rep, (pFct) str2rep);
+    
+    if(rep.idRep == 401) {
         printf("Partie créée avec succès !\n");
         printf("En attente de joueurs pour rejoindre la partie...\n");
         

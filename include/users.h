@@ -78,6 +78,7 @@ struct user_s {
     socket_t *sDial;    /**< Socket de dialogue associée */
     int indDest;        /**< Index de l'utilisateur destinataire (-1 si aucun) */
     party_t party;      /**< Partie associée à l'utilisateur */
+    int gamePort;       /**< Port du serveur de jeu (0 si pas de partie) */
 };
 
 /**
@@ -177,8 +178,9 @@ void ecrireUsers(void);
 /**
  * @brief Crée une nouvelle partie et désigne l'utilisateur comme hôte
  * @param sDial Socket de l'utilisateur créateur
+ * @param gamePort Port du serveur de jeu créé par l'utilisateur
  */
-void creerPartieBDD(socket_t *sDial);
+void creerPartieBDD(socket_t *sDial, int gamePort);
 
 /**
  * @brief Vérifie si une partie est pleine ou invalide

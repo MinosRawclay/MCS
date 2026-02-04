@@ -6,7 +6,7 @@
  *          thread, allowing multiple simultaneous connections. The server listens for
  *          incoming connections and spawns a new thread for each client to process
  *          registration requests and responses.
- * @author [Your name]
+ * @author Breviere Alexandre
  * @date 04/02/2026
  */
 #include "../include/socketEnregistrement.h"

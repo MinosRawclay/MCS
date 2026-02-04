@@ -166,8 +166,12 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			strcpy(req.verbReq, "connexion");
             // Check user existence
             index = trouverUser(rep->optRep);
-            if(index == -1)
-                req.idReq = 3;
+            if(index == -1) {
+               if (creerUser(rep->optRep, sDial) == -1)
+                    req.idReq = 3;
+                else
+                    req.idReq = 401;
+            }  
             else 
                 req.idReq = 401;
 

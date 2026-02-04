@@ -1,3 +1,6 @@
+#ifndef LIB_REP_REQ_H
+#define LIB_REP_REQ_H
+
 #include "data.h"
 #include "users.h"
 
@@ -28,6 +31,15 @@ typedef struct reponse{
 
 // Liste des codes de requêtes :
 typedef enum requeteList {
+
+	// Codes d'erreurs :
+	ERR_MAUVAISE_CONNEXION = 1,
+	ERR_PARTIE_PLEINE = 2,
+	ERR_SERVEUR_PLEIN = 3,
+	ERR_MAUVAIS_CODE = 4,
+	ERR_SERVEUR_NON_DISPO = 5,
+
+
 	REQ_LANCER_PARTIE = 100,
 
 	// Fonctions de demande d'affichage :
@@ -42,7 +54,7 @@ typedef enum requeteList {
 	REQ_CHOIX_ATOUT_COULEUR = 123,
 
 	// Liste des codes de réponses :
-
+	REP_ACK_LANCER_PARTIE = 200,
 	REP_ACK_ENVOYER_DECK = 210,
 	REP_ACK_ENVOYER_PLI = 211,
 	REP_ACK_ENVOYER_SCORE = 212,
@@ -82,3 +94,5 @@ void DialC(socket_t sd);
 
 
 requete_t traiterRegister(reponse_t * rep, socket_t * sDial);
+
+#endif

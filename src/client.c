@@ -2,12 +2,27 @@
 // TODO : Documentation
 // TODO : Mode DEBUG ?
 
+/**
+ *	\file		client.c
+ *	\brief		Fonctions relatives aux clients
+ *	\author		Maxime NEUQUELMAN
+ *	\date		04/02/2026
+ *	\version	1.0
+ */
+
 #include <stdio.h>
-#include "../include/moteur.h"
-#include "../include/data.h"
-#include "../include/libDial.h"
-#include "../include/libRepReq.h"
-#include "../include/session.h"
+
+#include <moteur.h>
+#include <data.h>
+#include <libDial.h>
+#include <libRepReq.h>
+#include <session.h>
+
+// #include "../include/moteur.h"
+// #include "../include/data.h"
+// #include "../include/libDial.h"
+// #include "../include/libRepReq.h"
+// #include "../include/session.h"
 
 
 // // DANS MOTEUR.H :
@@ -48,12 +63,12 @@
 
 
 /**
- *	\fn			void threadClient(void)
+ *	\fn			void clientHandler(void)
  *	\brief		Traitement du client
  *	\note		
  *	\result		
  */
-void threadClient(void){
+void clientHandler(const char *serverAddr, int serverPort){
 
     player_t player;
 
@@ -65,11 +80,11 @@ void threadClient(void){
     
 
     // Connexion avec le serveur :
-    saServer = creerSocketAdr(serverAddr, serverPort);
+    saServer = creerSocketAdr(SOCK_STREAM, serverAddr, serverPort);
 
     printf("Vous avez rejoint la partie de ...\n");
 
-    PAUSE("Appuyez sur ENTRER lorsque vous êtes prêt...");
+    // PAUSE("Appuyez sur ENTRER lorsque vous êtes prêt...");
 
     // Attente début de la partie :
     waitForRequest(&saServer, &request, REQ_LANCER_PARTIE);
@@ -79,6 +94,8 @@ void threadClient(void){
     // Début d'une manche :
 
     gameRequestHandler(&saServer, &request, &player);
+
+    // ...
 
     return;
 }
@@ -93,6 +110,8 @@ void threadClient(void){
  */
 void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t requestCode){
 
+    reponse_t *response;
+
     request->idReq = -1;
 
     while (request->idReq != requestCode){
@@ -100,10 +119,14 @@ void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t request
 
         if (request->idReq != requestCode){
 
-            // Réponse PAS OK à faire
+            response->idRep = ERR_MAUVAIS_CODE;
+            strcpy(response->verbRep, "WRONG CODE");
 
             envoyer(sockEch, response, rep2str);
         } else {
+
+            response->idRep = REP_ACK_LANCER_PARTIE;
+            strcpy(response->verbRep, "OK");
 
             // Réponse OK à faire
             envoyer(sockEch, response, rep2str);
@@ -152,6 +175,9 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
             case REQ_ENVOYER_SCORE:
                 // + message, option pour relancer etc... ?
                 afficherScore();
+
+                // Fin de la manche
+                return;
 
                 break;
             
@@ -280,15 +306,42 @@ char getCardsAmount(player_t *player){
 }
 
 
+/**
+ *	\fn			void req2player(const requete_t *request, player_t *player)
+ *	\brief		Transforme les données d'une requête en structure player_t
+ *	\param 		request : requête qui contient les informations sur la structure player_t
+ *	\param 		player : Joueur que l'on souhaite récupérer à partir de la requête
+ */
 void req2player(const requete_t *request, player_t *player){
 
-    // ...
+    int num;
+    enum state s;
+    int cards[NB_CARD_HAND];
+    
+
+    //          num s  cards :
+    sscanf(request->optReq, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d", &num, &s, cards);
+
+    player->num = num;
+    player->s = s;
+    memcpy(player->cards, cards, sizeof(cards));
+
+    //sscanf(str,REQ_STR_IN,&req->idReq,req->verbReq,req->optReq);
 
 }
 
+
+/**
+ *	\fn			void req2pli(const requete_t *request, pli_t *pli)
+ *	\brief		Transforme les données d'une requête en pli_t
+ *	\param 		request : requête qui contient les informations sur la structure pli_t
+ *	\param 		pli : Joueur que l'on souhaite récupérer à partir de la requête
+ */
 void req2pli(const requete_t *request, pli_t *pli){
 
     // ...
+        //          num s  cards :
+    sscanf(request->optReq, "%d:%d:%d:%d", &pli[0], &pli[1], &pli[2], &pli[3]);
 
 }
 // ...

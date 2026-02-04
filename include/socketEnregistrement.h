@@ -1,3 +1,6 @@
+#ifndef SOCKET_ENREGISTREMENT_H
+#define SOCKET_ENREGISTREMENT_H
+
 #include "libRepReq.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,3 +21,5 @@ typedef void* (*pFctThread) (void*);
 #define IP_HOST  "0.0.0.0"
 
 #define PORT    50000
+
+#endif

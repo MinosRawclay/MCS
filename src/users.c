@@ -118,11 +118,9 @@ int creerUser(name_t nom, socket_t *sDial) {
  * @param sDial Socket du client
  * @return Indice de l'utilisateur identifié ou -1 en cas d'échec
  */
-int identifierUser(socket_t *sDial) {
-    requete_t req;
+int identifierUser(socket_t *sDial, requete_t req) {
     int index = -1;
 
-    recevoir(sDial, &req, (pFct)str2req);
 
     if (req.idReq == 301) {
         if ((index = trouverUser(req.optReq)) == -1)
@@ -133,11 +131,7 @@ int identifierUser(socket_t *sDial) {
         }
     }
 
-    if (index == -1)
-        CHECK(close(sDial->fd), "--close()--");
-
-    afficherUsers("identifier");
-    return index;
+        return index;
 }
 
 /**
@@ -226,7 +220,7 @@ void ecrireUsers(void) {
 
 int userFromSocket(socket_t * sDial){
     for(int i = 0; i < users.nbUsers; i++){
-        if(users[i].sDial == sDial)
+        if(users.tab[i].sDial == sDial)
             return i;
     }
     return -1;

@@ -219,7 +219,7 @@ void ecrireUsers(void) {
 
 int userFromSocket(socket_t * sDial){
     for(int i = 0; i < users.nbUsers; i++){
-        if(users.tab[i].sDial == sDial)
+        if(users.tab[i].sDial.fd == sDial.fd)
             return i;
     }
     return -1;

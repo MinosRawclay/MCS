@@ -1408,9 +1408,34 @@ int main(int argc, char const *argv[])
     
     enum card* cards;
     cards = malloc(sizeof(enum card)*15);
+    char str[200];
+
     printf("Appuyez sur une touche pour continuer...\n");
     fgetc(stdin);
-    game(players);
+    //game(players);
 
+    pli[0] = H_9; // 5 de coeur
+    pli[1] = C_9; // 5 de carreau
+    pli[2] = P_9; // 5 de pique
+    pli[3] = T_9; // 5 de trefle
+
+    players[0]->cards[0] = H_7; // 7 de coeur
+    players[0]->cards[1] = H_8; // 6 de coeur
+    players[0]->cards[2] = NOTHING;
+
+    
+
+    pli2str(str, pli);
+    printf("Pli en string : %s\n", str);
+    str2Cards(str, cards, 4);
+    printf("Pli après conversion string->cards :\n");
+    afficherCards(cards, 4);
+
+    playerCards2str(str, players[0]);
+    printf("Main du joueur 0 en string : %s\n", str);
+    str2Cards(str, cards, NB_CARD_HAND);
+    printf("Main du joueur 0 après conversion string->cards :\n");
+    afficherCards(cards, NB_CARD_HAND);
+    
     return 0;
 }

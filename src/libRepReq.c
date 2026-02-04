@@ -72,7 +72,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			break;
 
 		case 304:
-			if(isFull(identifierUser(rep->optRep))){ 
+			if(isFull(trouverUser(rep->optRep))){ 
 				req.idReq=2;
 			}
 			else{

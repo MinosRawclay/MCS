@@ -122,6 +122,14 @@ void pli2str(char*pliStr, pli_t pli);
 void playerCards2str(char* cardsStr, player_t* player);
 
 /**
+ * @brief Converts a string format back to an array of cards
+ * @param[in] str String representation of cards (e.g., "H_AS|C_10|P_V")
+ * @param[out] cards Array to store the resulting cards
+ * @param[in] maxCards Maximum number of cards to parse
+ */
+void str2Cards(const char* str, enum card* cards, int maxCards);
+
+/**
  * @brief Adds a new player to the game
  * @param[in,out] players Array of player pointers
  * @param[in,out] nbPlayer Current number of players, incremented if successful

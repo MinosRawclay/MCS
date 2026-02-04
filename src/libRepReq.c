@@ -110,15 +110,16 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 
 			break;
 		case 307:
-			socket_t * sa = socketUser(trouverUser(rep.optRep));
+			socket_t * sa = socketUser(trouverUser(rep->optRep));
 			char buffer[64]; 
     
     		char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
     
     		int port = ntohs(sa->addrDst.sin_port);
-    
+			
     		snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
-			strcpy(req.optRep, buffer);
+			req.idReq = 405;
+			strcpy(req.optReq, buffer);
 
 			break;
 

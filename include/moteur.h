@@ -14,7 +14,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "data.h"
+
+#include "../include/data.h"
+#include "../include/libRepReq.h"
 
 // ==================== CONSTANTS =============================================
 
@@ -52,9 +54,9 @@ enum card {
  */
 enum colorCard {
     H,      ///< Hearts (Coeur)
-    C,      ///< Clubs (Trèfle)
+    C,      ///< Diamonds (Carreau)
     P,      ///< Spades (Pique)
-    T,      ///< Diamonds (Carreau)
+    T,      ///< Clubs (Trèfle)
     NONE    ///< No suit
 };
 
@@ -67,16 +69,6 @@ enum equipe {
     EQUIPE2     ///< Team 2 (players 1 and 3)
 };
 
-/**
- * @enum state
- * @brief Enumeration of player states
- */
-enum state {
-    FINISH,     ///< Player has finished their turn
-    PLAYING,    ///< Player is currently playing
-    WAITING     ///< Player is waiting for their turn
-};
-
 // ==================== STRUCTURES ============================================
 
 /**
@@ -85,7 +77,6 @@ enum state {
  */
 typedef struct player {
     int num;                    ///< Player number (0-3)
-    enum state s;               ///< Current player state
     int cards[NB_CARD_HAND];    ///< Cards in player's hand
     socket_t* sock;             ///< Socket for network communication (NULL for local player)
 } player_t;
@@ -114,6 +105,20 @@ typedef enum card pli_t[PLAYERS_MAX];
 // ==================== FUNCTION PROTOTYPES ===================================
 
 // -------------------- Communication Functions -------------------------------
+
+/**
+ * @brief Converts the current trick to a string format for sending
+ * @param[out] pliStr String buffer to store the result
+ * @param[in] pli Current trick (4 cards)
+ */
+void pli2str(char*pliStr, pli_t pli);
+
+/**
+ * @brief Converts a player's cards to a string format for sending
+ * @param[out] cardsStr String buffer to store the result
+ * @param[in] player Pointer to the player
+ */
+void playerCards2str(char* cardsStr, player_t* player);
 
 /**
  * @brief Adds a new player to the game
@@ -147,19 +152,21 @@ void givePli(players_t players, pli_t pli);
 /**
  * @brief Asks a player if they want to take the revealed trump card (first round)
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] player Index of the player being asked
  * @return true if player accepts, false otherwise
  */
-bool askTakeAtout(players_t players, int player);
+bool askTakeAtout(players_t players, pli_t pli, int player);
 
 /**
  * @brief Asks a player if they want to choose trump (second round) and which suit
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] player Index of the player being asked
  * @param[out] c Chosen trump suit (if player accepts)
  * @return true if player accepts and chooses a suit, false otherwise
  */
-bool askTakeAtoutTurn2(players_t players, int player, enum colorCard *c);
+bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard *c);
 
 /**
  * @brief Asks a player which card they want to play
@@ -349,12 +356,13 @@ void firstDeal(pileCard_t* deck, players_t players, int *startPlayer, pli_t pli)
 /**
  * @brief Conducts the trump selection phase
  * @param[in] players Array of player pointers
+ * @param[in] pli Current trick (contains revealed trump card)
  * @param[in] turn Round of bidding (1 or 2)
  * @param[in] startPlayer Pointer to the starting player index
  * @param[out] c Chosen trump suit (only set in round 2)
  * @return Index of player who accepted trump, or -1 if all passed
  */
-int playerTurnAtout(players_t players, int turn, int *startPlayer, enum colorCard *c);
+int playerTurnAtout(players_t players, pli_t pli, int turn,int * startPlayer,enum colorCard *c);
 
 /**
  * @brief Performs the second deal (2 cards to each player + reveal trump card)

@@ -22,6 +22,8 @@
 #include "session.h"
 
 typedef struct requete requete_t;
+typedef struct reponse reponse_t;
+
 
 /*============================================================================*/
 /*                           CONSTANTES                                       */
@@ -188,4 +190,6 @@ int isFull(int idUser);
 
 int userFromSocket(socket_t * sDial);
 
+
+void ipPort(requete_t * req, reponse_t * rep);
 #endif /* USERS_H */

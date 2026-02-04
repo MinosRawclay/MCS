@@ -193,8 +193,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             }
             else{
                 modifierDest(userFromSocket(sDial), rep->optRep);
-                req.idReq = 401;
-            }
+                ipPort(&req, rep) ;           }
             break;
             
         case 305:
@@ -205,8 +204,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             for(int i = 0; i < MAX_USERS; i++){
                 if(!isFull(i)){
                     modifierDest(userFromSocket(sDial), nameUser(i));
-                    req.idReq = 401;
-                    strcpy(req.optReq, "join aléatoire");
+                     ipPort(&req , rep);
 					break;
                 }
 				
@@ -229,21 +227,6 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
                     strncat(req.optReq, nom, sizeof(req.optReq) - strlen(req.optReq) - 1);
                 }
             }
-            break;
-            
-        case 307:
-			strcpy(req.verbReq, "get game IP PORT");
-            // Get game connection information (IP and port)
-            socket_t * sa = socketUser(trouverUser(rep->optRep));
-            char buffer[64]; 
-    
-            char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
-    
-            int port = ntohs(sa->addrDst.sin_port);
-            
-            snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
-            req.idReq = 405;
-            strcpy(req.optReq, buffer);
             break;
             
         default:

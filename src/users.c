@@ -252,3 +252,17 @@ int isFull(int idUser) {
            users.tab[idUser].party.nbJoueurs <= 0;
 }
 
+void ipPort(requete_t * req, reponse_t * rep){
+    // Get game connection information (IP and port)
+            socket_t * sa = socketUser(trouverUser(rep->optRep));
+            char buffer[64]; 
+    
+            char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
+    
+            int port = ntohs(sa->addrDst.sin_port);
+            
+            snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
+            req->idReq = 405;
+            strcpy(req->optReq, buffer);
+}
+

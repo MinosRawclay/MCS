@@ -116,6 +116,36 @@ void giveCard(players_t players, int player){
 }
 
 /**
+ * @brief Notifies all players that the game is starting
+ * @param[in] players Array of player pointers
+ */
+void startPartie(players_t players){
+    requete_t req;
+    req.idReq = 100;  // REQ_START_GAME
+    strcpy(req.verbReq, "startPartie");
+    strcpy(req.optReq, "");
+    
+    // Notifier tous les joueurs distants
+    for (int i = 0; i < PLAYERS_MAX; i++) {
+        if (players[i]->sock != NULL) {
+            envoyer(players[i]->sock, (generic)&req, (pFct)req2str);
+            
+            // Attendre l'accusé de réception
+            reponse_t rep;
+            recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
+            if (rep.idRep != 200) {
+                printf("Erreur : le joueur %d n'a pas confirmé le début de la partie\n", i);
+            }
+        }
+    }
+    
+    // Affichage pour le joueur local
+    printf("\n========================================\n");
+    printf("       LA PARTIE COMMENCE !\n");
+    printf("========================================\n\n");
+}
+
+/**
  * @brief Sends the current trick to all players for display
  * @param[in] players Array of player pointers
  * @param[in] pli Current trick (4 cards)
@@ -1163,6 +1193,9 @@ void game(players_t players){
     initPile(&gain_Eq1);
     initPile(&gain_Eq2);
     initPile(&deck);
+
+    // Notifier tous les joueurs que la partie commence
+    startPartie(players);
 
     while (scoreEq1 < POINT_WIN || scoreEq2 < POINT_WIN)
     {

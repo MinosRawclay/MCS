@@ -219,7 +219,7 @@ void ecrireUsers(void) {
 
 int userFromSocket(socket_t * sDial){
     for(int i = 0; i < users.nbUsers; i++){
-        if(users.tab[i].sDial.fd == sDial.fd)
+        if(users.tab[i].sDial->fd == sDial->fd)
             return i;
     }
     return -1;
@@ -253,8 +253,10 @@ int isFull(int idUser) {
 }
 
 void ipPort(requete_t * req, reponse_t * rep){
+    int index;
     // Get game connection information (IP and port)
-            socket_t * sa = socketUser(trouverUser(rep->optRep));
+            if(index = trouverUser(rep->optRep) == -1 ) return;
+            socket_t * sa = socketUser(index);
             char buffer[64]; 
     
             char *ip_text = inet_ntoa(sa->addrDst.sin_addr);

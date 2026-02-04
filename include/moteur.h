@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "data.h"
+#include "libRepReq.h"
 
 // ==================== CONSTANTS =============================================
 

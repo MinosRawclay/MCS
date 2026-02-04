@@ -7,7 +7,6 @@
  * @date 02/02/2026
  */
 #include "../include/moteur.h"
-#include "../include/libRepReq.h"
 
 #define MAX_LINE 1024
 

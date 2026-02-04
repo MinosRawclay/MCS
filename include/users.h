@@ -21,6 +21,8 @@
 
 #include "session.h"
 
+typedef struct requete requete_t;
+
 /*============================================================================*/
 /*                           CONSTANTES                                       */
 /*============================================================================*/
@@ -121,7 +123,7 @@ int creerUser(name_t nom, socket_t *sDial);
  * @return Index de l'utilisateur identifié ou -1 en cas d'erreur
  */
 
-int identifierUser(socket_t *sDial, requete_t req);
+int identifierUser(socket_t *sDial, requete_t * req);
 /**
  * @brief Déconnecte un utilisateur
  * @details Ferme la socket associée et réinitialise les informations

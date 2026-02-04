@@ -118,18 +118,17 @@ int creerUser(name_t nom, socket_t *sDial) {
  * @param sDial Socket du client
  * @return Indice de l'utilisateur identifié ou -1 en cas d'échec
  */
-int identifierUser(socket_t *sDial, requete_t req) {
+int identifierUser(socket_t *sDial, requete_t * req) {
     int index = -1;
 
 
-    if (req.idReq == 301) {
-        if ((index = trouverUser(req.optReq)) == -1)
-            index = creerUser(req.optReq, sDial);
+        if ((index = trouverUser(req->optReq)) == -1)
+            index = creerUser(req->optReq, sDial);
         else {
             users.tab[index].sDial = sDial;
             users.tab[index].indDest = -1;
         }
-    }
+    
 
         return index;
 }

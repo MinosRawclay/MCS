@@ -12,17 +12,14 @@
 
 #include <stdio.h>
 
+#include <ctype.h>
+
+#include <client.h>
 #include <moteur.h>
 #include <data.h>
 #include <libDial.h>
 #include <libRepReq.h>
 #include <session.h>
-
-// #include "../include/moteur.h"
-// #include "../include/data.h"
-// #include "../include/libDial.h"
-// #include "../include/libRepReq.h"
-// #include "../include/session.h"
 
 
 // // DANS MOTEUR.H :
@@ -63,12 +60,12 @@
 
 
 /**
- *	\fn			void clientHandler(void)
+ *	\fn			void clientHandler(char *serverAddr, int serverPort)
  *	\brief		Traitement du client
  *	\note		
  *	\result		
  */
-void clientHandler(const char *serverAddr, int serverPort){
+void clientHandler(char *serverAddr, int serverPort){
 
     player_t player;
 
@@ -76,7 +73,6 @@ void clientHandler(const char *serverAddr, int serverPort){
     socket_t saServer;
 
     requete_t request;
-    reponse_t response;
     
 
     // Connexion avec le serveur :
@@ -110,26 +106,26 @@ void clientHandler(const char *serverAddr, int serverPort){
  */
 void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t requestCode){
 
-    reponse_t *response;
+    reponse_t response;
 
     request->idReq = -1;
 
     while (request->idReq != requestCode){
-        recevoir(sockEch, request, str2req);
+        recevoir(sockEch, request, (pFct) req2str);
 
         if (request->idReq != requestCode){
 
-            response->idRep = ERR_MAUVAIS_CODE;
-            strcpy(response->verbRep, "WRONG CODE");
+            response.idRep = ERR_MAUVAIS_CODE;
+            strcpy(response.verbRep, "WRONG CODE");
 
-            envoyer(sockEch, response, rep2str);
+            envoyer(sockEch, &response, (pFct) rep2str);
         } else {
 
-            response->idRep = REP_ACK_LANCER_PARTIE;
-            strcpy(response->verbRep, "OK");
+            response.idRep = REP_ACK_LANCER_PARTIE;
+            strcpy(response.verbRep, "OK");
 
             // Réponse OK à faire
-            envoyer(sockEch, response, rep2str);
+            envoyer(sockEch, &response, (pFct) rep2str);
 
         }
     }
@@ -142,11 +138,12 @@ void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t request
 void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *currentPlayer){
 
     player_t newPlayer;
+    enum card trumps[1];
     pli_t pli;
 
     while (1){
 
-        recevoir(sockEch, request, req2str);
+        recevoir(sockEch, request, (pFct) req2str);
 
         switch (request->idReq){
 
@@ -158,23 +155,34 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
                 getCards(sockEch, currentPlayer, &newPlayer);
                 break;
 
+
             case REQ_ENVOYER_PLI:
 
-                req2pli(request, &pli);
+                // req2pli(request, &pli);
+                str2Cards(request->optReq, pli, 4);
 
                 getPli(sockEch, currentPlayer, &pli);
                 break;
 
+
             case REQ_CHOIX_ATOUT:
 
-                req2pli(request, &pli);
+                str2Cards(request->optReq, trumps, 1);
 
-                keepTrump(sockEch, currentPlayer, &pli);
+                keepTrump(sockEch, currentPlayer, trumps[0]);
                 break;
+
+            
+            case REP_CHOIX_ATOUT_COULEUR:
+
+
+
+                break;
+
 
             case REQ_ENVOYER_SCORE:
                 // + message, option pour relancer etc... ?
-                afficherScore();
+                // afficherScore();
 
                 // Fin de la manche
                 return;
@@ -190,49 +198,49 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
 
 }
 
+
 void getCards(socket_t *sockEch, player_t *currentPlayer, const player_t *newPlayer){
 
-    reponse_t *response;
+    reponse_t response;
 
-    // recevoir(sockEch, request, str2req);
+    // recevoir(sockEch, request, (pFct) str2req);
 
-    response->idRep = REP_ACK_ENVOYER_DECK;
-    strcpy(response->verbRep, "OK");
+    response.idRep = REP_ACK_ENVOYER_DECK;
+    strcpy(response.verbRep, "OK");
 
-    envoyer(sockEch, response, rep2str);
+    envoyer(sockEch, &response, (pFct) rep2str);
 
     // Ajout des cartes au deck :
-    memcpy(currentPlayer->cards + getCardsAmount(currentPlayer->cards), newPlayer->cards, sizeof(getCardsAmount(newPlayer->cards)));
+    memcpy(currentPlayer->cards + getCardsAmount(currentPlayer), newPlayer->cards, getCardsAmount(newPlayer) * sizeof(int));
 
     
 }
 
 void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
 ;
-    reponse_t *response;
+    reponse_t response;
 
-    response->idRep = REP_ACK_ENVOYER_PLI;
-    strcpy(response->verbRep, "OK");
+    response.idRep = REP_ACK_ENVOYER_PLI;
+    strcpy(response.verbRep, "OK");
 
     // Affichage du pli :
     printf("Le pli est : ...\n");
+    afficherCards((enum card *) pli, 4);
 
-    envoyer(sockEch, response, rep2str);
+    envoyer(sockEch, &response, (pFct) rep2str);
 
     return;
 
 }
 
 
-void keepTrump(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
+void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout){
 
-    reponse_t *response;
-
-    pli_t pli;
+    reponse_t response;
 
     char userResponse;
 
-    // Affichage du pli :
+    // Affichage de l'atout :
     printf("L'atout est : ...\n");
 
     // Demande pour savoir si l'utilisateur veut prendre le pli :
@@ -243,21 +251,25 @@ void keepTrump(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
     // fgets(userResponse, 1 * sizeof(char), stdin);
     fflush(stdin);
 
+    response.idRep = REP_CHOIX_ATOUT;
+
     // Prise du pli :
     if (tolower(userResponse) == 'y'){
-        response->idRep = REQ_TAKE_PLI;
-        strcpy(response->verbRep, "take");
+        
+        strcpy(response.verbRep, "take");
+        strcpy(response.optRep, "1");
 
-        currentPlayer->cards[...] = pli;
+        currentPlayer->cards[getCardsAmount(currentPlayer)] = atout;
 
     // Non prise du pli :
     } else {
-        response->idRep = REQ_LET_PLI;
-        strcpy(response->verbRep, "let");
+
+        strcpy(response.verbRep, "let");
+        strcpy(response.optRep, "0");
     }
 
     // Envoi de la réponse au serveur :
-    envoyer(sockEch, response, rep2str);
+    envoyer(sockEch, &response, (pFct) rep2str);
 }
 
 
@@ -270,7 +282,7 @@ void playMove(socket_t *sockEch, player_t *currentPlayer){
     printf("C'est à vous de jouer !\n\n");
 
     printf("Affichage de vos cartes :\n");
-    showCards(currentPlayer);
+    afficherCards(currentPlayer->cards, getCardsAmount(currentPlayer));
 
     const char nbCards = getCardsAmount(currentPlayer);
 
@@ -278,24 +290,25 @@ void playMove(socket_t *sockEch, player_t *currentPlayer){
         
         printf("Entrez l'indice de la carte à jouer (entre 0 et %d) : ", nbCards - 1);
         
-        selectedCard = atoi(getchar());
+        scanf("%d", &selectedCard);
         fflush(stdin);
     }
 
     // Création de la réponse pour le serveur :
     response.idRep = REP_ENVOI_CARTE;
     strcpy(response.verbRep, "PLAY");
-    response.optRep = selectedCard;
+
+    sprintf(response.optRep, "%d", selectedCard);
 
     // Envoi de la réponse au serveur :
-    envoyer(sockEch, response, ...);
+    envoyer(sockEch, &response, (pFct) rep2str);
 
 }
 
 
-char getCardsAmount(player_t *player){
+int getCardsAmount(const player_t *player){
 
-    for (char i = 0; i < NB_CARD_HAND; i++){
+    for (int i = 0; i < NB_CARD_HAND; i++){
         if (player->cards[i] == NOTHING){
             return i;
         }
@@ -314,16 +327,16 @@ char getCardsAmount(player_t *player){
  */
 void req2player(const requete_t *request, player_t *player){
 
-    int num;
-    enum state s;
+    int num = 0;
     int cards[NB_CARD_HAND];
     
 
     //          num s  cards :
-    sscanf(request->optReq, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d", &num, &s, cards);
+    // sscanf(request->optReq, "%d|%d:%d:%d:%d:%d:%d:%d:%d:%d", &num, cards[0], cards[0], cards[0], cards[0], cards[0], cards[0], cards[0], cards[0]);
+
+    string_to_card(request->optReq, cards);
 
     player->num = num;
-    player->s = s;
     memcpy(player->cards, cards, sizeof(cards));
 
     //sscanf(str,REQ_STR_IN,&req->idReq,req->verbReq,req->optReq);
@@ -335,13 +348,32 @@ void req2player(const requete_t *request, player_t *player){
  *	\fn			void req2pli(const requete_t *request, pli_t *pli)
  *	\brief		Transforme les données d'une requête en pli_t
  *	\param 		request : requête qui contient les informations sur la structure pli_t
- *	\param 		pli : Joueur que l'on souhaite récupérer à partir de la requête
+ *	\param 		pli : Pli que l'on souhaite récupérer à partir de la requête
  */
 void req2pli(const requete_t *request, pli_t *pli){
 
     // ...
         //          num s  cards :
-    sscanf(request->optReq, "%d:%d:%d:%d", &pli[0], &pli[1], &pli[2], &pli[3]);
+    // sscanf(request->optReq, "%d:%d:%d:%d", &pli[0], &pli[1], &pli[2], &pli[3]);
+
+    string_to_card(request->optReq, (enum card *) pli);
 
 }
-// ...
+
+
+/**
+ *	\fn			
+ *	\brief		Transforme les données d'une requête en carte
+ *	\param 		request : requête qui contient les informations sur la structure pli_t
+ *	\param 		carte : Carte que l'on souhaite récupérer à partir de la requête
+ */
+void req2card(const requete_t *request, enum card *c){
+
+    sscanf(request->optReq, "%d", c);
+
+}
+
+
+void afficherScore(int score1, int score2){
+    printf("c les score\n");
+};

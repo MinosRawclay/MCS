@@ -188,7 +188,11 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
         case 304:
 			strcpy(req.verbReq, "join spe game");
             // Join a specific game
-            if(isFull(trouverUser(rep->optRep))){ 
+            if(index = trouverUser(rep->optRep) == -1){
+                req.idReq=402;
+                break;
+            }
+            if(isFull(index)){ 
                 req.idReq = 2;
             }
             else{

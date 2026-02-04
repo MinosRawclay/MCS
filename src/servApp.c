@@ -68,6 +68,8 @@ int connexionToSE (socket_t *sdSE, char * nomUtilisateur) {
         printf("Erreur de connexion\n");
         return -1;
     }
+
+    return -1;
 }
 
 /**
@@ -281,7 +283,7 @@ void rejoindrePartie (socket_t *sdSE) {
     if (demanderAffichagePartiesUtilisateur(sdSE) == 0) {
         if (choisirPartieUtilisateur(sdSE, IPUtilisateur, &portUtilisateur) == 0) {
             printf("Connexion à %s:%d\n", IPUtilisateur, portUtilisateur);
-            client(IPUtilisateur, portUtilisateur);
+            clientHandler(IPUtilisateur, portUtilisateur);
         }
     }
 }
@@ -314,7 +316,7 @@ int rejoindrePartieAleatoire (socket_t *sdSE, char *nomUtilisateur) {
         token = strtok(NULL, "|");
         portPartie = atoi(token);
         // lancement du client
-        client(IPPartie, portPartie);
+        clientHandler(IPPartie, portPartie);
         return 0;
     }
     else if (rep.idRep == 005) {

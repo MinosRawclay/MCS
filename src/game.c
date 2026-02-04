@@ -11,7 +11,7 @@
 
 // déclarations des constantes
 #define IP_SERVEUR_ENREGISTREMENT "127.0.0.1"
-#define PORT_SERVEUR_ENREGISTREMENT 5000
+#define PORT_SERVEUR_ENREGISTREMENT 50000
 
 // ==================== MAIN FUNCTION =========================================
 

@@ -72,7 +72,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 			break;
 
 		case 304:
-			if(isFull(rep->optRep)){ 
+			if(isFull(identifierUser(rep->optRep))){ 
 				req.idReq=2;
 			}
 			else{
@@ -84,7 +84,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 		case 305:
 			for(int i = 0; i < MAX_USERS; i++){
 				if(!isFull(i)){
-					modifierDest(identifierUser(sDial),i );
+					modifierDest(identifierUser(sDial), nameUser(i) );
 					req.idReq=401;
 					break;
 					req.idReq=402;
@@ -92,6 +92,36 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
 				}
 			}
 			break;
+		case 306:
+			req.idReq = 404;
+			req.optReq[0] = '\0';
+
+			for(int i = 0; i < MAX_USERS; i++){
+				if(!isFull(i)){
+					char *nom = nameUser(i);
+					
+					if (strlen(req.optReq) > 0) {
+						strncat(req.optReq, "|", sizeof(req.optReq) - strlen(req.optReq) - 1);
+					}
+					
+					strncat(req.optReq, nom, sizeof(req.optReq) - strlen(req.optReq) - 1);
+				}
+			}
+
+			break;
+		case 307:
+			socket_t * sa = socketUser(trouverUser(rep.optRep));
+			char buffer[64]; 
+    
+    		char *ip_text = inet_ntoa(sa->addrDst.sin_addr);
+    
+    		int port = ntohs(sa->addrDst.sin_port);
+    
+    		snprintf(buffer, sizeof(buffer), "%s|%d", ip_text, port);
+			strcpy(req.optRep, buffer);
+
+			break;
+
 
 		default:
 			req.idReq = 402;

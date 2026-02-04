@@ -201,10 +201,10 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             // Join a random available game
 			req.idReq = 402;
 
-            for(int i = 0; i < MAX_USERS; i++){
+            for(int i = 0; i < users.nbUsers; i++){
                 if(!isFull(i)){
                     modifierDest(userFromSocket(sDial), nameUser(i));
-                     ipPort(&req , rep);
+                    ipPort(&req , rep);
 					break;
                 }
 				
@@ -216,7 +216,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
             // List all available games
             req.idReq = 403;
             req.optReq[0] = '\0';
-            for(int i = 0; i < MAX_USERS; i++){
+            for(int i = 0; i < users.nbUsers; i++){
                 if(!isFull(i)){
                     char *nom = nameUser(i);
                     

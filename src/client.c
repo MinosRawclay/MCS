@@ -1,16 +1,13 @@
 
-// // TODO : Documentation
-// // TODO : Mode DEBUG ?
+/**
+ *	\file		client.c
+ *	\brief		Fonctions relatives aux clients
+ *	\author		Maxime NEUQUELMAN
+ *	\date		04/02/2026
+ *	\version	1.0
+ */
 
-// /**
-//  *	\file		client.c
-//  *	\brief		Fonctions relatives aux clients
-//  *	\author		Maxime NEUQUELMAN
-//  *	\date		04/02/2026
-//  *	\version	1.0
-//  */
-
-// #include <stdio.h>
+#include <stdio.h>
 
 #include <ctype.h>
 
@@ -40,7 +37,7 @@ void clientHandler(char *serverAddr, int serverPort){
     // Connexion avec le serveur :
     saServer = connecterClt2Srv(serverAddr, serverPort);
 
-    printf("Vous avez rejoint la partie de ...\n");
+    printf("Vous avez rejoint la partie de %sn", serverAddr);
 
     // PAUSE("Appuyez sur ENTRER lorsque vous êtes prêt...");
 
@@ -52,8 +49,6 @@ void clientHandler(char *serverAddr, int serverPort){
     // Début d'une manche :
 
     gameRequestHandler(&saServer, &request, &player);
-
-    // ...
 
     return;
 }
@@ -81,6 +76,7 @@ void waitForRequest(socket_t *sockEch, requete_t *request, requeteList_t request
             strcpy(response.verbRep, "WRONG CODE");
 
             envoyer(sockEch, &response, (pFct) rep2str);
+
         } else {
 
             response.idRep = REP_ACK_LANCER_PARTIE;
@@ -102,6 +98,9 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
     player_t newPlayer;
     enum card trumps[1];
     pli_t pli;
+    int score1, score2;
+
+    reponse_t response;
 
     while (1){
 
@@ -137,14 +136,24 @@ void gameRequestHandler(socket_t *sockEch, requete_t *request, player_t *current
             
             case REP_CHOIX_ATOUT_COULEUR:
 
+                str2Cards(request->optReq, trumps, 1);
 
+                keepTrump2(sockEch, currentPlayer, trumps[0]);
 
                 break;
 
 
             case REQ_ENVOYER_SCORE:
+
+                sscanf(request->optReq, "%d|%d", &score1, &score2);
+
                 // + message, option pour relancer etc... ?
-                // afficherScore();
+                afficherScore(score1, score2);
+
+                response.idRep = REP_ACK_ENVOYER_SCORE;
+                strcpy(response.verbRep, "OK");
+
+                envoyer(sockEch, &response, NULL);
 
                 // Fin de la manche
                 return;
@@ -186,7 +195,6 @@ void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
     strcpy(response.verbRep, "OK");
 
     // Affichage du pli :
-    printf("Le pli est : ...\n");
     afficherCards((enum card *) pli, 4);
 
     envoyer(sockEch, &response, (pFct) rep2str);
@@ -199,24 +207,20 @@ void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli){
 void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout){
 
     reponse_t response;
-
-    char userResponse;
-
-    // Affichage de l'atout :
-    printf("L'atout est : ...\n");
-
-    // Demande pour savoir si l'utilisateur veut prendre le pli :
-    printf("Prendre l'atout (y-N) ? ");
-    
-    userResponse = getchar();
-
-    // fgets(userResponse, 1 * sizeof(char), stdin);
-    fflush(stdin);
+    int yesNoResult = 0;
 
     response.idRep = REP_CHOIX_ATOUT;
 
+    // Affichage de l'atout :
+    printf("Affichage de l'atout :\n");
+    afficherCards((enum card *) atout, 1);
+
+    // Demande pour savoir si l'utilisateur veut prendre l'atout :
+    yesNoResult = askYesNo("Prendre l'atout");
+    
+
     // Prise du pli :
-    if (tolower(userResponse) == 'y'){
+    if (yesNoResult){
         
         strcpy(response.verbRep, "take");
         strcpy(response.optRep, "1");
@@ -228,6 +232,72 @@ void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout
 
         strcpy(response.verbRep, "let");
         strcpy(response.optRep, "0");
+    }
+
+    // Envoi de la réponse au serveur :
+    envoyer(sockEch, &response, (pFct) rep2str);
+}
+
+
+void keepTrump2(socket_t *sockEch, player_t *currentPlayer, const enum card atout){
+
+    reponse_t response;
+    int yesNoResult = 0;
+    enum colorCard couleurChoisie = NONE;
+    int temp = -1;
+
+    response.idRep = REP_CHOIX_ATOUT;
+
+    // Affichage de l'atout :
+    printf("Affichage de l'atout :\n");
+    afficherCards((enum card *) atout, 1);
+
+    // Demande pour savoir si l'utilisateur veut prendre l'atout :
+    yesNoResult = askYesNo("Prendre l'atout");
+    
+
+    // Prise du pli :
+    if (yesNoResult){
+        
+        strcpy(response.verbRep, "take");
+
+        currentPlayer->cards[getCardsAmount(currentPlayer)] = atout;
+
+        while (temp < 1 || 4 < temp){
+            printf("Veuillez choisir la couleur de l'atout :\n");
+            printf("1 : trèfle\t| 3 : coeur\n");
+            printf("2 : carreau\t| 4 : pique\n");
+
+            scanf("%d", &temp);
+
+        }
+
+        switch (temp){
+            case 1:
+                couleurChoisie = T;
+                break;
+
+            case 2:
+                couleurChoisie = C;
+                break;
+
+            case 3:
+                couleurChoisie = H;
+                break;
+
+            case 4:
+                couleurChoisie = P;
+                break;
+        
+        }
+
+        sprintf(response.optRep, "%d", couleurChoisie);
+
+    // Non prise du pli :
+    } else {
+
+        strcpy(response.verbRep, "let");
+        sprintf(response.optRep, "%d", couleurChoisie);
     }
 
     // Envoi de la réponse au serveur :
@@ -324,7 +394,7 @@ void req2pli(const requete_t *request, pli_t *pli){
 
 
 /**
- *	\fn			
+ *	\fn			void req2card(const requete_t *request, enum card *c)
  *	\brief		Transforme les données d'une requête en carte
  *	\param 		request : requête qui contient les informations sur la structure pli_t
  *	\param 		carte : Carte que l'on souhaite récupérer à partir de la requête
@@ -336,6 +406,38 @@ void req2card(const requete_t *request, enum card *c){
 }
 
 
+/**
+ *	\fn			void afficherScore(int score1, int score2)
+ *	\brief		Affiche le score des équipes
+ *	\param 		score1 : score de la 1ère équipe
+ *	\param 		score2 : score de la 2nde équipe
+ */
 void afficherScore(int score1, int score2){
-    printf("c les score\n");
+    printf("======================================\n");
+    printf("=       Affichage des scores         =\n");
+    printf("======================================\n");
+
+    printf("Équipe 1 : \t%d\n", score1);
+    printf("Équipe 2 : \t%d\n", score2);
 };
+
+
+/**
+ *	\fn			int askYesNo(const char *message)
+ *	\brief		Demande oui ou non et renvoie le résultat
+ *	\param 		message : message à afficher
+ *	\result     0 : non ; 1 : oui
+ */
+int askYesNo(const char *message){
+
+    // Demande :
+    printf("%s (y-N) ? ", message);
+    
+    char userResponse = getchar();
+
+    fflush(stdin);
+
+    // Retour du résultat :
+    return tolower(userResponse) == 'y';
+
+}

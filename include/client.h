@@ -67,9 +67,19 @@ void getPli(socket_t *sockEch, player_t *currentPlayer, const pli_t *pli);
  *	\brief		Permet à l'utilisateur de décider s'il souhaite prendre l'atout ou non
  *	\param 		sockEch : socket d'échange utilisée
  *	\param 		currentPlayer : joueur actuel
- *	\param 		pli : Pli reçu par le serveur
+ *	\param 		atout : atout reçu par le serveur
  */
 void keepTrump(socket_t *sockEch, player_t *currentPlayer, const enum card atout);
+
+
+/**
+ *	\fn			void keepTrump2(socket_t *sockEch, player_t *currentPlayer, const enum card atout)
+ *	\brief		Permet à l'utilisateur de décider s'il souhaite prendre l'atout ou non (2ème tour)
+ *	\param 		sockEch : socket d'échange utilisée
+ *	\param 		currentPlayer : joueur actuel
+ *	\param 		atout : atout reçu par le serveur
+ */
+void keepTrump2(socket_t *sockEch, player_t *currentPlayer, const enum card atout);
 
 
 /**
@@ -115,5 +125,21 @@ void req2pli(const requete_t *request, pli_t *pli);
  *	\param 		carte : Carte que l'on souhaite récupérer à partir de la requête
  */
 void req2card(const requete_t *request, enum card *c);
+
+/**
+ *	\fn			int askYesNo(const char *message)
+ *	\brief		Demande oui ou non et renvoie le résultat
+ *	\param 		message : message à afficher
+ *	\result     0 : non ; 1 : oui
+ */
+int askYesNo(const char *message);
+
+/**
+ *	\fn			void afficherScore(int score1, int score2)
+ *	\brief		Affiche le score des équipes
+ *	\param 		score1 : score de la 1ère équipe
+ *	\param 		score2 : score de la 2nde équipe
+ */
+void afficherScore(int score1, int score2);
 
 #endif

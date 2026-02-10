@@ -45,6 +45,9 @@ gameApp : $(SRC_DIR)/game.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)
 socketEnregistrement: $(SRC_DIR)/socketEnregistrement.c $(LIB_DIR)/libInet.a $(LIB_DIR)/libDial.a $(LIB_DIR)/libRepReq.a $(LIB_DIR)/libUsers.a
 	gcc $< -o $(BIN_DIR)/$@ $(FLAGS) $(LDFLAGS)
 
+gameStandalone: $(SRC_DIR)/moteur_standalone.c
+	gcc $< -o $(BIN_DIR)/$@ $(FLAGS)
+
 # ----- Nettoyage -----
 clean:
 	rm -f $(OBJ_DIR)/* $(LIB_DIR)/* $(BIN_DIR)/*

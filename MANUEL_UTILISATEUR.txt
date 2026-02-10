@@ -1,0 +1,984 @@
+================================================================================
+                    MANUEL D'UTILISATION - RE'BELOTTE v1.0
+                   Jeu de Belote Client/Serveur Multi-Joueurs
+================================================================================
+
+Document : Manuel Utilisateur
+Version : 1.0
+Date : 04 Février 2026
+Plateforme : Linux/Unix
+Support : belotte-support@example.com
+
+
+================================================================================
+TABLE DES MATIÈRES
+================================================================================
+
+1. INTRODUCTION
+2. INSTALLATION ET CONFIGURATION
+3. DÉMARRAGE RAPIDE
+4. INTERFACE PRINCIPALE
+5. DÉROULEMENT D'UNE PARTIE
+6. RÈGLES DE JEU EN DÉTAIL
+7. TOUCHES CLAVIER ET COMMANDES
+8. GESTION DES ERREURS
+9. ASTUCES ET CONSEILS
+10. FAQ - QUESTIONS FRÉQUEMMENT POSÉES
+11. SUPPORT ET CONTACT
+
+
+================================================================================
+1. INTRODUCTION
+================================================================================
+
+Bienvenue dans RE'BELOTTE, une implémentation numérique du jeu de carte 
+français traditionnel : la Belote.
+
+Ce manuel vous guidera à travers l'installation, la configuration et l'utilisation
+de l'application pour jouer avec vos amis en réseau.
+
+CARACTÉRISTIQUES PRINCIPALES :
+  ✓ Jeu multi-joueurs en réseau (jusqu'à 16 joueurs simultanés)
+  ✓ Architecture client/serveur distribuée
+  ✓ Support complet des règles de la Belote
+  ✓ Interface en ligne de commande
+  ✓ Compatible Linux/Unix
+  ✓ Gratuit et open-source
+
+
+CONFIGURATION MINIMALE :
+  • Processeur : Pentium 1 GHz minimum
+  • RAM : 64 MB minimum
+  • Système d'exploitation : Linux, Unix, macOS, WSL (Windows)
+  • Compilateur : GCC 4.8+
+  • Connexion réseau : Ethernet ou WiFi
+  • Terminal : bash ou compatible
+
+
+CONFIGURATION RECOMMANDÉE :
+  • Processeur : 1 GHz+
+  • RAM : 256 MB+
+  • Connexion Internet 10 Mbps+
+  • Terminal moderne (xterm, gnome-terminal, etc.)
+
+
+================================================================================
+2. INSTALLATION ET CONFIGURATION
+================================================================================
+
+2.1 TÉLÉCHARGEMENT
+───────────────────
+
+Récupérez le code source du projet (supposant un dépôt publique) :
+
+  $ git clone https://github.com/mcs-belotte/re-belotte.git
+  $ cd re-belotte
+
+
+2.2 COMPILATION
+────────────────
+
+La compilation est simple grâce au Makefile fourni :
+
+  $ make
+
+Cela génère trois exécutables :
+  • bin/socketEnregistrement  - Serveur d'enregistrement central
+  • bin/servApp               - Serveur d'application (créateur de partie)
+  • bin/client                - Client joueur
+
+
+Pour nettoyer les fichiers compilés :
+
+  $ make clean
+
+Pour réinstaller proprement :
+
+  $ make clean && make
+
+
+2.3 VÉRIFICATION DE L'INSTALLATION
+────────────────────────────────────
+
+Vérifiez que les fichiers sont présents :
+
+  $ ls -la bin/
+  -rwxr-xr-x socketEnregistrement
+  -rwxr-xr-x servApp
+  -rwxr-xr-x client
+
+Si les fichiers exécutables ne sont pas présents, la compilation a échoué.
+Consultez la section "Dépannage" à la fin de ce manuel.
+
+
+2.4 CONFIGURATION RÉSEAU
+──────────────────────────
+
+PARAMÈTRES PAR DÉFAUT :
+  • Serveur d'enregistrement : Port 50000
+  • Serveur d'application : Ports 50001+ (attribués dynamiquement)
+  • Adresse écoute SE : 0.0.0.0 (toutes interfaces)
+
+MODIFICATION DES PARAMÈTRES :
+
+Si vous avez besoin de modifier les ports (ex: port 50000 déjà utilisé) :
+
+  Éditer include/socketEnregistrement.h :
+
+    #define PORT    50000   // Changer cette valeur
+
+Puis recompiler :
+
+  $ make clean && make
+
+
+================================================================================
+3. DÉMARRAGE RAPIDE (5 MINUTES)
+================================================================================
+
+3.1 CONFIGURATION SIMPLE (LOCAL)
+─────────────────────────────────
+
+Sur UNE MÊME MACHINE (4 terminaux différents) :
+
+TERMINAL 1 - Démarrer le serveur central :
+  $ ./bin/socketEnregistrement
+  Affichage : "Serveur d'enregistrement démarré sur port 50000"
+
+TERMINAL 2 - Démarrer le créateur de partie :
+  $ ./bin/servApp
+  • Affichage du menu
+  • Sélectionnez : 1 (Créer une partie)
+  • Entrez votre pseudo (ex: alice)
+
+TERMINAL 3 - Démarrer le 2e joueur :
+  $ ./bin/client localhost 50000
+  • Entrez votre pseudo (ex: bob)
+  • Sélectionnez : 2 (Rejoindre une partie existante)
+  • Sélectionnez la partie d'alice
+
+TERMINAL 4 - Démarrer le 3e joueur :
+  $ ./bin/client localhost 50000
+  • Entrez votre pseudo (ex: charlie)
+  • Sélectionnez : 2 (Rejoindre une partie existante)
+  • Sélectionnez la partie d'alice
+
+TERMINAL 1 ou 2 - Ajouter le 4e joueur :
+  Lancez un autre ./bin/client avec le pseudo "david"
+
+Dès que 4 joueurs sont connectés et prêts, la partie démarre !
+
+
+3.2 CONFIGURATION RÉSEAU (MULTI-MACHINES)
+────────────────────────────────────────────
+
+Sur PLUSIEURS MACHINES (PC différents) :
+
+MACHINE 1 - Serveur central et créateur :
+  $ ./bin/socketEnregistrement      # Terminal 1
+  $ ./bin/servApp                   # Terminal 2
+
+MACHINE 2, 3, 4 - Clients :
+  $ ./bin/client 192.168.1.X 50000
+  (Remplacer 192.168.1.X par l'IP de MACHINE 1)
+
+Remarque : Pour trouver l'IP de MACHINE 1 :
+  $ hostname -I
+  ou
+  $ ifconfig
+
+
+================================================================================
+4. INTERFACE PRINCIPALE
+================================================================================
+
+4.1 MENU DE DÉMARRAGE
+──────────────────────
+
+Quand vous lancez le client, vous voyez :
+
+┌──────────────────────────────────────────────┐
+│                                              │
+│          ╔═╗╔═╗   ╔╗ ╔═╗╦  ╔═╗╔╦╗╔╦╗╔═╗   │
+│          ║  ║║║   ║║ ║╣ ║  ║ ║ ║║║║║║║ ║   │
+│          ║  ╚╩╝   ║╚╗╠╩╗║  ║ ║ ║║║║║║║╚╩╗   │
+│          ╚═╚═╦═╗  ╚═╝╚═╝╚═╝╚═╝═╩╝╩ ╩╚═╗   │
+│                                         │   │
+│                                              │
+│              MENU PRINCIPAL                 │
+│                                              │
+│      1. Créer une nouvelle partie           │
+│      2. Rejoindre une partie existante      │
+│      3. Rejoindre une partie aléatoire      │
+│      4. Quitter                            │
+│                                              │
+│      Sélection : [_]                        │
+│                                              │
+└──────────────────────────────────────────────┘
+
+
+4.2 OPTION 1 : CRÉER UNE PARTIE
+──────────────────────────────────
+
+Sélectionnez "1" et appuyez sur Entrée.
+
+Affichage :
+  "Création d'une nouvelle partie en cours..."
+  "Votre serveur écoute sur le port 50001"
+  "En attente de 3 joueurs... (1/4)"
+
+À ce stade :
+  • Vous êtes enregistré au serveur central
+  • Les 3 autres joueurs peuvent vous trouver et rejoindre
+  • Le jeu attend que tous les joueurs signalent qu'ils sont prêts
+  • Vous pourrez démarrer quand 4 joueurs sont connectés
+
+Commandes disponibles :
+  • Appuyez sur P pour marquer que vous êtes PRÊT
+  • Appuyez sur S pour voir l'état de la partie
+  • Appuyez sur Q pour abandonner et quitter
+
+
+4.3 OPTION 2 : REJOINDRE UNE PARTIE EXISTANTE
+──────────────────────────────────────────────
+
+Sélectionnez "2" et appuyez sur Entrée.
+
+Affichage de la liste des parties disponibles :
+  ┌──────────────────────────────────────────┐
+  │  Parties disponibles :                   │
+  │                                          │
+  │  1) alice     192.168.1.5:50001  (2/4)  │
+  │  2) bob       192.168.1.10:50002 (1/4)  │
+  │  3) charlie   192.168.1.15:50003 (3/4)  │
+  │                                          │
+  │  Sélectionnez une partie (1-3) : [_]    │
+  └──────────────────────────────────────────┘
+
+Entrez le numéro de la partie à rejoindre.
+
+Une fois connecté, vous voyez :
+  "Connecté à la partie de alice"
+  "En attente que la partie démarre..."
+
+
+4.4 OPTION 3 : REJOINDRE ALÉATOIREMENT
+───────────────────────────────────────
+
+Sélectionnez "3" et appuyez sur Entrée.
+
+Le système :
+  • Cherche automatiquement une partie non complète
+  • Vous connecte à la première disponible
+  • Si aucune partie n'existe, en crée une nouvelle
+  • Affiche : "Connecté à la partie de [hôte]"
+
+
+4.5 OPTION 4 : QUITTER
+───────────────────────
+
+Sélectionnez "4" et appuyez sur Entrée.
+
+Ferme proprement l'application.
+
+
+================================================================================
+5. DÉROULEMENT D'UNE PARTIE
+================================================================================
+
+5.1 PHASE 1 : ATTENTE DES JOUEURS
+───────────────────────────────────
+
+État : "EN_ATTENTE"
+Durée : Variable (jusqu'à ce que 4 joueurs soient prêts)
+
+Affichage :
+  ┌─────────────────────────────────┐
+  │  Partie en cours de formation   │
+  │                                 │
+  │  Joueurs connectés :            │
+  │    ✓ alice (prêt)               │
+  │    ✓ bob (prêt)                 │
+  │    ✓ charlie (en attente)       │
+  │    ○ david (non connecté)       │
+  │                                 │
+  │  [P] Marquer prêt               │
+  │  [S] État de la partie          │
+  │  [Q] Quitter                    │
+  └─────────────────────────────────┘
+
+Actions possibles :
+  P : Appuyez pour signaler au serveur que VOUS ÊTES PRÊT
+  S : Affiche l'état actuel de la partie
+  Q : Abandonner et quitter
+
+
+5.2 PHASE 2 : LANCEMENT DU JEU
+───────────────────────────────
+
+Une fois 4 joueurs connectés ET tous prêts :
+
+Affichage :
+  "Tous les joueurs sont prêts !"
+  "Distribution des cartes..."
+  "Partie lancée !"
+
+
+5.3 PHASE 3 : DISTRIBUTION DES CARTES
+───────────────────────────────────────
+
+État : "EN_COURS"
+Durée : Instantané
+
+Chaque joueur reçoit 8 cartes.
+
+Affichage de votre main :
+  ┌────────────────────────────────────┐
+  │  Votre main (8 cartes) :           │
+  │                                    │
+  │  1. [H ♥ AS]  5. [C ♦ 10]         │
+  │  2. [H ♥ 7]   6. [P ♠ V]          │
+  │  3. [H ♥ 8]   7. [P ♠ D]          │
+  │  4. [C ♦ 9]   8. [T ♣ R]          │
+  │                                    │
+  │  Atout : ? (à déterminer)          │
+  └────────────────────────────────────┘
+
+Légende :
+  H = Cœur (♥)
+  C = Carreau (♦)
+  P = Pique (♠)
+  T = Trèfle (♣)
+  AS, 7, 8, 9, 10, V (Valet), D (Dame), R (Roi)
+
+
+5.4 PHASE 4 : DÉCLARATION DE L'ATOUT
+──────────────────────────────────────
+
+État : Début du jeu
+Durée : Quelques secondes
+
+Le premier joueur (habituellement le créateur) declare l'atout.
+
+Affichage :
+  "Alice doit déclarer l'atout"
+  "Quelle couleur ? (H/C/P/T) : [_]"
+
+Le joueur entre :
+  H = Cœurs
+  C = Carreaux
+  P = Piques
+  T = Trèfles
+
+Les autres joueurs reçoivent :
+  "L'atout est déclaré : CŒURS ♥"
+
+
+5.5 PHASE 5 : JEU DES 8 LEVÉES
+────────────────────────────────
+
+État : "EN_COURS"
+Durée : 8 tours (une levée = 4 cartes jouées)
+
+DÉROULEMENT D'UNE LEVÉE :
+
+Le premier joueur joue une carte :
+  "C'est à alice de jouer"
+  "Quelle carte ? (1-8) : [_]"
+
+Alice entre "1" (pour la première carte de sa main).
+
+Affichage à TOUS les joueurs :
+  "Alice a joué : H ♥ AS"
+
+Les autres joueurs jouent à tour de rôle.
+
+Une fois 4 cartes jouées :
+  ┌────────────────────────────────┐
+  │  Levée 1 complète              │
+  │                                │
+  │  alice    →  H ♥ AS           │
+  │  bob      →  C ♦ 8            │
+  │  charlie  →  H ♥ 7            │
+  │  david    →  T ♣ 10           │
+  │                                │
+  │  Gagnant : ALICE              │
+  │  Points gagnés : 160           │
+  │                                │
+  │  Scores :                      │
+  │  Équipe 1 (alice, charlie): 160│
+  │  Équipe 2 (bob, david):      0│
+  └────────────────────────────────┘
+
+Attente quelques secondes, puis :
+  "Levée 2 - À vous de jouer"
+
+Cela se répète 8 fois.
+
+
+5.6 PHASE 6 : FIN DE PARTIE
+─────────────────────────────
+
+État : "TERMINÉE"
+
+Une fois les 8 levées complétées, le système calcule le vainqueur :
+
+Affichage final :
+  ┌──────────────────────────────────┐
+  │  *** PARTIE TERMINÉE ***         │
+  │                                  │
+  │  RÉSULTATS FINAUX                │
+  │                                  │
+  │  Équipe 1 (Alice, Charlie)       │
+  │    Alice   : 1050 points         │
+  │    Charlie : 1000 points         │
+  │    ────────────────────          │
+  │    Total   : 2050 points         │
+  │                                  │
+  │  Équipe 2 (Bob, David)           │
+  │    Bob     : 750 points          │
+  │    David   : 500 points          │
+  │    ────────────────────          │
+  │    Total   : 1250 points         │
+  │                                  │
+  │  🏆 ÉQUIPE 1 GAGNE ! 🏆         │
+  │     (Score : 2050 vs 1250)       │
+  │                                  │
+  │  [M] Menu  [R] Rejouer [Q] Quitter│
+  └──────────────────────────────────┘
+
+Options :
+  M : Retourner au menu principal
+  R : Créer/rejoindre une nouvelle partie
+  Q : Quitter l'application
+
+
+================================================================================
+6. RÈGLES DE JEU EN DÉTAIL
+================================================================================
+
+6.1 OBJECTIF
+─────────────
+
+La Belote est un jeu de cartes pour 4 joueurs répartis en 2 équipes.
+
+OBJECTIF : Remporter le plus de points possibles en remportant les levées.
+
+
+6.2 SETUP
+──────────
+
+Nombre de joueurs : 4 (2 équipes de 2)
+
+Équipes :
+  ÉQUIPE 1 : Joueurs 0 et 2 (assis face à face)
+  ÉQUIPE 2 : Joueurs 1 et 3 (assis face à face)
+
+Cartes : 32 cartes (As, 7, 8, 9, 10, Valet, Dame, Roi dans 4 couleurs)
+        (Les cartes 2, 3, 4, 5, 6 sont retirées du jeu)
+
+Distribution : 8 cartes par joueur
+
+
+6.3 VALEUR DES CARTES
+──────────────────────
+
+La valeur d'une carte varie selon qu'elle soit l'atout ou non.
+
+CARTES NON-ATOUT (couleurs autres que l'atout) :
+  
+  Carte       Valeur
+  ─────────────────
+  Roi         4
+  Dame        3
+  Valet       2
+  10          10
+  9           0
+  8           0
+  7           0
+  As          11
+
+
+CARTES DE L'ATOUT (couleur déclarée) :
+
+  Carte       Valeur
+  ─────────────────
+  Valet       20  ← Point le plus élevé !
+  9           14
+  As          11
+  10          10
+  Roi         4
+  Dame        3
+  8           0
+  7           0
+
+
+6.4 ORDRE DE JCEU
+──────────────────
+
+Levée 1 : Le créateur de la partie joue en premier
+Levées suivantes : Le gagnant de la levée précédente joue en premier
+
+
+6.5 RÈGLES DE JCEU
+────────────────────
+
+À chaque levée, le joueur doit respecter ces règles, DANS CET ORDRE :
+
+1. SUIVRE LA COULEUR
+   Si vous avez une carte de la couleur jouée, VOUS DEVEZ la jouer.
+
+   Exemple : La première carte est un Cœur. Si vous avez un Cœur en main,
+            vous DEVEZ jouer un Cœur.
+
+2. SI PAS LA COULEUR, ATOUT OBLIGATOIRE
+   Si vous ne pouvez pas suivre la couleur, mais vous avez l'atout,
+   VOUS DEVEZ jouer l'atout.
+
+   Exemple : Première carte = Pique, vous n'avez pas de Pique,
+            mais vous avez l'atout (Cœur). Vous DEVEZ jouer un Cœur.
+
+3. SI PAS COULEUR NI ATOUT, CARTE LIBRE
+   Si vous n'avez ni la couleur ni l'atout, vous pouvez jouer n'importe quelle carte.
+
+
+6.6 GAGNANT D'UNE LEVÉE
+────────────────────────
+
+Le gagnant de la levée est déterminé ainsi (ordre de priorité) :
+
+1. La plus haute carte de l'atout (si l'atout a été joué)
+2. La plus haute carte de la couleur jouée (si pas d'atout)
+3. La première carte jouée (par défaut, si aucune ne suit la couleur)
+
+Exemple 1 : 
+  Cartes jouées : [P ♠ 10] [H ♥ 7] [H ♥ AS] [P ♠ Roi]
+  Atout : Cœur (pas d'atout joué ici)
+  Gagnant : P ♠ Roi (plus haute Pique)
+
+Exemple 2 :
+  Cartes jouées : [P ♠ 10] [H ♥ 7] [H ♥ Valet] [P ♠ Roi]
+  Atout : Cœur (atout joué !)
+  Gagnant : H ♥ Valet (atout vaut toujours la couleur)
+  Points de ce Valet d'atout : 20 (très important !)
+
+
+6.7 CALCUL DES POINTS
+──────────────────────
+
+À la fin de chaque levée, les 4 cartes jouées sont additionnées :
+  Points levée = valeur_carte1 + valeur_carte2 + valeur_carte3 + valeur_carte4
+
+Le gagnant de la levée donne ces points à son équipe.
+
+Exemple :
+  Levée complète :
+    alice   (Équipe 1) : [H ♥ AS]        = 11 pts
+    bob     (Équipe 2) : [C ♦ 10]        = 10 pts
+    charlie (Équipe 1) : [T ♣ Roi]       = 4 pts
+    david   (Équipe 2) : [C ♦ Dame]      = 3 pts
+    
+    Gagnant : Alice (Équipe 1)
+    Points totaux levée : 11 + 10 + 4 + 3 = 28 pts
+    → Équipe 1 gagne 28 points
+
+
+6.8 FIN DE PARTIE ET VICTOIRE
+───────────────────────────────
+
+La partie est composée de 8 levées.
+
+À la fin des 8 levées :
+  1. On compte les points totaux de chaque équipe
+  2. L'équipe avec le plus de points GAGNE
+  3. Si points égaux (rare), on fait une levée supplémentaire
+
+
+Exemple de victoire :
+  Équipe 1 : 1200 points
+  Équipe 2 : 1050 points
+  
+  → ÉQUIPE 1 GAGNE !
+
+
+================================================================================
+7. TOUCHES CLAVIER ET COMMANDES
+================================================================================
+
+7.1 MENUS DE SÉLECTION
+──────────────────────
+
+Partout où une sélection est demandée :
+  • Entrez le NUMÉRO ou la LETTRE proposée
+  • Appuyez sur ENTRÉE pour valider
+  • Appuyez sur Q (puis ENTRÉE) pour quitter/revenir
+
+
+7.2 PENDANT LE JEU - ATTENTE DES JOUEURS
+──────────────────────────────────────────
+
+P = Marquer que vous êtes PRÊT
+S = Afficher l'état de la partie
+L = Lister les joueurs connectés
+Q = Quitter la partie
+
+
+7.3 PENDANT LE JEU - PHASE ACTIVE
+───────────────────────────────────
+
+1-8 = Sélectionner une carte à jouer
+      (le numéro correspond à la position dans votre main)
+
+H = Afficher l'aide
+S = Afficher l'état actuel du jeu
+C = Afficher les scores des équipes
+A = Afficher l'atout en vigueur
+Q = Quitter la partie
+
+
+7.4 TOUCHES SPÉCIALES GLOBALES
+────────────────────────────────
+
+Ctrl+C = Quitter l'application (fermeture d'urgence)
+Ctrl+Z = Suspendre l'application (sur Linux)
+
+
+================================================================================
+8. GESTION DES ERREURS
+================================================================================
+
+8.1 MESSAGE : "Connexion refusée"
+────────────────────────────────────
+
+Cause : Le serveur d'enregistrement n'est pas accessible
+
+Solutions :
+  1. Vérifier que ./bin/socketEnregistrement est lancé
+  2. Vérifier l'IP fournie en paramètre (défaut : localhost)
+  3. Vérifier le port (défaut : 50000)
+  4. Vérifier la connexion réseau
+  5. Vérifier que les pare-feu ne bloquent pas les ports
+
+Exemple lancement avec IP spécifique :
+  $ ./bin/client 192.168.1.5 50000
+
+
+8.2 MESSAGE : "Pseudo déjà utilisé"
+──────────────────────────────────────
+
+Cause : Quelqu'un d'autre utilise déjà ce pseudo
+
+Solutions :
+  1. Entrez un pseudo DIFFÉRENT
+  2. Vérifiez le pseudo exact (majuscules/minuscules)
+  3. Attendez 30 secondes et réessayez (le pseudo était peut-être en cours de libération)
+
+
+8.3 MESSAGE : "Partie pleine (4/4 joueurs)"
+──────────────────────────────────────────────
+
+Cause : La partie a atteint son maximum de 4 joueurs
+
+Solutions :
+  1. Rejoignez une autre partie (option 2 du menu)
+  2. Rejoignez aléatoirement (option 3)
+  3. Créez une nouvelle partie (option 1)
+
+
+8.4 MESSAGE : "Carte invalide - vous ne l'avez pas"
+──────────────────────────────────────────────────────
+
+Cause : Vous avez essayé de jouer une carte que vous n'avez pas en main
+
+Solutions :
+  1. Vérifiez votre main (relisez les 8 cartes affichées)
+  2. Vérifiez le numéro saisi (1-8)
+  3. Essayez une autre carte
+
+
+8.5 MESSAGE : "Coup invalide - respectez les règles"
+───────────────────────────────────────────────────────
+
+Cause : Vous avez violé une règle (couleur, atout)
+
+Détails :
+  • Vous aviez la couleur jouée et vous n'l'avez pas jouée → invalide
+  • Vous aviez l'atout et vous ne l'avez pas joué alors qu'il fallait → invalide
+
+Solutions :
+  1. Relisez les RÈGLES DE JEU (Section 6.5)
+  2. Jouez une carte de la bonne couleur (si vous l'avez)
+  3. Jouez l'atout (si vous n'avez pas la couleur)
+  4. Jouez n'importe quoi sinon
+
+
+8.6 MESSAGE : "Déconnexion du serveur - fin de partie"
+─────────────────────────────────────────────────────────
+
+Cause : Le serveur s'est arrêté ou la connexion a été perdue
+
+Solutions :
+  1. Redémarrer le serveur central (socketEnregistrement)
+  2. Reconnecter le serveur d'application (servApp)
+  3. Relancer votre client
+
+
+8.7 MESSAGE : "Timeout - pas de réponse du serveur"
+──────────────────────────────────────────────────────
+
+Cause : Le serveur n'a pas répondu dans les 10 secondes
+
+Solutions :
+  1. Vérifier la connexion réseau (ping)
+  2. Vérifier que le serveur est toujours actif
+  3. Relancer l'application
+
+
+8.8 MESSAGE D'ERREUR GÉNÉRIQUE
+────────────────────────────────
+
+Cas rare : "Erreur interne du serveur"
+
+Solutions :
+  1. Essayer de reconnecter
+  2. Relancer le serveur central
+  3. Consultez les logs du serveur (si disponibles)
+  4. Contactez le support
+
+
+================================================================================
+9. ASTUCES ET CONSEILS
+================================================================================
+
+9.1 CONSEILS STRATÉGIQUES
+────────────────────────────
+
+1. COMMUNIQUEZ DISCRÈTEMENT AVEC VOTRE PARTENAIRE
+   Même si vous ne pouvez pas parler directement dans le jeu,
+   vous pouvez communiquer par d'autres moyens (WhatsApp, Discord, etc.)
+   pour convenir d'une stratégie.
+
+2. COMPTEZ LES CARTES
+   Essayez de vous souvenir quelles cartes ont été jouées.
+   Cela vous aidera à prévoir les mouvements futurs.
+
+3. GARDEZ VOS MEILLEURES CARTES POUR LA FIN
+   Si vous avez des cartes très fortes (As, Rois, Valetes d'atout),
+   essayez de les garder pour les dernières levées.
+
+4. JOUEZ L'ATOUT STRATÉGIQUEMENT
+   Le Valet d'atout vaut 20 points - c'est une carte précieuse.
+   Ne la gaspillez pas sur une petite levée.
+
+5. ATTENTION À LA COULEUR DU VALET
+   Si vous n'avez pas le Valet de l'atout (qu'on appelle "le valet maître"),
+   souvenez-vous que votre adversaire l'a probablement.
+
+6. OBSERVEZ VOS ADVERSAIRES
+   Regardez quelles couleurs ils ne peuvent pas jouer.
+   Si Alice ne peut pas jouer de Pique, elle n'a probablement plus de Pique.
+
+7. SOYEZ PRUDENT AVEC L'ATOUT
+   Si vous avez un atout mais que quelqu'un d'autre a déjà joué un meilleur atout,
+   ne gaspillez pas votre atout - jouez plutôt une carte faible.
+
+
+9.2 CONSEILS TECHNIQUES
+──────────────────────────
+
+1. VÉRIFIEZ VOTRE VITESSE DE RÉSEAU
+   Une connexion lente peut causer des timeouts.
+   Test : ping 8.8.8.8
+
+2. FERMEZ LES AUTRES APPLICATIONS
+   Pour une meilleure performance, fermez les applications qui utilisent la bande passante.
+
+3. UTILISEZ UN CÂBLE ETHERNET SI POSSIBLE
+   C'est plus stable que le WiFi.
+
+4. UTILISEZ DES PSEUDOS UNIQUES
+   Pour éviter les conflits, choisissez des pseudos distinctifs et courts.
+
+5. NOTELEZ-VOUS LES ADRESSES IP
+   Si vous jouez souvent avec les mêmes personnes, notez leurs adresses IP.
+   Cela rend la reconnexion plus rapide.
+
+
+9.3 PERFORMANCE
+─────────────────
+
+Le jeu est conçu pour être très léger :
+  • Utilise très peu de bande passante (moins de 1 KB par coup)
+  • Compatible avec des connections lentes (56K, ADSL basique)
+  • Pas de graphiques lourds
+
+Si vous avez des problèmes de lag :
+  1. Vérifiez votre connexion (ping < 100ms idéal)
+  2. Redémarrez routeur et modem
+  3. Fermez autres applications
+  4. Utilisez Ethernet au lieu de WiFi
+
+
+================================================================================
+10. FAQ - QUESTIONS FRÉQUEMMENT POSÉES
+================================================================================
+
+Q: Combien de joueurs maximum ?
+R: 16 utilisateurs connectés simultanément au serveur central, avec 4 parties
+   de 4 joueurs chacune.
+
+
+Q: Puis-je jouer seul ?
+R: Non, il faut au minimum 4 joueurs pour une partie (2 équipes de 2).
+
+
+Q: Comment je parle à mon équipier ?
+R: Le chat intégré n'existe pas encore. Utilisez Discord, Skype, téléphone, etc.
+
+
+Q: Qui décide de l'atout ?
+R: Le createur de la partie (ou le premier joueur selon l'implémentation).
+
+
+Q: Que se passe-t-il si quelqu'un quitte pendant la partie ?
+R: La partie s'arrête et ferme pour les autres joueurs.
+   (Fonctionnalité de reconnecter à être implémentée)
+
+
+Q: Y a-t-il une limite de temps pour jouer une carte ?
+R: Non, vous avez autant de temps que vous voulez.
+
+
+Q: Les points 10, 20, 30 ?
+R: Non, la Belote utilise un système de points détaillé selon les cartes.
+   Voir section "Valeur des cartes".
+
+
+Q: Quelle est la meilleure stratégie ?
+R: Chaque partie est différente. Entraînez-vous !
+   Les conseils sont en section 9.1.
+
+
+Q: Puis-je rejouer une partie immédiatement ?
+R: Oui, après l'écran de fin, sélectionnez "Rejouer"
+
+
+Q: Que signifie "Valet maître" ?
+R: C'est le Valet de l'atout, qui vaut 20 points (très important).
+
+
+Q: Le jeu est-il équitable (pas de triche serveur) ?
+R: Le code est open-source. Vous pouvez vérifier par vous-mêmes.
+
+
+================================================================================
+11. SUPPORT ET CONTACT
+================================================================================
+
+11.1 AVANT DE CONTACTER LE SUPPORT
+────────────────────────────────────
+
+Veuillez vérifier :
+
+1. Vous avez suivi les étapes d'installation (Section 2)
+2. Vous avez compilé correctement (make)
+3. Vous avez lu les sections pertinentes de ce manuel
+4. Votre problème ne figure pas dans la FAQ (Section 10)
+5. Votre problème ne figure pas dans "Gestion des erreurs" (Section 8)
+
+En 95% des cas, le problème vient d'une mauvaise installation ou utilisation.
+
+
+11.2 INFORMATIONS À FOURNIR POUR LE SUPPORT
+───────────────────────────────────────────────
+
+Si vous demandez de l'aide, fournissez :
+
+1. Votre système d'exploitation (Linux, macOS, WSL Windows, etc.)
+2. Version GCC : gcc --version
+3. Les étapes exactes que vous avez suivies
+4. Le message d'erreur EXACT (copié-collé)
+5. Les résultats de la compilation (make clean && make)
+6. Sortie de : ./bin/socketEnregistrement
+
+
+11.3 CANAUX DE SUPPORT
+───────────────────────
+
+EMAIL : belotte-support@example.com
+        (Réponse attendue : 24-48h)
+
+FORUM : https://forum.belotte.local/
+        (Communauté réactive)
+
+GITHUB ISSUES : https://github.com/mcs-belotte/re-belotte/issues
+                (Pour bugs et suggestions)
+
+IRC : #belotte sur irc.libera.chat
+      (Support communautaire en temps réel)
+
+DISCORD : https://discord.gg/belotte
+          (Serveur communautaire)
+
+
+11.4 SIGNALER UN BUG
+──────────────────────
+
+Veuillez signaler les bugs avec :
+
+1. Titre clair et concis
+   Mauvais : "Ca marche pas"
+   Bon : "Impossible de se connecter au serveur quand le port est > 50010"
+
+2. Description détaillée
+   Quoi : Qu'est-ce que vous essayiez de faire ?
+   Comment : Pas à pas, comment reproduire le bug ?
+   Résultat : Qu'est-il arrivé au lieu du résultat attendu ?
+
+3. Informations système
+   OS, version GCC, capture d'écran de l'erreur
+
+4. Fichiers logs (si disponibles)
+   Les messages d'erreur complètes du terminal
+
+
+11.5 SUGGESTIONS D'AMÉLIORATION
+─────────────────────────────────
+
+Nous accueillons les suggestions ! Vous pouvez proposer :
+
+• Nouvelles fonctionnalités (chat, stats, achievements)
+• Amélioration de l'interface (graphismes, themes)
+• Améliorations gameplay (variantes de belote, niveaux IA)
+• Ports (Windows natif, Android, iPhone)
+• Documentation (traductions, vidéos tutoriels)
+
+
+================================================================================
+12. CRÉDITS ET LICENCE
+================================================================================
+
+Développement : Équipe MCS
+  • Raphael ALLO (Moteur de jeu)
+  • Samir El Khattabi (Sockets et utilisateurs)
+  • Maxime NEUQUELMAN (Client)
+  • Vaniet Quentin (Serveur Application)
+
+Version : 1.0
+Date : 04 Février 2026
+
+Licence : Open Source (à définir - GNU GPLv3 probablement)
+
+
+================================================================================
+FIN DU MANUEL
+================================================================================
+
+Ce manuel est pour RE'BELOTTE v1.0
+Pour les futures versions, consultez : https://belotte.local/changelog
+
+Dernier mise à jour : 04 Février 2026
+
+Merci de jouer à RE'BELOTTE ! 🎴♠️♥️♣️♦️
+
+================================================================================

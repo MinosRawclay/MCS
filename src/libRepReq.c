@@ -164,7 +164,7 @@ requete_t traiterRegister(reponse_t * rep, socket_t * sDial){
     switch(rep->idRep){
         case 301:
 			strcpy(req.verbReq, "connexion");
-            if (identifierUser(sDial, rep) == -1) {
+            if (identifierUser(sDial, &req) == -1) {
                 req.idReq = 3; // User not found
             } else {
                 req.idReq = 401; // Success

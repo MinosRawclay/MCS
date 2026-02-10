@@ -1,5 +1,5 @@
 /**
- * @file moteur.c
+ * @file moteur_standalone.c
  * @brief Include of Implementation of the Belote card game
  * @details This program implements the French card game Belote for 4 players in 2 teams.
  *          It handles card dealing, trump selection, trick playing, and scoring.
@@ -104,20 +104,8 @@ bool addPlayer(players_t players, int *nbPlayer){
  * @param[in] player Index of the player to notify
  */
 void okCard(players_t players, int player){
-    requete_t req;
-    reponse_t rep;
-
-    if (players[player]->sock == NULL) {
-        // Joueur local : pas besoin d'envoyer de confirmation
-        return;
-    }
-    // Joueur distant : envoyer confirmation
-    req.idReq = REQ_CARTE_LEGALE;  // REQ_OK_CARD
-    strcpy(req.verbReq, "OkCard");
-    strcpy(req.optReq, "OK");
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    // Attendre l'accusé de réception
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    printf("Player %d card is valid.\n", player);
+    return;
 }
 
 /**
@@ -126,25 +114,9 @@ void okCard(players_t players, int player){
  * @param[in] player Index of the player to send cards to
  */
 void giveCard(players_t players, int player){
-    requete_t req;
-    reponse_t rep;
-
-    if (players[player]->sock == NULL) {
-        // Joueur local : pas besoin d'envoyer
-        printf("Player %d cards:\n", player);
-        afficherCards(players[player]->cards,NB_CARD_HAND);    
-        return;
-    }
-    // Joueur distant : envoyer toutes les cartes
-    // Format: carte1|carte2|carte3|...|carte8
-    req.idReq = REQ_ENVOYER_DECK;  // REQ_GIVE_CARDS
-    strcpy(req.verbReq, "GiveCards");
-    playerCards2str(req.optReq, players[player]);
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    // Attendre l'accusé de réception
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
+    // Joueur local : pas besoin d'envoyer
     printf("Player %d cards:\n", player);
-    afficherCards(players[player]->cards,NB_CARD_HAND);
+    afficherCards(players[player]->cards,NB_CARD_HAND);    
     return;
 }
 
@@ -152,25 +124,7 @@ void giveCard(players_t players, int player){
  * @brief Notifies all players that the game is starting
  * @param[in] players Array of player pointers
  */
-void startPartie(players_t players){
-    requete_t req;
-    reponse_t rep;
-
-    req.idReq = REQ_LANCER_PARTIE;  // REQ_START_GAME
-    strcpy(req.verbReq, "startPartie");
-    strcpy(req.optReq, "");
-    // Notifier tous les joueurs distants
-    for (int i = 0; i < PLAYERS_MAX; i++) {
-        if (players[i]->sock != NULL) {
-            envoyer(players[i]->sock, (generic)&req, (pFct)req2str);
-            // Attendre l'accusé de réception
-            recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
-            if (rep.idRep != 200) {
-                printf("Erreur : le joueur %d n'a pas confirmé le début de la partie\n", i);
-            }
-        }
-    }
-    
+void startPartie(players_t players){    
     // Affichage pour le joueur local
     printf("\n========================================\n");
     printf("       LA PARTIE COMMENCE !\n");
@@ -183,24 +137,7 @@ void startPartie(players_t players){
  * @param[in] pli Current trick (4 cards)
  */
 void givePli(players_t players, pli_t pli){
-    requete_t req;
-    reponse_t rep;
-
     // Afficher pour le joueur local
-    afficherPli(pli);
-    // Envoyer aux joueurs distants
-    // Format: carte1|carte2|carte3|carte4    
-    req.idReq = REQ_ENVOYER_PLI;  // REQ_GIVE_PLI
-    strcpy(req.verbReq, "GivePli");
-    pli2str(req.optReq, pli);
-    // Envoyer à tous les joueurs distants
-    for (int i = 0; i < PLAYERS_MAX; i++) {
-        if (players[i]->sock != NULL) {
-            envoyer(players[i]->sock, (generic)&req, (pFct)req2str);
-            // Attendre l'accusé de réception
-            recevoir(players[i]->sock, (generic)&rep, (pFct)str2rep);
-        }
-    }
     afficherCards(pli,PLAYERS_MAX);
     return;
 }
@@ -213,24 +150,13 @@ void givePli(players_t players, pli_t pli){
  * @return true if player accepts, false otherwise
  */
 bool askTakeAtout(players_t players, pli_t pli, int player){
-    requete_t req;
-    reponse_t rep;
     char choice;
-
-    if (players[player]->sock == NULL) {
-        // Joueur local
-        printf("Tu prends l'atout ? (1=oui, 0=non) : ");
-        scanf(" %c", &choice);
-        return (choice == '1');
-    }
-    // Joueur distant
-    req.idReq = REQ_CHOIX_ATOUT;  // REQ_ASK_ATOUT_T1
-    strcpy(req.verbReq, "AskAtoutT1");
-    //send a pli
-    pli2str(req.optReq, pli);
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    return (strcmp(rep.optRep, "1") == 0);
+    // Joueur local
+    printf(" =================== Player %d ===================\n", player);
+    afficherCards(players[player]->cards, NB_CARD_HAND);
+    printf("Tu prends l'atout ? (1=oui, 0=non) : ");
+    scanf(" %c", &choice);
+    return (choice == '1');
 }
 
 /**
@@ -242,43 +168,20 @@ bool askTakeAtout(players_t players, pli_t pli, int player){
  * @return true if player accepts and chooses a suit, false otherwise
  */
 bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard *c){
-    requete_t req;
-    reponse_t rep;
     char color = 0;
     char choice = 0;
-    char separator[MAX_LINE];
-    
-    if (players[player]->sock == NULL) {
-        // Joueur local
-        printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
-        scanf(" %c", &choice);
-        if (choice == '0') return false;
-        do {
-            printf("Quelle couleur (H/C/P/T) : ");
-            scanf(" %c", &color);
-        } while (!verifColor(color));
-        *c = color;
-        printf("Couleur choisie : %c\n", color);
-        return true;
-    }
-    // Joueur distant
-    req.idReq = REQ_CHOIX_ATOUT_COULEUR;  // REQ_ASK_ATOUT_T2
-    strcpy(req.verbReq, "AskAtoutT2");
-    //send a pli
-    pli2str(req.optReq, pli);
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    // Format réponse: "0" (refus) ou "1|H" (accepte + couleur)
-    if (strcmp(rep.optRep, "0") == 0) {
-        return false;
-    }
-    // Parser "1|H" pour extraire la couleur
-    strcpy(separator, strchr(rep.optRep, '|'));
-    if (strlen(separator) > 1) {
-        *c = *(separator + 1);  // Caractère après le |
-        return true;
-    }
-    return false;
+
+    // Joueur local
+    printf("Tu prends l'atout T2 ? (1=oui, 0=non) : ");
+    scanf(" %c", &choice);
+    if (choice == '0') return false;
+    do {
+        printf("Quelle couleur (H/C/P/T) : ");
+        scanf(" %c", &color);
+    } while (!verifColor(color));
+    *c = color;
+    printf("Couleur choisie : %c\n", color);
+    return true;
 }
 
 /**
@@ -289,24 +192,9 @@ bool askTakeAtoutTurn2(players_t players, pli_t pli, int player, enum colorCard 
  * @return true if scores were sent successfully, false if any error occurred
  */
 bool giveScore(players_t players, int scoreEq1, int scoreEq2){
-    requete_t req;
-    reponse_t rep;
 
-    for (int player = 0; player < PLAYERS_MAX; player++){
-        if (players[player]->sock == NULL) {
-            // Joueur local : pas besoin d'envoyer
-            printf("Score - Equipe 1: %d, Equipe 2: %d\n", scoreEq1, scoreEq2);
-            return true;
-        }
-        // Joueur distant : envoyer score
-        req.idReq = REQ_ENVOYER_SCORE;  // REQ_GIVE_SCORE
-        strcpy(req.verbReq, "GiveScore");
-        sprintf(req.optReq, "%d|%d", scoreEq1, scoreEq2);
-        strcat(req.optReq, "\0");
-        envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-        // Attendre l'accusé de réception
-        recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    }
+    // Joueur local : pas besoin d'envoyer
+    printf("Score - Equipe 1: %d, Equipe 2: %d\n", scoreEq1, scoreEq2);
     return true;
 }
 
@@ -317,29 +205,15 @@ bool giveScore(players_t players, int scoreEq1, int scoreEq2){
  * @return The card chosen by the player
  */
 enum card askCard(players_t players, int player){
-    requete_t req;
-    reponse_t rep;
-    enum card c;
 
-    if (players[player]->sock == NULL) {
-        // Joueur local - logique simple
-        printf("Tu mets quelle carte ? \n");
-        int choice;
-        scanf(" %d", &choice);
-        if (choice >= 0 && choice < NB_CARD_HAND) {
-            return players[player]->cards[choice];
-        }
-        return NOTHING;
-    }
-    // Joueur distant
-    req.idReq = REQ_JOUER;  // REQ_ASK_CARD
-    strcpy(req.verbReq, "AskCard");
-    strcpy(req.optReq, "");
-    envoyer(players[player]->sock, (generic)&req, (pFct)req2str);
-    recevoir(players[player]->sock, (generic)&rep, (pFct)str2rep);
-    // Parser la carte reçue (ex: "H_AS")
-    if (string_to_card(rep.optRep, &c)) {
-        return c;
+    // Joueur local - logique simple
+    printf(" =================== Player %d ===================\n", player);
+    afficherCards(players[player]->cards, NB_CARD_HAND);
+    printf("Tu mets quelle carte ? \n");
+    int choice;
+    scanf(" %d", &choice);
+    if (choice >= 0 && choice < NB_CARD_HAND) {
+        return players[player]->cards[choice];
     }
     return NOTHING;
 }
@@ -1021,8 +895,13 @@ void thirdDeal(pileCard_t* deck, players_t players,int* startPlayer, pli_t pli, 
  */
 bool turnDeal(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorCard * c){
     int p;
+    printf("\n[turnDeal] Début du tour de distribution, startPlayer=%d\n", *startPlayer);
+    getc(stdin);
     resetCards(deck,pileEq1,pileEq2, players);
     cardShuffle(deck);
+    printf("[turnDeal] Deck mélangé\n");
+    getc(stdin);
+
     firstDeal(deck,players,startPlayer,pli);
     secondDeal(deck,players,startPlayer,pli);
     givePli(players,pli);
@@ -1114,6 +993,7 @@ int nextPlayingPlayer(int* startPlayer, int nbNextPlayer){
  * @return true if round completed successfully, false if all players passed on trump
  */
 bool manche(pileCard_t * deck, pileCard_t* pileEq1, pileCard_t* pileEq2, players_t players, int * startPlayer, pli_t pli,enum colorCard * c, int* scoreEq1, int* scoreEq2){
+    printf("\n[manche] Début de la manche, startPlayer=%d\n", *startPlayer);
     if(turnDeal( deck, pileEq1, pileEq2, players, startPlayer, pli, c)==false)
         return false;
     printf("Atout is of color %d\n",*c);
@@ -1151,6 +1031,7 @@ void game(players_t players){
 
     while (scoreEq1 < POINT_WIN || scoreEq2 < POINT_WIN)
     {
+        printf("\n\n\n=== Nouvelle manche ===\n");
         manche(deck,gain_Eq1,gain_Eq2,players,&startPlayer,pli,&colorAtout,&scoreEq1,&scoreEq2);
         afficherGainEq(deck,gain_Eq1,gain_Eq2);
         giveScore(players, scoreEq1, scoreEq2);
@@ -1345,5 +1226,26 @@ void afficherPli(pli_t pli){
         }  
     }
     printf("\n");
+}
+
+
+int main(int argc, char const *argv[])
+{
+    players_t players;
+    int nbPlayer = 0;
+
+    STR_ROUGE_START;
+    printf("TEST\n");
+    STR_COLOR_END;
+    
+    // =============================================================
+    //création des 4 joueur - connection des clients
+    while (nbPlayer < 4)
+    {
+        addPlayer(players,&nbPlayer);
+    }
+    afficherPlayers(players);
+    
+    game(players);
 }
 
